@@ -1,11 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
-    <meta charset="pt">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VinculaPuc</title>
+    <title>Calendário</title>
+    <link rel="stylesheet" href="estilo/estilo1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    
+    <div class="calendario-desktop-container">
+        <aside class="sidebar">
+            <h2 class="logo-text">Agenda VinculaPuc</h2>
+            <div class="profile-info">
+                <i class="fas fa-user-circle profile-icon-lg"></i>
+                <p>Olá, Usuário!</p>
+            </div>
+            <button class="add-evento-btn">
+                <i class="fas fa-plus"></i> Adicionar Novo Evento
+            </button>
+            <nav class="side-menu">
+                <a href="#" class="menu-item active"><i class="fas fa-calendar-alt"></i> Mês</a>
+                <a href="#" class="menu-item"><i class="fas fa-list-ul"></i> Agenda</a>
+                <a href="#" class="menu-item"><i class="fas fa-chart-line"></i> Relatórios</a>
+                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content-desktop">
+            <header class="desktop-header">
+                <h1 class="month-title">Outubro 2025</h1>
+                <div class="header-actions">
+                    <button class="nav-button"><i class="fas fa-chevron-left"></i></button>
+                    <button class="nav-button">Hoje</button>
+                    <button class="nav-button"><i class="fas fa-chevron-right"></i></button>
+                    <div class="search-box">
+                        <input type="text" placeholder="Buscar eventos...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="calendar-grid">
+                <div class="day-header">Domingo</div>
+                <div class="day-header">Segunda</div>
+                <div class="day-header">Terça</div>
+                <div class="day-header">Quarta</div>
+                <div class="day-header">Quinta</div>
+                <div class="day-header">Sexta</div>
+                <div class="day-header">Sábado</div>
+
+                <div class="calendar-cell past-month">28</div>
+                <div class="calendar-cell past-month">29</div>
+                <div class="calendar-cell past-month">30</div>
+                
+                <div class="calendar-cell">1
+                    <div class="event-item blue">Evento Robótica</div>
+                </div>
+                <div class="calendar-cell">2</div>
+                <div class="calendar-cell">3
+                    <div class="event-item orange">Palestra UX</div>
+                    <div class="event-item orange">Palestra Design</div>
+                </div>
+                <div class="calendar-cell">4</div>
+
+                <div class="calendar-cell">5</div>
+                <div class="calendar-cell">6</div>
+                <div class="calendar-cell">7</div>
+                <div class="calendar-cell">8</div>
+                <div class="calendar-cell">9
+                    <div class="event-item orange">Roda Conversa</div>
+                </div>
+                <div class="calendar-cell">10
+                    <div class="event-item blue">Workshop</div>
+                </div>
+                <div class="calendar-cell">11</div>
+                
+                <div class="calendar-cell">12</div>
+                <div class="calendar-cell current-day">13
+                     <div class="event-item orange">HOJE - Reunião</div>
+                </div>
+                <div class="calendar-cell">14</div>
+                <div class="calendar-cell">15
+                    <div class="event-item blue">Palestra</div>
+                </div>
+                <div class="calendar-cell">16</div>
+                <div class="calendar-cell">17
+                    <div class="event-item orange">Evento Eng</div>
+                </div>
+                <div class="calendar-cell">18</div>
+
+                <div class="calendar-cell">19</div>
+                <div class="calendar-cell">20</div>
+                <div class="calendar-cell">21</div>
+                <div class="calendar-cell">22</div>
+                <div class="calendar-cell">23</div>
+                <div class="calendar-cell">24</div>
+                <div class="calendar-cell">25</div>
+
+                <div class="calendar-cell">26</div>
+                <div class="calendar-cell">27</div>
+                <div class="calendar-cell">28</div>
+                <div class="calendar-cell">29</div>
+                <div class="calendar-cell">30</div>
+                <div class="calendar-cell">31</div>
+                <div class="calendar-cell next-month">1</div>
+            </div>
+        </main>
+    </div>
 </body>
 </html>
