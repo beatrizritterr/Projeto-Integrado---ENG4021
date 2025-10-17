@@ -1,0 +1,145 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f9fafb;
+    color: #333;
+}
+
+
+.navbar {
+    background-color: lightblue;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+}
+
+.navbar-logo {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navbar-menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.navbar-menu a:hover {
+    opacity: 0.8;
+}
+
+
+.avaliacao {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.avaliacao h1 {
+    color: #004aad;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.avaliacao .descricao {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+
+.form-avaliacao {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-avaliacao label {
+    font-weight: 600;
+    color: #004aad;
+}
+
+.form-avaliacao input,
+.form-avaliacao textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-avaliacao input:focus,
+.form-avaliacao textarea:focus {
+    border-color: #004aad;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 74, 173, 0.3);
+}
+
+.btn-enviar {
+    background-color: #004aad;
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: #00398a;
+}
+
+
+.avaliacoes-recentes {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.avaliacoes-recentes h2 {
+    text-align: center;
+    color: #004aad;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+}
+
+.avaliacao-card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.avaliacao-card h3 {
+    color: #004aad;
+    margin-top: 0;
+}
+
+.avaliacao-card p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+
+@media (max-width: 768px) {
+    .avaliacao {
+        padding: 25px;
+        margin: 30px 15px;
+    }
+
+    .avaliacoes-recentes {
+        margin: 30px 15px;
+    }
+}

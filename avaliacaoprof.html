@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Professores e Disciplinas - Vinculou</title>
+    <link rel="stylesheet" href="estilo/avaliacaoprof.css">
+</head>
+<body>
+
+  
+    <nav class="navbar">
+        <div class="navbar-logo"> 
+            <span>Vinculou</span>
+        </div>
+        <div class="navbar-menu">
+            <a href="index.html">Início</a>
+            <a href="comunidades.html">Comunidades</a>
+            <a href="provas.html">Provas</a>
+            <a href="duvidas.html">Dúvidas</a>
+            <a href="perfil.html">Perfil</a>
+        </div>
+    </nav>
+
+
+    <section class="avaliacao">
+        <h1>Avaliação de Professores e Disciplinas</h1>
+        <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
+
+  
+        <form class="form-avaliacao">
+            <label for="disciplina">Disciplina:</label>
+            <input type="text" id="disciplina" name="disciplina" placeholder="Ex: Cálculo 2" required>
+
+            <label for="professor">Professor:</label>
+            <input type="text" id="professor" name="professor" placeholder="Ex: João da Silva" required>
+
+            <label for="nota">Nota (0 a 5):</label>
+            <input type="number" id="nota" name="nota" min="0" max="5" step="0.5" required>
+
+            <label for="comentario">Comentário:</label>
+            <textarea id="comentario" name="comentario" rows="5" placeholder="Compartilhe sua experiência..." required></textarea>
+
+            <button type="submit" class="btn-enviar">Enviar Avaliação</button>
+        </form>
+    </section>
+
+
+    <section class="avaliacoes-recentes">
+        <h2>Avaliações Recentes</h2>
+
+        <div class="avaliacao-card">
+            <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
+            <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
+            <p>Professor muito didático e atencioso. As provas são justas, mas exigem bastante estudo!</p>
+        </div>
+
+        <div class="avaliacao-card">
+            <h3>💻 Programação Orientada a Objetos — Profª. Maria Souza</h3>
+            <p><strong>Nota:</strong> ⭐⭐⭐⭐⭐ (5/5)</p>
+            <p>Excelente professora! Explica bem e disponibiliza materiais muito úteis.</p>
+        </div>
+    </section>
+
+</body>
+</html>
