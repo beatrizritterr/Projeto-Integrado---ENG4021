@@ -5,105 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendário</title>
     <link rel="stylesheet" href="estilo/estilo1.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <div class="calendario-desktop-container">
-        <aside class="sidebar">
-            <h2 class="logo-text">Agenda VinculaPuc</h2>
-            <div class="profile-info">
-                <i class="fas fa-user-circle profile-icon-lg"></i>
+    <div class="container">
+        
+        <aside class="barra-lado">
+            <br/><h2 class="titulo-logo">Agenda VinculaPuc</h2>
+            <div class="inf-perfil">
+                <img id="log" src="img/image copy.png">
                 <p>Olá, Usuário!</p>
             </div>
             <button class="add-evento-btn">
-                <i class="fas fa-plus"></i> Adicionar Novo Evento
+                 Adicionar Novo Evento
             </button>
             <nav class="side-menu">
-                <a href="#" class="menu-item active"><i class="fas fa-calendar-alt"></i> Mês</a>
-                <a href="#" class="menu-item"><i class="fas fa-list-ul"></i> Agenda</a>
-                <a href="#" class="menu-item"><i class="fas fa-chart-line"></i> Relatórios</a>
-                <a href="#" class="menu-item"><i class="fas fa-cog"></i> Configurações</a>
+                <a href="#" class="menuitemat">Mês</a>
+                <a href="#" class="menuitem"> Agenda</a>
+                <a href="#" class="menuitem"> Relatórios</a>
+                <a href="#" class="menuitem"> Configurações</a>
             </nav>
         </aside>
 
-        <main class="main-content-desktop">
-            <header class="desktop-header">
-                <h1 class="month-title">Outubro 2025</h1>
-                <div class="header-actions">
-                    <button class="nav-button"><i class="fas fa-chevron-left"></i></button>
+        <main class="principal">
+            <header class="header-principal">
+                <h1 class="titulomes">Outubro 2025</h1>
+                <div class="header-a">
+                    <button class="nav-button"><</button>
                     <button class="nav-button">Hoje</button>
-                    <button class="nav-button"><i class="fas fa-chevron-right"></i></button>
-                    <div class="search-box">
+                    <button class="nav-button">></button>
+                    <div class="barrapesquisa">
                         <input type="text" placeholder="Buscar eventos...">
-                        <i class="fas fa-search search-icon"></i>
                     </div>
                 </div>
             </header>
             
-            <div class="calendar-grid">
-                <div class="day-header">Domingo</div>
-                <div class="day-header">Segunda</div>
-                <div class="day-header">Terça</div>
-                <div class="day-header">Quarta</div>
-                <div class="day-header">Quinta</div>
-                <div class="day-header">Sexta</div>
-                <div class="day-header">Sábado</div>
+            <div class="grid-calendario">
+                <div class="dia">Domingo</div>
+                <div class="dia">Segunda</div>
+                <div class="dia">Terça</div>
+                <div class="dia">Quarta</div>
+                <div class="dia">Quinta</div>
+                <div class="dia">Sexta</div>
+                <div class="dia">Sábado</div>
 
-                <div class="calendar-cell past-month">28</div>
-                <div class="calendar-cell past-month">29</div>
-                <div class="calendar-cell past-month">30</div>
+                <div class="mes-passado">28</div>
+                <div class="mes-passado">29</div>
+                <div class="mes-passado">30</div>
                 
-                <div class="calendar-cell">1
-                    <div class="event-item blue">Evento Robótica</div>
+                <div class="calendario-dia">1
+                    <div class="evento-item azul">Evento Robótica</div>
                 </div>
-                <div class="calendar-cell">2</div>
-                <div class="calendar-cell">3
-                    <div class="event-item orange">Palestra UX</div>
-                    <div class="event-item orange">Palestra Design</div>
+                <div class="calendario-dia">2</div>
+                <div class="calendario-dia">3
+                    <div class="evento-item laranja">Palestra UX</div>
+                    <div class="evento-item laranja">Palestra Design</div>
                 </div>
-                <div class="calendar-cell">4</div>
+                <div class="calendario-dia">4</div>
 
-                <div class="calendar-cell">5</div>
-                <div class="calendar-cell">6</div>
-                <div class="calendar-cell">7</div>
-                <div class="calendar-cell">8</div>
-                <div class="calendar-cell">9
-                    <div class="event-item orange">Roda Conversa</div>
+                <div class="calendario-dia">5</div>
+                <div class="calendario-dia">6</div>
+                <div class="calendario-dia">7</div>
+                <div class="calendario-dia">8</div>
+                <div class="calendario-dia">9
+                    <div class="evento-item laranja">Roda Conversa</div>
                 </div>
-                <div class="calendar-cell">10
-                    <div class="event-item blue">Workshop</div>
+                <div class="calendario-dia">10
+                    <div class="evento-item azul">Workshop</div>
                 </div>
-                <div class="calendar-cell">11</div>
+                <div class="calendario-dia">11</div>
                 
-                <div class="calendar-cell">12</div>
-                <div class="calendar-cell current-day">13
-                     <div class="event-item orange">HOJE - Reunião</div>
+                <div class="calendario-dia">12</div>
+                <div class="calendario-dia-hoje">13
+                     <div class="evento-item laranja">HOJE - Reunião</div>
                 </div>
-                <div class="calendar-cell">14</div>
-                <div class="calendar-cell">15
-                    <div class="event-item blue">Palestra</div>
+                <div class="calendario-dia">14</div>
+                <div class="calendario-dia">15
+                    <div class="evento-item azul">Palestra</div>
                 </div>
-                <div class="calendar-cell">16</div>
-                <div class="calendar-cell">17
-                    <div class="event-item orange">Evento Eng</div>
+                <div class="calendario-dia">16</div>
+                <div class="calendario-dia">17
+                    <div class="evento-item laranja">Evento Eng</div>
                 </div>
-                <div class="calendar-cell">18</div>
+                <div class="calendario-dia">18</div>
 
-                <div class="calendar-cell">19</div>
-                <div class="calendar-cell">20</div>
-                <div class="calendar-cell">21</div>
-                <div class="calendar-cell">22</div>
-                <div class="calendar-cell">23</div>
-                <div class="calendar-cell">24</div>
-                <div class="calendar-cell">25</div>
+                <div class="calendario-dia">19</div>
+                <div class="calendario-dia">20</div>
+                <div class="calendario-dia">21</div>
+                <div class="calendario-dia">22</div>
+                <div class="calendario-dia">23</div>
+                <div class="calendario-dia">24</div>
+                <div class="calendario-dia">25</div>
 
-                <div class="calendar-cell">26</div>
-                <div class="calendar-cell">27</div>
-                <div class="calendar-cell">28</div>
-                <div class="calendar-cell">29</div>
-                <div class="calendar-cell">30</div>
-                <div class="calendar-cell">31</div>
-                <div class="calendar-cell next-month">1</div>
+                <div class="calendario-dia">26</div>
+                <div class="calendario-dia">27</div>
+                <div class="calendario-dia">28</div>
+                <div class="calendario-dia">29</div>
+                <div class="calendario-dia">30</div>
+                <div class="calendario-dia">31</div>
+                <div class="mes-prox">1</div>
             </div>
         </main>
     </div>

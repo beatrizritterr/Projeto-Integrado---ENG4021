@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed de Postagens - Desktop</title>
+    <link rel="stylesheet" href="estilo/estilo3.css">
+</head>
+<body>
+    <div class="layout-desktop-feed">
+        <header class="cabecalho-desktop-feed">
+            <div class="cabecalho-esquerda">
+                <img id="icone" src="img/image copy 3.png">
+                <span class="titulo-app">Vincula</span>
+            </div>
+            
+            <div class="barra-busca-desktop">
+                <input type="text" placeholder="Pesquisar postagens, tópicos...">
+            </div>
+            
+            <div class="cabecalho-direita">
+                <img id="icone" src="img/image copy.png">
+            </div>
+        </header>
+
+        <main class="conteudo-principal-feed">
+            
+            <aside class="barra-lateral-filtros">
+                <div class="caixa-filtro tipo-filtro">
+                    <h3>Filtros</h3>
+                    <div class="selecao-filtro-desktop">
+                        <label for="selecao-tipo-post">Tipos de Postagem:</label>
+                        <select id="selecao-tipo-post">
+                            <option value="todos" selected>Todos</option>
+                            <option value="noticias">Notícias</option>
+                            <option value="eventos">Eventos</option>
+                            <option value="oportunidades">Oportunidades</option>
+                            <option value="discussao">Discussão</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="caixa-filtro">
+                    <h3>Comunidades</h3>
+                    <ul>
+                        <li><a href="#">#Engenharia</a></li>
+                        <li><a href="#">#Design</a></li>
+                        <li><a href="#">#Robótica</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <section class="container-feed">
+                
+                <article class="cartao-post">
+                    <div class="cabecalho-post">
+                    <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <div class="info-post">
+                            <h4 class="nome-usuario">Nome Usuário</h4>
+                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Notícia</span></span>
+                        </div>
+                        <span class="data-post">14/10/2025</span>
+                    </div>
+                    
+                    <p class="previa-conteudo-post">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </p>
+                    
+                    <div class="acoes-post">
+                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></button>
+                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png"></button>
+                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"></button>
+                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
+                    </div>
+                </article>
+
+                <article class="cartao-post">
+                    <div class="cabecalho-post">
+                        <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <div class="info-post">
+                            <h4 class="nome-usuario">Nome Usuário</h4>
+                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo laranja">Evento</span></span>
+                        </div>
+                        <span class="data-post">13/10/2025</span>
+                    </div>
+                    
+                    <p class="previa-conteudo-post">
+                        Não perca o workshop de prototipagem da próxima semana! Inscreva-se pelo link na descrição...
+                    </p>
+                    
+                    <div class="acoes-post">
+                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"> 12</button>
+                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png"></button>
+                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"> 4</button>
+                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
+                    </div>
+                </article>
+                
+                <article class="cartao-post">
+                    <div class="cabecalho-post">
+                        <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <div class="info-post">
+                            <h4 class="nome-usuario">Nome Usuário</h4>
+                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Oportunidade</span></span>
+                        </div>
+                        <span class="data-post">12/10/2025</span>
+                    </div>
+                    
+                    <p class="previa-conteudo-post">
+                        Vaga de estágio aberta para estudantes de Sistemas de Informação. Candidate-se agora!
+                    </p>
+                    
+                    <div class="acoes-post">
+                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></i></button>
+                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png">6</button>
+                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"></button>
+                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
+                    </div>
+                </article>
+
+            </section>
+
+            <aside class="barra-lateral-tendencias">
+                <div class="caixa-filtro">
+                    <h3>Tendências</h3>
+                    <ul class="lista-tendencias">
+                        <li><span class="hashtag-tendencia">#IAeLLMs</span> <span class="contagem-tendencia">2.5k posts</span></li>
+                        <li><span class="hashtag-tendencia">#Intercâmbio2026</span> <span class="contagem-tendencia">1.1k posts</span></li>
+                        <li><span class="hashtag-tendencia">#MedicinaPuc</span> <span class="contagem-tendencia">890 posts</span></li>
+                    </ul>
+                </div>
+                <div class="caixa-filtro">
+                    <h3>Sugestões para Você</h3>
+                    <p>Oportunidade imperdível!...</p>
+                    <p>Prof. Ana Paula</p>
+                </div>
+            </aside>
+            
+        </main>
+    </div>
+</body>
+</html>
