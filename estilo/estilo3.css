@@ -1,0 +1,278 @@
+/* Variáveis de Cores (Azul Escuro, Laranja e Branco) */
+:root {
+    --azul-escuro: #002D5B; /* Azul Marinho Principal */
+    --laranja-destaque: #FF8C00; /* Laranja Vibrante */
+    --branco-fundo: #F4F6F9; /* Fundo levemente acinzentado */
+    --branco-claro: #FFFFFF; /* Branco Puro */
+    --cinza-texto: #333333;
+    --cinza-borda: #E0E0E0;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#icone{
+    height: 40px;
+    width: 40px;
+}
+
+#iconee{
+    height: 50px;
+    width: 55px;
+}
+
+#icone-interacao{
+    height: 30px;
+    width: 35px;
+}
+
+body {
+    background-color: var(--branco-fundo);
+    min-height: 100vh;
+}
+
+/* 1. Header Desktop (Fixo no Topo) - Azul Escuro */
+.cabecalho-desktop-feed {
+    background-color: var(--azul-escuro);
+    color: var(--branco-claro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.cabecalho-esquerda, .cabecalho-direita {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icone-menu-desktop {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.logo-puc {
+    width: 30px;
+    height: 30px;
+    background-color: var(--branco-claro);
+    border-radius: 50%;
+    /* Placeholder - substitua pela sua imagem real */
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF8C00"/><text x="50" y="55" font-family="Arial" font-size="30" fill="%23002D5B" text-anchor="middle">PUC</text></svg>');
+}
+
+.titulo-app {
+    font-size: 20px;
+    font-weight: bold;
+    color:#FF8C00;
+}
+
+.icone-perfil-desktop {
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.barra-busca-desktop {
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.barra-busca-desktop input {
+    width: 100%;
+    padding: 8px 15px 8px 40px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--cinza-texto);
+    font-size: 14px;
+    outline: none;
+}
+
+.icone-busca-cabecalho {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+/* 2. Layout do Conteúdo Principal (3 Colunas) */
+.conteudo-principal-feed {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+    max-width: 1400px; 
+    margin: 0 auto;
+}
+
+/* Colunas Laterais */
+.barra-lateral-filtros, .barra-lateral-tendencias {
+    width: 280px;
+    padding: 15px;
+    position: sticky; 
+    top: 80px; 
+    align-self: flex-start; 
+}
+
+/* Estilo das caixas de filtros/tendências */
+.caixa-filtro {
+    background-color: var(--branco-claro);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    border-top: 3px solid var(--azul-escuro);
+}
+
+.caixa-filtro h3 {
+    color: var(--azul-escuro);
+    font-size: 16px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed var(--cinza-borda);
+    padding-bottom: 5px;
+}
+
+.selecao-filtro-desktop label, .caixa-filtro p {
+    font-size: 14px;
+    color: var(--cinza-texto);
+    display: block;
+    margin-bottom: 5px;
+}
+
+#selecao-tipo-post {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--cinza-borda);
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.caixa-filtro ul {
+    list-style: none;
+}
+.caixa-filtro ul a {
+    color: var(--laranja-destaque);
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 5px 0;
+}
+.caixa-filtro ul a:hover {
+    text-decoration: underline;
+}
+
+.lista-tendencias li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 5px 0;
+    border-bottom: 1px dotted var(--cinza-borda);
+}
+.hashtag-tendencia { color: var(--azul-escuro); font-weight: 500;}
+.contagem-tendencia { color: #999;}
+
+
+/* Coluna Central: Container do Feed */
+.container-feed {
+    flex-grow: 1;
+    max-width: 650px; 
+}
+
+/* Estilo do Card de Postagem */
+.cartao-post {
+    background-color: var(--branco-claro);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cabecalho-post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.foto-perfil-pequena {
+    font-size: 40px;
+    color: var(--azul-escuro);
+    margin-right: 15px;
+}
+
+.info-post {
+    flex-grow: 1;
+}
+
+.nome-usuario {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--azul-escuro);
+    margin: 0;
+}
+
+.tag-tipo-post {
+    font-size: 13px;
+    color: #666;
+    display: block;
+}
+.texto-tag-tipo {
+    font-weight: bold;
+    color: var(--azul-escuro);
+}
+.texto-tag-tipo.laranja {
+    color: var(--laranja-destaque);
+}
+
+.data-post {
+    font-size: 12px;
+    color: #999;
+}
+
+.previa-conteudo-post {
+    font-size: 15px;
+    color: var(--cinza-texto);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.acoes-post {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-top: 1px dotted var(--cinza-borda);
+    padding-top: 10px;
+}
+
+.botao-acao {
+    background: none;
+    border: none;
+    color: var(--cinza-texto);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.botao-acao:hover {
+    background-color: rgba(0, 45, 91, 0.05); 
+    color: var(--laranja-destaque);
+}
+
+.icone-compartilhar-direita {
+    margin-left: auto; 
+}
