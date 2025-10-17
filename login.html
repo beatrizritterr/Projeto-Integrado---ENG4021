@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinculou - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        /* Linhas de fundo sofisticadas */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            z-index: 0;
+        }
+
+        .bg-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .bg-pattern::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(45deg, transparent 40%, rgba(59, 130, 246, 0.03) 50%, transparent 60%),
+                linear-gradient(-45deg, transparent 40%, rgba(168, 85, 247, 0.03) 50%, transparent 60%);
+        }
+
+        /* Linhas onduladas animadas */
+        .wave-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(59, 130, 246, 0.1) 50%, 
+                transparent 70%);
+            animation: wave-move 20s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            background: linear-gradient(-45deg, 
+                transparent 30%, 
+                rgba(168, 85, 247, 0.08) 50%, 
+                transparent 70%);
+            animation: wave-move 25s linear infinite reverse;
+        }
+
+        .wave:nth-child(3) {
+            background: linear-gradient(90deg, 
+                transparent 30%, 
+                rgba(34, 197, 94, 0.06) 50%, 
+                transparent 70%);
+            animation: wave-move 30s linear infinite;
+        }
+
+        @keyframes wave-move {
+            0% { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) translateY(-50%) rotate(360deg); }
+        }
+
+        /* Inputs profissionais */
+        .professional-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            color: #111827;
+            transition: all 0.2s;
+        }
+
+        .professional-input:focus {
+            outline: none;
+            background-color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .professional-input::placeholder {
+            color: #6b7280;
+        }
+
+        /* Botão profissional */
+        .professional-btn {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
+            color: white;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .professional-btn:hover {
+            background: linear-gradient(to right, #1d4ed8, #1e40af);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .professional-btn:active {
+            transform: translateY(0);
+        }
+
+        .professional-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Cards com glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animações suaves */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        /* Responsividade para logos */
+        @media (max-width: 768px) {
+            .logo-puc {
+                width: 5rem;
+                height: 5rem;
+            }
+            
+            .logo-vinculou {
+                width: 4rem;
+                height: 4rem;
+            }
+            
+            .vinculou-icon {
+                width: 3.5rem;
+                height: 3.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-puc {
+                width: 4rem;
+                height: 4rem;
+            }
+            
+            .logo-vinculou {
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .vinculou-icon {
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <!-- Fundo sofisticado -->
+    <div class="bg-pattern"></div>
+    
+    <!-- Linhas onduladas animadas -->
+    <div class="wave-lines">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <!-- Container principal -->
+    <div class="relative z-10 w-full max-w-2xl px-6 fade-in">
+        <!-- Logos -->
+        <div class="flex justify-center items-center gap-20 mb-16 slide-up">
+            <!-- Logo PUC RIO -->
+            <div class="flex flex-col items-center">
+                <img src="https://www.puc-rio.br/imagens/brasao_preto_vertical.svg" alt="PUC RIO" class="logo-puc w-40 h-40 object-contain">
+            </div>
+        
+            <!-- Logo VINCULOU -->
+            <div class="flex flex-col items-center p-8 gap-20">
+                <div class="logo-vinculou w-40 h-40 relative mb-4">
+                    <img src="https://cdn.discordapp.com/attachments/1380386208030523524/1428498398041870377/vinculou.png?ex=68f2b84e&is=68f166ce&hm=de8047e7b963753621f9306c23f5122cef1969184726f2a0bd7faa063976c839&" alt="Vinculou" class="w-40 h-40 object-contain">  
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- Banner de boas-vindas -->
+        <div class="bg-gray-100 px-10 py-6 rounded-lg text-center mb-12 slide-up">
+            <h1 class="text-2xl font-bold text-gray-900">Bem vindo ao Vinculou!</h1>    
+        </div>
+
+        <!-- Formulário -->
+        <div class="glass-card rounded-2xl p-8 shadow-2xl slide-up">
+            <form class="space-y-6">
+                <!-- Campo Usuário -->
+                <div class="flex items-center gap-6">
+                    <label class="text-gray-700 font-medium min-w-[80px] text-left">Usuário</label>
+                    <input 
+                        type="text" 
+                        class="professional-input" 
+                        placeholder="Digite seu usuário"
+                        required
+                    >
+                </div>
+
+                <!-- Campo Senha -->
+                <div class="flex items-center gap-6">
+                    <label class="text-gray-700 font-medium min-w-[80px] text-left">Senha</label>
+                    <input 
+                        type="password" 
+                        class="professional-input" 
+                        placeholder="Digite sua senha"
+                        required
+                    >
+                </div>
+
+                <!-- Botão de Login -->
+                <div class="pt-4">
+                    <button type="submit" class="professional-btn">
+                        Entrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
