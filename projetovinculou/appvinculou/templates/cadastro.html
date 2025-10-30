@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vinda(o)!</title>
+    <link rel="stylesheet" href="static/style(cadastro).css"> 
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header-container">
+            <div class="logo-puc">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97E3W3w_YKdRd0vrvasyrU5HCt2fRJRTcqA&s" alt="Logo PUC Rio">
+            </div>
+            <h1 class="welcome-message">Bem vinda(o)!!</h1>
+            <div class="logo-vinculou img">
+                <img src="logo-vinculou.png" alt="Logo Vínculou">
+            </div>
+        </header>
+
+        <main class="main-content-container">
+            <form method="post" action="{% url 'cadastro' %}" class="register-card">
+                
+                {% csrf_token %} 
+                
+                <h2>Cadastre-se</h2>
+
+                {{ form.non_field_errors }} 
+
+                <div class="input-field">
+                    <label for="{{ form.nome_completo.id_for_label }}">Nome completo:</label>
+                    {{ form.nome_completo }}
+                    {{ form.nome_completo.errors }}
+                </div>
+                
+                <div class="input-field">
+                    <label for="{{ form.nome_perfil.id_for_label }}">Nome do perfil:</label>
+                    {{ form.nome_perfil }}
+                    {{ form.nome_perfil.errors }}
+                </div>
+                
+                <div class="input-field">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                
+                <div class="input-field">
+                    <label for="{{ form.data_nascimento.id_for_label }}">Data de nascimento:</label>
+                    {{ form.data_nascimento }}
+                    {{ form.data_nascimento.errors }}
+                </div>
+                
+                <div class="input-field">
+                    <label for="{{ form.senha.id_for_label }}">Senha:</label>
+                    {{ form.senha }}
+                    {{ form.senha.errors }}
+                </div>
+                
+                <div class="input-field">
+                    <label for="{{ form.confirmacao_senha.id_for_label }}">Confirme a Senha:</label>
+                    {{ form.confirmacao_senha }}
+                    {{ form.confirmacao_senha.errors }}
+                </div>
+
+                <button type="submit" class="create-account-button">Criar conta</button>
+            
+            </form>
+            </main>
+    </div>
+</body>
+</html>
