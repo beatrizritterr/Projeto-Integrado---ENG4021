@@ -7,22 +7,68 @@
     <link rel="stylesheet" href="estilo/estilo3.css">
 </head>
 <body>
-    <div class="layout-desktop-feed">
-        <header class="cabecalho-desktop-feed">
-            <div class="cabecalho-esquerda">
-                <img id="icone" src="img/image copy 3.png">
-                <span class="titulo-app">Vincula</span>
-            </div>
-            
-            <div class="barra-busca-desktop">
-                <input type="text" placeholder="Pesquisar postagens, tópicos...">
-            </div>
-            
-            <div class="cabecalho-direita">
-                <img id="icone" src="img/image copy.png">
-            </div>
-        </header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+             <a href="filtrobusca.html" class="menu-item active">
+                <span class="menu-icon">💬</span>
+                <span class="menu-text">Filtros</span>
+            </a>
+            
+            <a href="avaliacaoprof.html" class="menu-item ">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-text">Avaliações</span>
+            </a>
+            
+            <a href="provasantigas.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span class="menu-text">Provas Antigas</span>
+            </a>
+            <a href="index.html" class="menu-item ">
+                <span class="menu-icon">🗓️</span>
+                <span class="menu-text">Calendário</span>
+            </a>
+            <a href="perfil.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Perfil</span>
+            </a>
+
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Login</span>
+            </a>
+            
+            <a href="configuracoes.html" class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Configurações</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+        </div>
+        
+        <div class="search-input-desktop">
+            <div class="search-icon-desktop">🔍</div>
+            <input type="text" placeholder="Buscar...">
+        </div>
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <div class="layout-desktop-feed">
         <main class="conteudo-principal-feed">
             
             <aside class="barra-lateral-filtros">
@@ -54,7 +100,7 @@
                 
                 <article class="cartao-post">
                     <div class="cabecalho-post">
-                    <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <img id="iconee" src="img/image copy 12.png">
                         <div class="info-post">
                             <h4 class="nome-usuario">Nome Usuário</h4>
                             <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Notícia</span></span>
@@ -76,7 +122,7 @@
 
                 <article class="cartao-post">
                     <div class="cabecalho-post">
-                        <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <img id="iconee" src="img/image copy 12.png">
                         <div class="info-post">
                             <h4 class="nome-usuario">Nome Usuário</h4>
                             <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo laranja">Evento</span></span>
@@ -98,7 +144,7 @@
                 
                 <article class="cartao-post">
                     <div class="cabecalho-post">
-                        <img id="iconee" src="img/image copy 12.png">&nbsp;&nbsp;
+                        <img id="iconee" src="img/image copy 12.png">
                         <div class="info-post">
                             <h4 class="nome-usuario">Nome Usuário</h4>
                             <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Oportunidade</span></span>
@@ -111,7 +157,7 @@
                     </p>
                     
                     <div class="acoes-post">
-                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></i></button>
+                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></button>
                         <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png">6</button>
                         <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"></button>
                         <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
@@ -138,5 +184,44 @@
             
         </main>
     </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            body.classList.add('sidebar-open');
+        });
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+        });
+    </script>
 </body>
 </html>

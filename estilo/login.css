@@ -8,8 +8,12 @@
 body {
     background-color: #F4F6F9;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Header - padrão consistente */
 .header-container {
     background-color: #002D5B;
     color: #FFFFFF;
@@ -18,6 +22,11 @@ body {
     align-items: center;
     padding: 15px 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
 }
 
 .logo-area, .user-area {
@@ -61,6 +70,7 @@ body {
     color: #666;
 }
 
+/* Barra Lateral */
 .sidebar {
     position: fixed;
     top: 0;
@@ -150,6 +160,7 @@ body {
     font-weight: bold;
 }
 
+/* Overlay quando sidebar está aberta */
 .sidebar-overlay {
     position: fixed;
     top: 0;
@@ -165,184 +176,176 @@ body {
     display: block;
 }
 
+/* Ajuste do conteúdo quando sidebar está aberta */
 body.sidebar-open {
     overflow: hidden;
 }
 
+/* Header ajustado para incluir o menu hamburguer */
 .menu-icon.hamburger {
     font-size: 24px;
     cursor: pointer;
     padding: 5px;
     border-radius: 4px;
     transition: background-color 0.3s;
-    color: #FFFFFF;
 }
 
 .menu-icon.hamburger:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.container {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    padding-top: 70px; 
-}
-
-\.barra-lateral {
-    width: 280px;
-    background-color: #002D5B;
-    color: #FFFFFF;
-    padding: 30px 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.barra-item {
+/* Container de login */
+.login-container {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    border-left: 4px solid transparent;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 100px 20px 40px;
+    width: 100%;
 }
 
-.barra-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.login-content {
+    width: 100%;
+    max-width: 500px;
 }
 
-.barra-item.active {
-    background-color: rgba(255, 140, 0, 0.2);
-    border-left-color: #FF8C00;
-}
-
-#icone {
-    width: 24px;
-    height: 24px;
-}
-
-.item-txt {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-.config {
-    flex: 1;
-    padding: 40px;
-    background-color: #F4F6F9;
-}
-
-.titulo {
-    font-size: 32px;
-    font-weight: 300;
-    color: #002D5B;
+/* Logo section */
+.logo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
     margin-bottom: 40px;
+}
+
+.logo-puc, .logo-vinculou {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+/* Banner de boas-vindas */
+.welcome-banner {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
     text-align: center;
 }
 
-.container-lista {
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+.welcome-banner h1 {
+    font-size: 24px;
+    font-weight: 300;
+    color: #002D5B;
+    margin: 0;
 }
 
-.caixa-categoria {
+/* Formulário de login */
+.login-form-container {
     background-color: #FFFFFF;
+    padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
 }
 
-.itens {
+.form-group {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 20px 25px;
-    text-decoration: none;
-    color: #333333;
-    border-bottom: 1px solid #F4F6F9;
-    transition: background-color 0.3s;
+    margin-bottom: 25px;
+    gap: 20px;
 }
 
-.itens:last-child {
-    border-bottom: none;
-}
-
-.itens:hover {
-    background-color: #F4F6F9;
-}
-
-.itens.highlight {
-    background-color: #F4F6F9;
-    border-left: 4px solid ;
-}
-
-.item-titulo {
-    font-size: 18px;
+.form-group label {
     font-weight: 500;
     color: #002D5B;
+    min-width: 80px;
+    text-align: left;
+}
+
+.login-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F4F6F9;
+    font-size: 16px;
+    color: #333333;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-input:focus {
+    border-color: #002D5B;
+    box-shadow: 0 0 0 3px rgba(0, 45, 91, 0.1);
+}
+
+.login-input::placeholder {
+    color: #666666;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: #002D5B;
+    color: #FFFFFF;
+    border: none;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background-color: #FF8C00;
+    transform: translateY(-2px);
+}
+
+.login-btn:active {
+    transform: translateY(0);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column;
-        gap: 15px;
         padding: 15px 20px;
+        flex-wrap: wrap;
     }
     
     .search-input-desktop {
-        max-width: 100%;
         order: 3;
+        max-width: 100%;
+        margin-top: 10px;
     }
     
-    .container {
+    .logo-section {
         flex-direction: column;
-        padding-top: 120px;
+        gap: 20px;
     }
     
-    .barra-lateral {
+    .logo-puc, .logo-vinculou {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .login-form-container {
+        padding: 30px 20px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .form-group label {
+        min-width: auto;
+    }
+    
+    .login-input {
         width: 100%;
-        height: auto;
-        padding: 20px;
-    }
-    
-    .menu {
-        flex-direction: row;
-        overflow-x: auto;
-        gap: 5px;
-    }
-    
-    .barra-item {
-        flex-direction: column;
-        padding: 10px;
-        text-align: center;
-        min-width: 80px;
-    }
-    
-    .item-txt {
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    
-    .config {
-        padding: 20px;
-    }
-    
-    .titulo {
-        font-size: 24px;
-        margin-bottom: 25px;
     }
     
     .sidebar {
@@ -351,15 +354,16 @@ body.sidebar-open {
 }
 
 @media (max-width: 480px) {
-    .container-lista {
-        gap: 15px;
+    .logo-puc, .logo-vinculou {
+        width: 80px;
+        height: 80px;
     }
     
-    .itens {
-        padding: 15px 20px;
+    .welcome-banner h1 {
+        font-size: 20px;
     }
     
-    .item-titulo {
-        font-size: 16px;
+    .login-form-container {
+        padding: 25px 15px;
     }
 }
