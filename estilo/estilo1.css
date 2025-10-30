@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -9,47 +8,219 @@
 body {
     background-color: #F4F6F9;
     min-height: 100vh;
-    overflow: hidden; /
 }
 
+/* Header - padrão consistente */
+.header-container {
+    background-color: #002D5B;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-area, .user-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+}
+
+.menu-icon, .profile-icon, .notification-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.search-input-desktop {
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-input-desktop input {
+    width: 100%;
+    padding: 10px 15px 10px 45px; 
+    border: none;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333333;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-icon-desktop {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+/* Barra Lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #002D5B;
+    color: #FFFFFF;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #FF8C00;
+}
+
+.menu-item.active {
+    background-color: rgba(255, 140, 0, 0.2);
+    border-left-color: #FF8C00;
+}
+
+.menu-icon {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #FFFFFF;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.checkbox-custom.checked::after {
+    content: "✓";
+    color: #FF8C00;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Overlay quando sidebar está aberta */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* Ajuste do conteúdo quando sidebar está aberta */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Header ajustado para incluir o menu hamburguer */
+.menu-icon.hamburger {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.menu-icon.hamburger:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Container principal do calendário - COM ESPAÇAMENTO */
 .container {
     display: flex;
     width: 100%;
     min-height: 100vh;
+    padding-top: 15px; /* Mude para 10px ou 15px */
 }
 
-#logo{
-width: 50px;
-height: 50px;
-
-}
-
-#log{
+#log {
     width: 50px;
     height: 50px;
 }
 
 .barra-lado {
     width: 250px;
-    background-color:  #002D5B;
+    background-color: #002D5B;
     color: #FFFFFF;
-    padding: 30px 20px;
+    padding: 25px 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 20px 20px 0; /* Espaço à direita e abaixo */
 }
 
 .titulo-logo {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     color: #FF8C00;
 }
 
 .inf-perfil {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .profile-icon-lg {
@@ -68,15 +239,15 @@ height: 50px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     transition: background-color 0.3s;
 }
 
 .add-evento-btn:hover {
-    background-color:  #FFA500;
+    background-color: #FFA500;
 }
 
-.menu {
+.side-menu {
     width: 100%;
 }
 
@@ -97,7 +268,7 @@ height: 50px;
 }
 
 .menuitem:hover {
-    background-color: #0056B3;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .menuitemat {
@@ -107,7 +278,7 @@ height: 50px;
 
 .principal {
     flex-grow: 1;
-    padding: 30px;
+    padding: 25px 30px 30px 0; /* Espaço à direita */
     display: flex;
     flex-direction: column;
 }
@@ -116,7 +287,7 @@ height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     padding-bottom: 15px;
     border-bottom: 1px solid #E0E0E0;
 }
@@ -124,27 +295,27 @@ height: 50px;
 .titulomes {
     font-size: 28px;
     font-weight: 400;
-    color:  #002D5B;
+    color: #002D5B;
 }
 
 .header-a {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .nav-button {
-    background-color:#FFFFFF;
-    color: var(--cinza-texto);
+    background-color: #FFFFFF;
+    color: #333333;
     border: 1px solid #E0E0E0;
-    padding: 8px 15px;
+    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .nav-button:hover {
-    background-color: #0056B3;
+    background-color: #002D5B;
     color: #FFFFFF;
 }
 
@@ -175,20 +346,21 @@ height: 50px;
     border: 1px solid #E0E0E0;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .dia {
     background-color: #FFFFFF; 
-    color:  #002D5B;
-    padding: 10px;
+    color: #002D5B;
+    padding: 12px;
     text-align: center;
     font-weight: bold;
     border-bottom: 1px solid #E0E0E0;
     border-right: 1px solid #E0E0E0;
 }
 
-.calendario-dia{
-    padding: 5px;
+.calendario-dia {
+    padding: 8px;
     min-height: 120px; 
     text-align: right;
     font-size: 18px;
@@ -198,12 +370,13 @@ height: 50px;
     border-width: 0 1px 1px 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
 }
 
 .calendario-dia:nth-child(7n) { 
     border-right: none;
 }
+
 .calendario-dia:nth-last-child(-n+7) { 
     border-bottom: none;
 }
@@ -219,13 +392,13 @@ height: 50px;
 .calendario-dia-hoje {
     background-color: #FFFBEA; 
     border: 2px solid #FF8C00;
-    padding: 4px; 
+    padding: 6px; 
 }
 
 .evento-item {
     text-align: left;
     font-size: 12px;
-    padding: 3px 5px;
+    padding: 4px 6px;
     border-radius: 3px;
     margin-top: 2px;
     overflow: hidden;
@@ -240,5 +413,86 @@ height: 50px;
 }
 
 .evento-item.azul {
-    background-color:  #002D5B;
+    background-color: #002D5B;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .search-input-desktop {
+        max-width: 100%;
+        order: 3;
+    }
+    
+    .container {
+        flex-direction: column;
+        padding-top: 120px;
+    }
+    
+    .barra-lado {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        margin: 0 0 20px 0;
+    }
+    
+    .principal {
+        padding: 20px;
+    }
+    
+    .header-principal {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .header-a {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .barrapesquisa input {
+        width: 200px;
+    }
+    
+    .grid-calendario {
+        grid-template-columns: repeat(7, 1fr);
+        font-size: 14px;
+    }
+    
+    .calendario-dia {
+        min-height: 80px;
+        font-size: 16px;
+    }
+    
+    .sidebar {
+        width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-calendario {
+        grid-template-columns: repeat(7, 1fr);
+        font-size: 12px;
+    }
+    
+    .calendario-dia {
+        min-height: 60px;
+        font-size: 14px;
+        padding: 4px;
+    }
+    
+    .evento-item {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+    
+    .barrapesquisa input {
+        width: 150px;
+    }
 }

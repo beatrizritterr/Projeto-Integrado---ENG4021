@@ -7,24 +7,73 @@
     <link rel="stylesheet" href="estilo/perfil.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-logo">
-            
-            <span>Vinculou</span>
-        </div>
-        <div class="navbar-menu">
-            <a href="index.html">Início</a>
-            <a href="#">Comunidades</a>
-            <a href="#">Mensagens</a>
-            <a href="#">Sair</a>
-        </div>
-    </nav>
-    <section class="perfil-container">
-        <div class="perfil-card">
+    <!-- Overlay para fechar sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
+    <!-- Barra Lateral -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="logo-vinculou.png" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="#" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span class="menu-text">Chats</span>
+                <div class="checkbox-custom"></div>
+            </a>
+            
+            <a href="#" class="menu-item active">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-text">Avaliações</span>
+                <div class="checkbox-custom checked"></div>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span class="menu-text">Provas Antigas</span>
+                <div class="checkbox-custom"></div>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Perfil</span>
+                <div class="checkbox-custom checked"></div>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Configurações</span>
+                <div class="checkbox-custom"></div>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Header padrão -->
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="logo-vinculou.png" alt="Logo Vinculou">
+        </div>
+        
+       
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="principal">
+        <h1 class="titulo-principal">Perfil do Usuário</h1>
+        
+        <!-- Card de perfil -->
+        <div class="perfil-card">
             <div class="perfil-foto">
-                <img src="usuario.png" alt="Foto de perfil"> 
-                <div class="foto-placeholder">Foto</div>
+                <img src="usuario.png" alt="Foto de perfil" onerror="this.style.display='none'; document.querySelector('.foto-placeholder').style.display='flex';">
+                <div class="foto-placeholder" style="display: none;">👤</div>
             </div>
 
             <div class="perfil-info">
@@ -38,24 +87,90 @@
                 <button class="editar-btn">Editar perfil</button>
             </div>
         </div>
-    </section>
 
-    <section class="atividades">
-        <h2>Atividades Recentes</h2>
-        <div class="atividade">
-            <p><strong>Você comentou</strong> na comunidade de Cálculo I: “Alguém tem a prova de 2023.1?”</p>
-            <span>Há 2 horas</span>
-        </div>
+        <!-- Atividades recentes -->
+        <div class="atividades-container">
+            <h2 class="atividades-titulo">Atividades Recentes</h2>
+            
+            <div class="atividade-item">
+                <p class="atividade-texto">
+                    <strong>Você comentou</strong> na comunidade de Cálculo I: "Alguém tem a prova de 2023.1?"
+                </p>
+                <span class="atividade-tempo">Há 2 horas</span>
+            </div>
 
-        <div class="atividade">
-            <p><strong>Você publicou</strong> uma avaliação sobre o professor João Pereira (Banco de Dados).</p>
-            <span>Ontem</span>
-        </div>
+            <div class="atividade-item">
+                <p class="atividade-texto">
+                    <strong>Você publicou</strong> uma avaliação sobre o professor João Pereira (Banco de Dados).
+                </p>
+                <span class="atividade-tempo">Ontem</span>
+            </div>
 
-        <div class="atividade">
-            <p><strong>Você entrou</strong> na comunidade “Engenharia de Computação - PUC-Rio”.</p>
-            <span>2 dias atrás</span>
+            <div class="atividade-item">
+                <p class="atividade-texto">
+                    <strong>Você entrou</strong> na comunidade "Engenharia de Computação - PUC-Rio".
+                </p>
+                <span class="atividade-tempo">2 dias atrás</span>
+            </div>
         </div>
-    </section>
+    </div>
+
+    <script>
+        // JavaScript para controlar a sidebar
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
+
+        // Abrir sidebar
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            body.classList.add('sidebar-open');
+        });
+
+        // Fechar sidebar ao clicar no overlay
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        // Fechar sidebar ao clicar em um item do menu
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove a classe active de todos os itens
+                menuItems.forEach(i => i.classList.remove('active'));
+                // Adiciona a classe active ao item clicado
+                this.classList.add('active');
+                
+                // Fecha a sidebar
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            });
+        });
+
+        // Fechar sidebar com a tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+        });
+
+        // Tratamento para foto de perfil
+        document.addEventListener('DOMContentLoaded', function() {
+            const fotoPerfil = document.querySelector('.perfil-foto img');
+            const placeholder = document.querySelector('.foto-placeholder');
+            
+            if (!fotoPerfil.src || fotoPerfil.src.includes('usuario.png')) {
+                fotoPerfil.style.display = 'none';
+                placeholder.style.display = 'flex';
+            }
+        });
+    </script>
 </body>
 </html>
