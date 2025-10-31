@@ -1,14 +1,3 @@
-/* Variáveis de Cores (Azul Escuro, Laranja e Branco) */
-:root {
-    --azul-escuro: #002D5B; /* Azul Marinho Principal */
-    --laranja-destaque: #FF8C00; /* Laranja Vibrante */
-    --branco-fundo: #F4F6F9; /* Fundo levemente acinzentado */
-    --branco-claro: #FFFFFF; /* Branco Puro */
-    --cinza-texto: #333333;
-    --cinza-borda: #E0E0E0;
-}
-
-/* Reset Básico */
 * {
     margin: 0;
     padding: 0;
@@ -16,69 +5,216 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#icone{
-    height: 40px;
-    width: 40px;
-}
-
-#iconee{
-    height: 50px;
-    width: 55px;
-}
-
-#icone-interacao{
-    height: 30px;
-    width: 35px;
-}
-
 body {
-    background-color: var(--branco-fundo);
+    background-color: #F4F6F9;
     min-height: 100vh;
 }
 
-/* 1. Header Desktop (Fixo no Topo) - Azul Escuro */
-.cabecalho-desktop-feed {
-    background-color: var(--azul-escuro);
-    color: var(--branco-claro);
+.header-container {
+    background-color: #002D5B;
+    color: #FFFFFF;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
+    padding: 15px 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
 }
 
-.cabecalho-esquerda, .cabecalho-direita {
+.logo-area, .user-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+}
+
+.menu-icon, .profile-icon, .notification-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.search-input-desktop {
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-input-desktop input {
+    width: 100%;
+    padding: 10px 15px 10px 45px; 
+    border: none;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333333;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-icon-desktop {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #002D5B;
+    color: #FFFFFF;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-.icone-menu-desktop {
-    font-size: 22px;
-    cursor: pointer;
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
 }
 
-.logo-puc {
-    width: 30px;
-    height: 30px;
-    background-color: var(--branco-claro);
-    border-radius: 50%;
-    /* Placeholder - substitua pela sua imagem real */
-    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23FF8C00"/><text x="50" y="55" font-family="Arial" font-size="30" fill="%23002D5B" text-anchor="middle">PUC</text></svg>');
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #FF8C00;
+}
+
+.menu-item.active {
+    background-color: rgba(255, 140, 0, 0.2);
+    border-left-color: #FF8C00;
+}
+
+.menu-icon {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #FFFFFF;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.checkbox-custom.checked::after {
+    content: "✓";
+    color: #FF8C00;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+.menu-icon.hamburger {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.menu-icon.hamburger:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.layout-desktop-feed {
+    padding-top: 70px;
+}
+
+.cabecalho-desktop-feed {
+    background-color: #002D5B;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.cabecalho-esquerda {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#icone {
+    width: 40px;
+    height: 40px;
 }
 
 .titulo-app {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
-    color:#FF8C00;
-}
-
-.icone-perfil-desktop {
-    font-size: 30px;
-    cursor: pointer;
+    color: #FFFFFF;
 }
 
 .barra-busca-desktop {
@@ -89,190 +225,250 @@ body {
 
 .barra-busca-desktop input {
     width: 100%;
-    padding: 8px 15px 8px 40px;
+    padding: 10px 15px 10px 45px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     background-color: rgba(255, 255, 255, 0.9);
-    color: var(--cinza-texto);
-    font-size: 14px;
+    color: #333333;
+    font-size: 16px;
     outline: none;
 }
 
-.icone-busca-cabecalho {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #666;
+.cabecalho-direita {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
-/* 2. Layout do Conteúdo Principal (3 Colunas) */
 .conteudo-principal-feed {
     display: flex;
-    justify-content: center;
-    padding: 20px;
     gap: 20px;
-    max-width: 1400px; 
+    padding: 20px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
-/* Colunas Laterais */
-.barra-lateral-filtros, .barra-lateral-tendencias {
+.barra-lateral-filtros,
+.barra-lateral-tendencias {
     width: 280px;
-    padding: 15px;
-    position: sticky; 
-    top: 80px; 
-    align-self: flex-start; 
+    flex-shrink: 0;
 }
 
-/* Estilo das caixas de filtros/tendências */
 .caixa-filtro {
-    background-color: var(--branco-claro);
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    border-top: 3px solid var(--azul-escuro);
 }
 
 .caixa-filtro h3 {
-    color: var(--azul-escuro);
-    font-size: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #002D5B;
     margin-bottom: 15px;
-    border-bottom: 1px dashed var(--cinza-borda);
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #FF8C00;
 }
 
-.selecao-filtro-desktop label, .caixa-filtro p {
-    font-size: 14px;
-    color: var(--cinza-texto);
+.selecao-filtro-desktop {
+    margin-bottom: 15px;
+}
+
+.selecao-filtro-desktop label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333333;
 }
 
-#selecao-tipo-post {
+.selecao-filtro-desktop select {
     width: 100%;
-    padding: 8px;
-    border: 1px solid var(--cinza-borda);
-    border-radius: 4px;
-    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F4F6F9;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
 }
 
 .caixa-filtro ul {
     list-style: none;
 }
-.caixa-filtro ul a {
-    color: var(--laranja-destaque);
+
+.caixa-filtro ul li {
+    margin-bottom: 8px;
+}
+
+.caixa-filtro ul li a {
+    color: #002D5B;
     text-decoration: none;
-    font-size: 14px;
-    display: block;
-    padding: 5px 0;
-}
-.caixa-filtro ul a:hover {
-    text-decoration: underline;
+    transition: color 0.3s;
 }
 
-.lista-tendencias li {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    padding: 5px 0;
-    border-bottom: 1px dotted var(--cinza-borda);
+.caixa-filtro ul li a:hover {
+    color: #FF8C00;
 }
-.hashtag-tendencia { color: var(--azul-escuro); font-weight: 500;}
-.contagem-tendencia { color: #999;}
 
-
-/* Coluna Central: Container do Feed */
 .container-feed {
-    flex-grow: 1;
-    max-width: 650px; 
+    flex: 1;
+    max-width: 600px;
 }
 
-/* Estilo do Card de Postagem */
 .cartao-post {
-    background-color: var(--branco-claro);
+    background-color: #FFFFFF;
+    padding: 25px;
     border-radius: 10px;
-    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cartao-post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
 }
 
 .cabecalho-post {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 15px;
 }
 
-.foto-perfil-pequena {
-    font-size: 40px;
-    color: var(--azul-escuro);
-    margin-right: 15px;
+.cabecalho-post .info-post {
+    flex: 1;
+    margin-left: 15px;
 }
 
-.info-post {
-    flex-grow: 1;
+#iconee {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 
 .nome-usuario {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--azul-escuro);
-    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #002D5B;
+    margin-bottom: 5px;
 }
 
 .tag-tipo-post {
-    font-size: 13px;
-    color: #666;
-    display: block;
+    font-size: 14px;
+    color: #666666;
 }
+
 .texto-tag-tipo {
-    font-weight: bold;
-    color: var(--azul-escuro);
+    color: #002D5B;
+    font-weight: 500;
 }
+
 .texto-tag-tipo.laranja {
-    color: var(--laranja-destaque);
+    color: #FF8C00;
 }
 
 .data-post {
-    font-size: 12px;
-    color: #999;
+    font-size: 14px;
+    color: #999999;
 }
 
 .previa-conteudo-post {
-    font-size: 15px;
-    color: var(--cinza-texto);
+    font-size: 16px;
     line-height: 1.5;
-    margin-bottom: 15px;
+    color: #333333;
+    margin-bottom: 20px;
 }
 
 .acoes-post {
     display: flex;
     align-items: center;
     gap: 15px;
-    border-top: 1px dotted var(--cinza-borda);
-    padding-top: 10px;
 }
 
 .botao-acao {
     background: none;
     border: none;
-    color: var(--cinza-texto);
-    font-size: 14px;
     cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    transition: color 0.2s, background-color 0.2s;
+    color: #666666;
+    font-size: 14px;
 }
 
 .botao-acao:hover {
-    background-color: rgba(0, 45, 91, 0.05); 
-    color: var(--laranja-destaque);
+    background-color: #F4F6F9;
+}
+
+#icone-interacao {
+    width: 20px;
+    height: 20px;
 }
 
 .icone-compartilhar-direita {
-    margin-left: auto; 
+    margin-left: auto;
+}
+
+.lista-tendencias li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #F4F6F9;
+}
+
+.hashtag-tendencia {
+    color: #002D5B;
+    font-weight: 500;
+}
+
+.contagem-tendencia {
+    color: #999999;
+    font-size: 12px;
+}
+
+@media (max-width: 1024px) {
+    .barra-lateral-tendencias {
+        display: none;
+    }
+    
+    .conteudo-principal-feed {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cabecalho-desktop-feed {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .barra-busca-desktop {
+        max-width: 100%;
+        order: 2;
+    }
+    
+    .conteudo-principal-feed {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .barra-lateral-filtros,
+    .barra-lateral-tendencias {
+        width: 100%;
+    }
+    
+    .container-feed {
+        max-width: 100%;
+    }
+    
+    .sidebar {
+        width: 280px;
+    }
 }

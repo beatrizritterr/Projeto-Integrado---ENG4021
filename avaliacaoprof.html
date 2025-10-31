@@ -7,60 +7,146 @@
     <link rel="stylesheet" href="estilo/avaliacaoprof.css">
 </head>
 <body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-  
-    <nav class="navbar">
-        <div class="navbar-logo"> 
-            <span>Vinculou</span>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
         </div>
-        <div class="navbar-menu">
-            <a href="index.html">Início</a>
-            <a href="comunidades.html">Comunidades</a>
-            <a href="provas.html">Provas</a>
-            <a href="duvidas.html">Dúvidas</a>
-            <a href="perfil.html">Perfil</a>
+        
+        <nav class="sidebar-menu">
+             <a href="filtrobusca.html" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span class="menu-text">Filtros</span>
+            </a>
+            
+            <a href="avaliacaoprof.html" class="menu-item active">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-text">Avaliações</span>
+            </a>
+            
+            <a href="provasantigas.html" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span class="menu-text">Provas Antigas</span>
+            </a>
+            <a href="index.html" class="menu-item ">
+                <span class="menu-icon">🗓️</span>
+                <span class="menu-text">Calendário</span>
+            </a>
+            <a href="perfil.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Perfil</span>
+            </a>
+
+            <a href="login.html" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Login</span>
+            </a>
+            
+            <a href="configuracoes.html" class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Configurações</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
         </div>
-    </nav>
-
-
-    <section class="avaliacao">
-        <h1>Avaliação de Professores e Disciplinas</h1>
-        <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
-
-  
-        <form class="form-avaliacao">
-            <label for="disciplina">Disciplina:</label>
-            <input type="text" id="disciplina" name="disciplina" placeholder="Ex: Cálculo 2" required>
-
-            <label for="professor">Professor:</label>
-            <input type="text" id="professor" name="professor" placeholder="Ex: João da Silva" required>
-
-            <label for="nota">Nota (0 a 5):</label>
-            <input type="number" id="nota" name="nota" min="0" max="5" step="0.5" required>
-
-            <label for="comentario">Comentário:</label>
-            <textarea id="comentario" name="comentario" rows="5" placeholder="Compartilhe sua experiência..." required></textarea>
-
-            <button type="submit" class="btn-enviar">Enviar Avaliação</button>
-        </form>
-    </section>
-
-
-    <section class="avaliacoes-recentes">
-        <h2>Avaliações Recentes</h2>
-
-        <div class="avaliacao-card">
-            <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
-            <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
-            <p>Professor muito didático e atencioso. As provas são justas, mas exigem bastante estudo!</p>
+        
+        <div class="search-input-desktop">
+            <div class="search-icon-desktop">🔍</div>
+            <input type="text" placeholder="Buscar...">
         </div>
-
-        <div class="avaliacao-card">
-            <h3>💻 Programação Orientada a Objetos — Profª. Maria Souza</h3>
-            <p><strong>Nota:</strong> ⭐⭐⭐⭐⭐ (5/5)</p>
-            <p>Excelente professora! Explica bem e disponibiliza materiais muito úteis.</p>
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
         </div>
-    </section>
+    </div>
 
+    <div class="principal">
+        <h1 class="titulo-principal">Avaliação de Professores e Disciplinas</h1>
+
+        <section class="avaliacao">
+            <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
+
+            <form class="form-avaliacao">
+                <label for="disciplina">Disciplina:</label>
+                <input type="text" id="disciplina" name="disciplina" placeholder="Ex: Cálculo 2" required>
+
+                <label for="professor">Professor:</label>
+                <input type="text" id="professor" name="professor" placeholder="Ex: João da Silva" required>
+
+                <label for="nota">Nota (0 a 5):</label>
+                <input type="number" id="nota" name="nota" min="0" max="5" step="0.5" required>
+
+                <label for="comentario">Comentário:</label>
+                <textarea id="comentario" name="comentario" rows="5" placeholder="Compartilhe sua experiência..." required></textarea>
+
+                <button type="submit" class="btn-enviar">Enviar Avaliação</button>
+            </form>
+        </section>
+
+        <section class="avaliacoes-recentes">
+            <h2>Avaliações Recentes</h2>
+
+            <div class="avaliacao-card">
+                <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
+                <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
+                <p>Professor muito didático e atencioso. As provas são justas, mas exigem bastante estudo!</p>
+            </div>
+
+            <div class="avaliacao-card">
+                <h3>💻 Programação Orientada a Objetos — Profª. Maria Souza</h3>
+                <p><strong>Nota:</strong> ⭐⭐⭐⭐⭐ (5/5)</p>
+                <p>Excelente professora! Explica bem e disponibiliza materiais muito úteis.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            body.classList.add('sidebar-open');
+        });
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+        });
+
+
+    </script>
 </body>
 </html>
