@@ -2,12 +2,11 @@
 # Arquivo: core/views.py
 
 from django.shortcuts import render
+from .forms import CustomUserCreationForm
 
 def home(request):
     return render(request, 'core/index.html') 
 
-def login(request):
-    return render(request, 'core/login.html') 
 
 def perfil(request):
     return render(request, 'core/perfil.html')
@@ -31,4 +30,13 @@ def provasantigas(request):
     return render(request, 'core/provasantigas.html')
 
 def cadastro(request):
-    return render(request, 'core/cadastro.html')
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('login') 
+    else:
+        form = CustomUserCreationForm()
+        
+    context = {'form': form}
+    return render(request, 'core/cadastro.html', context)

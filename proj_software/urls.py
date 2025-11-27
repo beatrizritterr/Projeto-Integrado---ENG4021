@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # Conecta o App 'core' à URL base do projeto ('' ou seja, http://127.0.0.1:8000/)
     path('', include('core.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

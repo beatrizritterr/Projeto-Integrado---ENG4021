@@ -12,7 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -51,15 +51,18 @@
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
             </a>
+            <a href="{% url 'cadastro' %}" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Cadastro</span>
+            </a>
         </nav>
     </div>
 
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
-      
         
         <div class="user-area">
             <div class="notification-icon">🔔</div>
@@ -78,13 +81,13 @@
             </div>
 
             <div class="login-form-container">
-                <form class="login-form">
-                    <div class="form-group">
+                <form class="login-form" method="post" action="{% url 'login' %}">
+                    {% csrf_token %} <div class="form-group">
                         <label for="usuario">Usuário</label>
                         <input 
                             type="text" 
                             id="usuario"
-                            class="login-input" 
+                            name="username"  class="login-input" 
                             placeholder="Digite seu usuário"
                             required
                         >
@@ -95,7 +98,7 @@
                         <input 
                             type="password" 
                             id="senha"
-                            class="login-input" 
+                            name="password"  class="login-input" 
                             placeholder="Digite sua senha"
                             required
                         >
@@ -147,19 +150,8 @@
             }
         });
 
-        const loginForm = document.querySelector('.login-form');
-        loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const usuario = document.getElementById('usuario').value;
-            const senha = document.getElementById('senha').value;
-            
-            if (usuario && senha) {
-                alert('Login realizado com sucesso!');
-            } else {
-                alert('Por favor, preencha todos os campos.');
-            }
-        });
+        // A LÓGICA DE SUBMISSÃO E ALERTA FOI REMOVIDA AQUI
+        // O FORMULÁRIO AGORA SERÁ ENVIADO DIRETAMENTE AO DJANGO.
     </script>
 </body>
 </html>

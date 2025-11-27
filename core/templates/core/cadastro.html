@@ -12,7 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -57,49 +57,40 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
-      
         <div class="user-area">
             <div class="notification-icon">🔔</div>
             <div class="profile-icon">👤</div>
         </div>
-    </div><br/><br/>
-            <h1 class="welcome-message">Bem vinda(o)!</h1>
-        <main class="main-content-container">
-            <div class="register-card">
-                <h2>Cadastre-se</h2>
-                <div class="input-field">
-                    <label>Nome completo:</label>
-                    <div class="gray-box"></div>
-                </div>
-                <div class="input-field">
-                    <label>Nome do perfil:</label>
-                    <div class="gray-box"></div>
-                </div>
-                <div class="input-field">
-                    <label>Email:</label>
-                    <div class="gray-box"></div>
-                </div>
-                <div class="input-field">
-                    <label>Data de nascimento:</label>
-                    <div class="gray-box"></div>
-                </div>
-                <div class="input-field">
-                    <label>Senha:</label>
-                    <div class="gray-box"></div>
-                </div>
-                <button class="create-account-button">Criar conta</button>
-            </div>
-        </main>
     </div>
+    
+    <br/><br/>
+    <h1 class="welcome-message">Bem vinda(o)!</h1>
+    
+    <main class="main-content-container">
+        <div class="register-card">
+            <h2>Cadastre-se</h2>
+            
+            <form method="post" action="{% url 'cadastro' %}">
+                {% csrf_token %} {{ form.as_p }} 
+                
+                <button type="submit" class="create-account-button">
+                    Criar conta
+                </button>
+            </form>
+            </div>
+    </main>
+    
 
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
+
+        // ... (Seu código de navegação lateral) ...
 
         menuToggle.addEventListener('click', function() {
             sidebar.classList.add('active');

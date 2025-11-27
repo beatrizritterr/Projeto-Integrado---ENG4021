@@ -6,7 +6,6 @@ urlpatterns = [
     # Mapeia a URL raiz da app para a função 'home' em views.py
     path('', views.home, name='home'),
     # Exemplo para a página de login
-    path('login/', views.login, name='login'),
     path('perfil/', views.perfil, name='perfil'),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
     path('comunidades/', views.comunidades, name='comunidades'),
