@@ -1,11 +1,22 @@
-# Create your views here.
-# Arquivo: core/views.py
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm
+from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
+from .forms import CustomUserCreationForm, AvaliacaoForm
+from django.contrib.auth.decorators import login_required
+
+User = get_user_model() 
+
 
 def home(request):
-    return render(request, 'core/index.html') 
+    if request.user.is_authenticated:
+        status_login = f"Bem-vindo(a), {request.user.username}!"
+    else:
+        status_login = "Você não está logado(a)."
+        
+    context = {'status_login': status_login}
+    return render(request, 'core/index.html', context)
 
 
 def perfil(request):
@@ -29,6 +40,7 @@ def filtropost(request):
 def provasantigas(request):
     return render(request, 'core/provasantigas.html')
 
+
 def cadastro(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -40,3 +52,53 @@ def cadastro(request):
         
     context = {'form': form}
     return render(request, 'core/cadastro.html', context)
+
+
+def password_reset_dev(request):
+    user_id = 1 
+    user = get_object_or_404(User, pk=user_id) 
+
+    uid = 'MQ' 
+    token = 'set-password' 
+
+
+    reset_url = reverse_lazy('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+    
+    return redirect(reset_url)
+
+def avaliacaoprof(request):
+    if request.method == 'POST':
+        form = AvaliacaoForm(request.POST)
+        
+        if form.is_valid():
+            avaliacao = form.save(commit=False)
+            
+            avaliacao.usuario = request.user 
+            
+            avaliacao.save()
+            
+            return redirect('avaliacaoprof')
+    else:
+        form = AvaliacaoForm()
+
+    context = {'form': form}
+    return render(request, 'core/avaliacaoprof.html', context)
+
+@login_required 
+def avaliacaoprof(request):
+    if request.method == 'POST':
+        form = AvaliacaoForm(request.POST)
+        
+        if form.is_valid():
+            avaliacao = form.save(commit=False)
+            
+            avaliacao.usuario = request.user 
+            
+            avaliacao.save()
+            
+            return redirect('avaliacaoprof')
+    else:
+        form = AvaliacaoForm()
+
+    context = {'form': form}
+    return render(request, 'core/avaliacaoprof.html', context)

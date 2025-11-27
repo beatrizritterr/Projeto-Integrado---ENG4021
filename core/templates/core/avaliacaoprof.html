@@ -12,7 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -57,7 +57,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
         <div class="search-input-desktop">
@@ -77,18 +77,8 @@
         <section class="avaliacao">
             <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
 
-            <form class="form-avaliacao">
-                <label for="disciplina">Disciplina:</label>
-                <input type="text" id="disciplina" name="disciplina" placeholder="Ex: Cálculo 2" required>
-
-                <label for="professor">Professor:</label>
-                <input type="text" id="professor" name="professor" placeholder="Ex: João da Silva" required>
-
-                <label for="nota">Nota (0 a 5):</label>
-                <input type="number" id="nota" name="nota" min="0" max="5" step="0.5" required>
-
-                <label for="comentario">Comentário:</label>
-                <textarea id="comentario" name="comentario" rows="5" placeholder="Compartilhe sua experiência..." required></textarea>
+            <form class="form-avaliacao" method="post" action="{% url 'avaliacaoprof' %}">
+                {% csrf_token %} {{ form.as_p }} 
 
                 <button type="submit" class="btn-enviar">Enviar Avaliação</button>
             </form>
@@ -96,7 +86,6 @@
 
         <section class="avaliacoes-recentes">
             <h2>Avaliações Recentes</h2>
-
             <div class="avaliacao-card">
                 <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
                 <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
@@ -112,6 +101,7 @@
     </div>
 
     <script>
+        // ... Seu código JavaScript de navegação lateral (sem a validação do formulário) ...
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -148,8 +138,6 @@
                 body.classList.remove('sidebar-open');
             }
         });
-
-
     </script>
 </body>
 </html>
