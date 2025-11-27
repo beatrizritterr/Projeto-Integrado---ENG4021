@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendário</title>
-    <link rel="stylesheet" href="estilo/estilo1.css">
+    <link rel="stylesheet" href="{% static 'css/estilo/estilo1.css' %}">
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -16,40 +17,40 @@
         </div>
         
         <nav class="sidebar-menu">
-            <a href="filtrobusca.html" class="menu-item">
+            <a href="{% url 'filtrobusca' %}" class="menu-item">
                 <span class="menu-icon">💬</span>
                 <span class="menu-text">Filtros</span>
             </a>
             
-            <a href="avaliacaoprof.html" class="menu-item ">
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
             
-            <a href="provasantigas.html" class="menu-item">
+            <a href="{% url 'provasantigas' %}" class="menu-item">
                 <span class="menu-icon">📚</span>
                 <span class="menu-text">Provas Antigas</span>
             </a>
-            <a href="index.html" class="menu-item active">
+            
+            <a href="{% url 'home' %}" class="menu-item ">
                 <span class="menu-icon">🗓️</span>
                 <span class="menu-text">Calendário</span>
             </a>
-            <a href="perfil.html" class="menu-item">
+            
+            <a href="{% url 'perfil' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
-
-            <a href="login.html" class="menu-item">
+        
+            <a href="{% url 'login' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Login</span>
             </a>
             
-            <a href="configuracoes.html" class="menu-item">
+            <a href="{% url 'configuracoes' %}" class="menu-item">
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
             </a>
-
-            
         </nav>
     </div>
 

@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidades - Vinculou</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/comunidades.css' %}">
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="{% url 'filtrobusca' %}" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span class="menu-text">Filtros</span>
+            </a>
+            
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-text">Avaliações</span>
+            </a>
+            
+            <a href="{% url 'provasantigas' %}" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span class="menu-text">Provas Antigas</span>
+            </a>
+            
+            <a href="{% url 'home' %}" class="menu-item ">
+                <span class="menu-icon">🗓️</span>
+                <span class="menu-text">Calendário</span>
+            </a>
+            
+            <a href="{% url 'perfil' %}" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Perfil</span>
+            </a>
+        
+            <a href="{% url 'login' %}" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Login</span>
+            </a>
+            
+            <a href="{% url 'configuracoes' %}" class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Configurações</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+        </div>
+        
+        <div class="search-input-desktop">
+            <div class="search-icon-desktop">🔍</div>
+            <input type="text" placeholder="Buscar...">
+        </div>
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <div class="principal">
+        <div class="comunidades-container">
+            <h1 class="titulo-principal">Comunidades</h1>
+            
+           <div class="search-bar-comunidades">
+                <div class="search-icon">🔍</div>
+                <input type="text" placeholder="Digite o nome da Comunidade...">
+            </div>
+
+            <div class="communities-grid">
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1903/1903162.png" alt="Divulgação Vagas STEM">
+                        <div class="community-info">
+                            <h3>Divulgação Vagas STEM</h3>
+                            <span>300 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2103/2103658.png" alt="IA">
+                        <div class="community-info">
+                            <h3>IA</h3>
+                            <span>80 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="ExpoArte">
+                        <div class="community-info">
+                            <h3>ExpoArte</h3>
+                            <span>65 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/943/943346.png" alt="SIENG">
+                        <div class="community-info">
+                            <h3>SIENG</h3>
+                            <span>30 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/890/890547.png" alt="Hackaton">
+                        <div class="community-info">
+                            <h3>Hackaton</h3>
+                            <span>120 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+
+                <div class="community-card">
+                    <div class="community-left">
+                        <img src="https://cdn-icons-png.flaticon.com/512/743/743007.png" alt="Caronas Zona Sul">
+                        <div class="community-info">
+                            <h3>Caronas Zona Sul</h3>
+                            <span>250 Integrantes</span>
+                        </div>
+                    </div>
+                    <button class="enter-btn"><span>Entrar</span></button>
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <button class="sugestoes-btn">➕ Sugestões</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            body.classList.add('sidebar-open');
+        });
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+        });
+    </script>
+</body>
+</html>

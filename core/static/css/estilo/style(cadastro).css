@@ -1,0 +1,360 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #F4F6F9;
+    min-height: 100vh;
+}
+
+/* Header - padrão consistente */
+.header-container {
+    background-color: #002D5B;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-area, .user-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#logo {
+    width: 50px;
+    height: 50px;
+}
+
+.menu-icon, .profile-icon, .notification-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.search-input-desktop {
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-input-desktop input {
+    width: 100%;
+    padding: 10px 15px 10px 45px; 
+    border: none;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333333;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-icon-desktop {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+/* Barra Lateral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: #002D5B;
+    color: #FFFFFF;
+    transition: left 0.3s ease;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: #FF8C00;
+}
+
+.menu-item.active {
+    background-color: rgba(255, 140, 0, 0.2);
+    border-left-color: #FF8C00;
+}
+
+.menu-icon {
+    margin-right: 15px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-text {
+    flex: 1;
+    font-size: 16px;
+}
+
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #FFFFFF;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.checkbox-custom.checked::after {
+    content: "✓";
+    color: #FF8C00;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Overlay quando sidebar está aberta */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}
+
+/* Ajuste do conteúdo quando sidebar está aberta */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* Header ajustado para incluir o menu hamburguer */
+.menu-icon.hamburger {
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    color: #FFFFFF;
+}
+
+.menu-icon.hamburger:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Layout específico do cadastro */
+.page-wrapper {
+    padding-top: 70px;
+}
+
+.header-container {
+    background-color: #002D5B;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-puc img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.welcome-message {
+    font-size: 28px;
+    font-weight: 300;
+    color: #002D5B;
+    text-align: center;
+}
+
+.logo-vinculou img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.main-content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 140px);
+}
+
+.register-card {
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.register-card h2 {
+    font-size: 24px;
+    font-weight: 300;
+    color: #002D5B;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.input-field {
+    margin-bottom: 25px;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #002D5B;
+    font-size: 16px;
+}
+
+.gray-box {
+    width: 100%;
+    height: 50px;
+    background-color: #F4F6F9;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.gray-box:focus {
+    outline: none;
+    border-color: #002D5B;
+    box-shadow: 0 0 0 3px rgba(0, 45, 91, 0.1);
+}
+
+.create-account-button {
+    width: 100%;
+    background-color: #002D5B;
+    color: #FFFFFF;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.create-account-button:hover {
+    background-color: #FF8C00;
+    transform: translateY(-2px);
+}
+
+.create-account-button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .search-input-desktop {
+        max-width: 100%;
+        order: 3;
+    }
+    
+    .page-wrapper {
+        padding-top: 120px;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .logo-puc img,
+    .logo-vinculou img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .welcome-message {
+        font-size: 24px;
+    }
+    
+    .main-content-container {
+        padding: 20px;
+    }
+    
+    .register-card {
+        padding: 30px 20px;
+    }
+    
+    .sidebar {
+        width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-card {
+        padding: 25px 15px;
+    }
+    
+    .input-field {
+        margin-bottom: 20px;
+    }
+    
+    .gray-box {
+        height: 45px;
+    }
+    
+    .create-account-button {
+        padding: 12px;
+    }
+}

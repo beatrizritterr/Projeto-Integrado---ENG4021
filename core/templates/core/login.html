@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filtro Buscar</title>
-    <link rel="stylesheet" href="estilo/estilo2.css">
+    <title>Vinculou - Login</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/login.css' %}">
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -16,86 +17,96 @@
         </div>
         
         <nav class="sidebar-menu">
-            <a href="filtrobusca.html" class="menu-item active">
+            <a href="{% url 'filtrobusca' %}" class="menu-item">
                 <span class="menu-icon">💬</span>
                 <span class="menu-text">Filtros</span>
             </a>
             
-            <a href="avaliacaoprof.html" class="menu-item ">
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
             
-            <a href="provasantigas.html" class="menu-item">
+            <a href="{% url 'provasantigas' %}" class="menu-item">
                 <span class="menu-icon">📚</span>
                 <span class="menu-text">Provas Antigas</span>
             </a>
-            <a href="index.html" class="menu-item ">
+            
+            <a href="{% url 'home' %}" class="menu-item ">
                 <span class="menu-icon">🗓️</span>
                 <span class="menu-text">Calendário</span>
             </a>
-            <a href="perfil.html" class="menu-item">
+            
+            <a href="{% url 'perfil' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
-
-            <a href="login.html" class="menu-item">
+        
+            <a href="{% url 'login' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Login</span>
             </a>
             
-            <a href="configuracoes.html" class="menu-item">
+            <a href="{% url 'configuracoes' %}" class="menu-item">
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
             </a>
         </nav>
     </div>
 
-    <div class="container">
-        <header class="header-container">
-            <div class="logo-area">
-                <div class="menu-icon hamburger" id="menuToggle">☰</div>
-                <img id="logo" src="img/image-removebg-preview.png">
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+        </div>
+      
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-content">
+            <div class="logo-section">
+                <img src="https://www.puc-rio.br/imagens/brasao_preto_vertical.svg" alt="PUC RIO" class="logo-puc">
             </div>
-            
-            <div class="user-area">
-                <img id="icone" src="img/image copy 2.png">
-                <img id="icone" src="img/image copy.png">
+
+            <div class="welcome-banner">
+                <h1>Bem-vindo ao Vinculou!</h1>
             </div>
-        </header>
 
-        <main class="principal">
-            <div class="caixa-filtros">
-                <h2 class="titulo-caixa">O que você deseja encontrar?</h2>
-                
-                <form class="filtros-busca">
-                    
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="postagens">
-                        <span class="checkbox-ativa"></span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Postagens
-                    </label>
-
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="comunidades">
-                        <span class="checkbox-ativa"></span>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comunidades
-                    </label>
-
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="pessoas">
-                        <span class="checkbox-ativa"></span>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pessoas
-                    </label>
-
-                    <div class="button-container">
-                        <button type="submit" class="enter-btn">
-                           ENTER
-                        </button>
+            <div class="login-form-container">
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="usuario">Usuário</label>
+                        <input 
+                            type="text" 
+                            id="usuario"
+                            class="login-input" 
+                            placeholder="Digite seu usuário"
+                            required
+                        >
                     </div>
+
+                    <div class="form-group">
+                        <label for="senha">Senha</label>
+                        <input 
+                            type="password" 
+                            id="senha"
+                            class="login-input" 
+                            placeholder="Digite sua senha"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        Entrar
+                    </button>
                 </form>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
@@ -133,6 +144,20 @@
                 sidebar.classList.remove('active');
                 sidebarOverlay.classList.remove('active');
                 body.classList.remove('sidebar-open');
+            }
+        });
+
+        const loginForm = document.querySelector('.login-form');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            
+            if (usuario && senha) {
+                alert('Login realizado com sucesso!');
+            } else {
+                alert('Por favor, preencha todos os campos.');
             }
         });
     </script>

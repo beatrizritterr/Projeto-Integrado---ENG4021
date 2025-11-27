@@ -1,10 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliação de Professores e Disciplinas - Vinculou</title>
-    <link rel="stylesheet" href="estilo/avaliacaoprof.css">
+    <title>Configurações</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/estilo4.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -16,35 +18,37 @@
         </div>
         
         <nav class="sidebar-menu">
-             <a href="filtrobusca.html" class="menu-item">
+            <a href="{% url 'filtrobusca' %}" class="menu-item">
                 <span class="menu-icon">💬</span>
                 <span class="menu-text">Filtros</span>
             </a>
             
-            <a href="avaliacaoprof.html" class="menu-item active">
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
             
-            <a href="provasantigas.html" class="menu-item">
+            <a href="{% url 'provasantigas' %}" class="menu-item">
                 <span class="menu-icon">📚</span>
                 <span class="menu-text">Provas Antigas</span>
             </a>
-            <a href="index.html" class="menu-item ">
+            
+            <a href="{% url 'home' %}" class="menu-item ">
                 <span class="menu-icon">🗓️</span>
                 <span class="menu-text">Calendário</span>
             </a>
-            <a href="perfil.html" class="menu-item">
+            
+            <a href="{% url 'perfil' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
-
-            <a href="login.html" class="menu-item">
+        
+            <a href="{% url 'login' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Login</span>
             </a>
             
-            <a href="configuracoes.html" class="menu-item">
+            <a href="{% url 'configuracoes' %}" class="menu-item">
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
             </a>
@@ -57,10 +61,6 @@
             <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
         </div>
         
-        <div class="search-input-desktop">
-            <div class="search-icon-desktop">🔍</div>
-            <input type="text" placeholder="Buscar...">
-        </div>
         
         <div class="user-area">
             <div class="notification-icon">🔔</div>
@@ -68,44 +68,53 @@
         </div>
     </div>
 
-    <div class="principal">
-        <h1 class="titulo-principal">Avaliação de Professores e Disciplinas</h1>
+    <div class="container">
+        
+       
 
-        <section class="avaliacao">
-            <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
+        <main class="config">
+            <h1 class="titulo">Configurações</h1>
+            
+            <div class="container-lista">
+                
+                <div class="caixa-categoria">
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Perfil</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Privacidade</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                </div>
 
-            <form class="form-avaliacao">
-                <label for="disciplina">Disciplina:</label>
-                <input type="text" id="disciplina" name="disciplina" placeholder="Ex: Cálculo 2" required>
+                <div class="caixa-categoria">
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Notificações</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                    <a href="#" class="itens highlight">
+                        <span class="item-titulo">Postagens e Interações</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Restrições e Bloqueados</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                </div>
 
-                <label for="professor">Professor:</label>
-                <input type="text" id="professor" name="professor" placeholder="Ex: João da Silva" required>
-
-                <label for="nota">Nota (0 a 5):</label>
-                <input type="number" id="nota" name="nota" min="0" max="5" step="0.5" required>
-
-                <label for="comentario">Comentário:</label>
-                <textarea id="comentario" name="comentario" rows="5" placeholder="Compartilhe sua experiência..." required></textarea>
-
-                <button type="submit" class="btn-enviar">Enviar Avaliação</button>
-            </form>
-        </section>
-
-        <section class="avaliacoes-recentes">
-            <h2>Avaliações Recentes</h2>
-
-            <div class="avaliacao-card">
-                <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
-                <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
-                <p>Professor muito didático e atencioso. As provas são justas, mas exigem bastante estudo!</p>
+                <div class="caixa-categoria">
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Ajuda</span>
+                        <img id="icone" src="img/image copy 10.png">
+                    </a>
+                    <a href="#" class="itens">
+                        <span class="item-titulo">Sair</span>
+                        <img id="icone" src="img/image copy 11.png">
+                    </a>
+                </div>
             </div>
-
-            <div class="avaliacao-card">
-                <h3>💻 Programação Orientada a Objetos — Profª. Maria Souza</h3>
-                <p><strong>Nota:</strong> ⭐⭐⭐⭐⭐ (5/5)</p>
-                <p>Excelente professora! Explica bem e disponibiliza materiais muito úteis.</p>
-            </div>
-        </section>
+        </main>
     </div>
 
     <script>
@@ -145,8 +154,6 @@
                 body.classList.remove('sidebar-open');
             }
         });
-
-
     </script>
 </body>
 </html>
