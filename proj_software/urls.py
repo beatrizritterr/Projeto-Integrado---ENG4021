@@ -17,11 +17,10 @@ Including another URLconf
 # Arquivo: proj_software/urls.py (ESTE JÁ EXISTE)
 
 from django.contrib import admin
-from django.urls import path, include  # IMPORTANTE: Adicione 'include'
+from django.urls import path, include 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Conecta o App 'core' à URL base do projeto ('' ou seja, http://127.0.0.1:8000/)
     path('', include('core.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

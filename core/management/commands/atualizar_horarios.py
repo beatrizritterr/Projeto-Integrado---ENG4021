@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
-from core.scraping.microhorario import run_microhorario_scraping_for_course # Importa a função de scraping
-from core.models import Professor, Disciplina, Curso # Para poder listar cursos, se quiser
+from core.scraping.microhorario import run_microhorario_scraping_for_course 
+from core.models import Professor, Disciplina, Curso 
 
 
 class Command(BaseCommand):
@@ -13,7 +13,6 @@ class Command(BaseCommand):
             help='A URL completa da página do MicroHorário para o curso específico a ser scrapeado.',
             required=True
         )
-        # Opcional: Adicionar um argumento para limpar o banco antes de scrapear
         parser.add_argument(
             '--clear-data',
             action='store_true',
@@ -37,7 +36,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE(f"Iniciando atualização de horários para a URL: {course_url}"))
 
         try:
-            run_microhorario_scraping_for_course(course_url) # Chama a função de scraping
+            run_microhorario_scraping_for_course(course_url)
             self.stdout.write(self.style.SUCCESS('Scraping concluído e banco de dados atualizado com sucesso!'))
         except Exception as e:
             raise CommandError(f"Ocorreu um erro durante o scraping: {e}")
