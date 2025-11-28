@@ -1,11 +1,8 @@
-
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Mapeia a URL raiz da app para a função 'home' em views.py
     path('', views.home, name='home'),
-    # Exemplo para a página de login
     path('perfil/', views.perfil, name='perfil'),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
     path('comunidades/', views.comunidades, name='comunidades'),
@@ -16,4 +13,12 @@ urlpatterns = [
     path('provasantigas/', views.provasantigas, name='provasantigas'),
     path('reset-dev/', views.password_reset_dev, name='password_reset_dev'),
     path('adicionar-evento/', views.adicionar_evento, name='adicionar_evento'),
+
+    # ROTAS DO FORMULÁRIO DE AVALIAÇÃO (devem estar DENTRO da lista)
+    path('avaliar-disciplina/', views.avaliar_disciplina, name='avaliar_disciplina'),
+    path('avaliar-disciplina/sucesso/', views.avaliacao_sucesso, name='avaliacao_sucesso'),
+
+    path('conta/editar/', views.editar_conta, name='editar_conta'),
+    path('conta/excluir/', views.excluir_conta, name='excluir_conta'),
+
 ]

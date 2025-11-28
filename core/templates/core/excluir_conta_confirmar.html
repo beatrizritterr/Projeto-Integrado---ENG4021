@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Excluir Conta - Vinculou</title>
+</head>
+<body>
+    <div class="principal">
+        <h1>Excluir Conta</h1>
+
+        <p>Tem certeza que deseja excluir sua conta, <strong>{{ usuario.username }}</strong>?</p>
+        <p>Essa ação não pode ser desfeita e também apagará suas avaliações e eventos.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" style="background-color: red; color: white;">Sim, excluir minha conta</button>
+        </form>
+
+        <a href="{% url 'perfil' %}">Cancelar</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Excluir Avaliação - Vinculou</title>
+</head>
+<body>
+    <h1>Excluir Avaliação</h1>
+
+    <p>Você tem certeza de que deseja excluir a avaliação de 
+       <strong>{{ avaliacao.disciplina.nome }}</strong> — Prof. {{ avaliacao.professor }}?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sim, excluir</button>
+        <a href="{% url 'avaliacaoprof' %}">Cancelar</a>
+    </form>
+</body>
+</html>
