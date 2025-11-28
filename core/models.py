@@ -27,3 +27,46 @@ class Avaliacao(models.Model):
 
     def __str__(self):
         return f'{self.disciplina.nome} ({self.professor}) - Nota: {self.nota}'
+    
+class ProvaAntiga(models.Model):
+    
+    disciplina = models.ForeignKey('Disciplina', on_delete=models.CASCADE)
+    
+    # Ex: '2025.1'
+    periodo_semestral = models.CharField(max_length=10) 
+    
+    data_upload = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'{self.disciplina.nome} - {self.periodo_semestral}'
+
+
+class ArquivoProva(models.Model):
+    """Representa o arquivo real (P1, P2, P3) que pode ser baixado."""
+    
+    prova_antiga = models.ForeignKey(ProvaAntiga, on_delete=models.CASCADE)
+    
+    tipo_prova = models.CharField(max_length=10) 
+    
+    arquivo = models.FileField(upload_to='provas/') 
+
+    def __str__(self):
+        return f'{self.prova_antiga.disciplina.nome} - {self.tipo_prova}'
+    
+
+class Evento(models.Model):
+    
+    # Usuário que criou o evento (se for um evento pessoal/de comunidade)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE) 
+    
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True, null=True)
+    
+    # O campo mais importante: a data e hora do evento
+    data_hora = models.DateTimeField() 
+    
+    # Cor/Categoria do evento (Ex: 'azul', 'laranja')
+    categoria = models.CharField(max_length=15, default='azul') 
+    
+    def __str__(self):
+        return f'{self.titulo} em {self.data_hora.strftime("%d/%m/%Y")}'

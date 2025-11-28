@@ -12,7 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -57,7 +57,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
        
@@ -73,46 +73,45 @@
         
         <div class="perfil-card">
             <div class="perfil-foto">
-                <img src="usuario.png" alt="Foto de perfil" onerror="this.style.display='none'; document.querySelector('.foto-placeholder').style.display='flex';">
+                <img src="{% static 'img/usuario.png' %}" alt="Foto de perfil" onerror="this.style.display='none'; document.querySelector('.foto-placeholder').style.display='flex';">
                 <div class="foto-placeholder" style="display: none;">👤</div>
             </div>
 
             <div class="perfil-info">
-                <h1>Maria Silva</h1>
-                <p><strong>Curso:</strong> Engenharia de Computação</p>
-                <p><strong>Período:</strong> 5º</p>
-                <p><strong>Email:</strong> maria.silva@aluno.puc-rio.br</p>
+                <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
+                <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
+
+                <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
+                <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
+                
+                <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
                 <p class="bio">
-                    Apaixonada por tecnologia e inovação. Adoro ajudar calouros e trocar experiências sobre as disciplinas de programação.
+                    {{ info_extra.bio }} 
                 </p>
                 <button class="editar-btn">Editar perfil</button>
             </div>
         </div>
 
         <div class="atividades-container">
-            <h2 class="atividades-titulo">Atividades Recentes</h2>
+            <h2 class="atividades-titulo">Atividades Recentes (Avaliações)</h2>
             
-            <div class="atividade-item">
-                <p class="atividade-texto">
-                    <strong>Você comentou</strong> na comunidade de Cálculo I: "Alguém tem a prova de 2023.1?"
-                </p>
-                <span class="atividade-tempo">Há 2 horas</span>
+            {% for atividade in atividades %}
+                <div class="atividade-item">
+                    <p class="atividade-texto">
+                        <strong>Você publicou</strong> uma avaliação sobre o(a) professor(a) **{{ atividade.professor }}** (Disciplina: {{ atividade.disciplina.nome }}).
+                        <br>
+                        Comentário: <em>"{{ atividade.comentario|truncatechars:50 }}"</em>
+                    </p>
+                    <span class="atividade-tempo">
+                        Postado em: {{ atividade.data_criacao|date:"d/m/Y, H:i" }}
+                    </span>
+                </div>
+            {% empty %}
+                <div class="atividade-item">
+                    <p>Nenhuma avaliação publicada recentemente.</p>
+                </div>
+            {% endfor %}
             </div>
-
-            <div class="atividade-item">
-                <p class="atividade-texto">
-                    <strong>Você publicou</strong> uma avaliação sobre o professor João Pereira (Banco de Dados).
-                </p>
-                <span class="atividade-tempo">Ontem</span>
-            </div>
-
-            <div class="atividade-item">
-                <p class="atividade-texto">
-                    <strong>Você entrou</strong> na comunidade "Engenharia de Computação - PUC-Rio".
-                </p>
-                <span class="atividade-tempo">2 dias atrás</span>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -157,7 +156,14 @@
             const fotoPerfil = document.querySelector('.perfil-foto img');
             const placeholder = document.querySelector('.foto-placeholder');
             
-            if (!fotoPerfil.src || fotoPerfil.src.includes('usuario.png')) {
+            // Lógica para mostrar placeholder se a imagem não carregar ou for a padrão
+            fotoPerfil.onerror = function() {
+                fotoPerfil.style.display = 'none';
+                placeholder.style.display = 'flex';
+            };
+
+            // Para garantir que o placeholder aparece se a URL for a padrão e o JS carregar primeiro
+            if (fotoPerfil.src.includes('usuario.png')) {
                 fotoPerfil.style.display = 'none';
                 placeholder.style.display = 'flex';
             }

@@ -168,12 +168,10 @@ body {
     display: block;
 }
 
-/* Ajuste do conteúdo quando sidebar está aberta */
 body.sidebar-open {
     overflow: hidden;
 }
 
-/* Header ajustado para incluir o menu hamburguer */
 .menu-icon.hamburger {
     font-size: 24px;
     cursor: pointer;
@@ -186,12 +184,13 @@ body.sidebar-open {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Container principal do calendário - COM ESPAÇAMENTO */
 .container {
-    display: flex;
+    display: flex; 
     width: 100%;
     min-height: 100vh;
-    padding-top: 15px; /* Mude para 10px ou 15px */
+    padding-top: 15px;
+    gap: 20px; 
+    padding-left: 20px; 
 }
 
 #log {

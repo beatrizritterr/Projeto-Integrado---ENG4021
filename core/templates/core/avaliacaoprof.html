@@ -78,7 +78,9 @@
             <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
 
             <form class="form-avaliacao" method="post" action="{% url 'avaliacaoprof' %}">
-                {% csrf_token %} {{ form.as_p }} 
+                {% csrf_token %} 
+                
+                {{ form.as_p }} 
 
                 <button type="submit" class="btn-enviar">Enviar Avaliação</button>
             </form>
@@ -86,18 +88,24 @@
 
         <section class="avaliacoes-recentes">
             <h2>Avaliações Recentes</h2>
-            <div class="avaliacao-card">
-                <h3>📘 Cálculo 2 — Prof. João da Silva</h3>
-                <p><strong>Nota:</strong> ⭐⭐⭐⭐☆ (4/5)</p>
-                <p>Professor muito didático e atencioso. As provas são justas, mas exigem bastante estudo!</p>
-            </div>
-
-            <div class="avaliacao-card">
-                <h3>💻 Programação Orientada a Objetos — Profª. Maria Souza</h3>
-                <p><strong>Nota:</strong> ⭐⭐⭐⭐⭐ (5/5)</p>
-                <p>Excelente professora! Explica bem e disponibiliza materiais muito úteis.</p>
-            </div>
-        </section>
+            
+            {% if avaliacoes %}
+                {% for avaliacao in avaliacoes %}
+                    <div class="avaliacao-card">
+                        <h3>
+                            📘 {{ avaliacao.disciplina.nome }} — Prof. {{ avaliacao.professor }}
+                        </h3>
+                        <p><strong>Nota:</strong> {{ avaliacao.nota }}/5</p> 
+                        <p>{{ avaliacao.comentario }}</p>
+                        <p class="meta-info">
+                            Postado por: {{ avaliacao.usuario.username }} em {{ avaliacao.data_criacao|date:"d/m/Y" }}
+                        </p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Nenhuma avaliação encontrada. Seja o primeiro a postar!</p>
+            {% endif %}
+            </section>
     </div>
 
     <script>
