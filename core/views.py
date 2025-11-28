@@ -5,6 +5,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, AvaliacaoForm
 from django.contrib.auth.decorators import login_required
+from .models import Avaliacao, Disciplina, Professor, Curso
+from django.db.models import Prefetch
+
 
 User = get_user_model() 
 
@@ -66,39 +69,28 @@ def password_reset_dev(request):
     
     return redirect(reset_url)
 
+@login_required
 def avaliacaoprof(request):
     if request.method == 'POST':
         form = AvaliacaoForm(request.POST)
-        
         if form.is_valid():
             avaliacao = form.save(commit=False)
-            
             avaliacao.usuario = request.user 
-            
             avaliacao.save()
-            
             return redirect('avaliacaoprof')
     else:
-        form = AvaliacaoForm()
+        form = AvaliacaoForm() 
 
-    context = {'form': form}
-    return render(request, 'core/avaliacaoprof.html', context)
+   
+    cursos_data = Curso.objects.prefetch_related(
+        Prefetch('disciplinas', queryset=Disciplina.objects.prefetch_related('professores'))
+    ).all().order_by('nome')
 
-@login_required 
-def avaliacaoprof(request):
-    if request.method == 'POST':
-        form = AvaliacaoForm(request.POST)
-        
-        if form.is_valid():
-            avaliacao = form.save(commit=False)
-            
-            avaliacao.usuario = request.user 
-            
-            avaliacao.save()
-            
-            return redirect('avaliacaoprof')
-    else:
-        form = AvaliacaoForm()
+    todos_professores_data = Professor.objects.all().order_by('nome')
 
-    context = {'form': form}
+    context = {
+        'form': form,
+        'cursos': cursos_data,
+        'todos_professores': todos_professores_data,
+    }
     return render(request, 'core/avaliacaoprof.html', context)
