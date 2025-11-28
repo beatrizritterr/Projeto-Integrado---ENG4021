@@ -73,57 +73,50 @@
         
         <div class="filtros-container">
             <div class="filtro-item">
-                <label for="curso">Escolha o curso:</label>
-                <select id="curso" class="filtro-select">
-                    <option value="">Selecione um curso</option>
-                    <option value="engenharia">Engenharia</option>
-                    <option value="medicina">Medicina</option>
-                    <option value="direito">Direito</option>
-                    <option value="administracao">Administração</option>
-                </select>
+                <label for="disciplina">Escolha a disciplina:</label>
+                <select id="disciplina" class="filtro-select">
+                <option value="">Selecione uma disciplina</option>
+                {% for disc in disciplinas %}
+                <option value="{{ disc.id }}">{{ disc.nome }} ({{ disc.codigo }})</option>
+                {% endfor %}
+                 </select>
             </div>
             
             <div class="filtro-item">
-                <label for="disciplina">Escolha a disciplina:</label>
-                <select id="disciplina" class="filtro-select">
-                    <option value="">Selecione uma disciplina</option>
-                    <option value="matematica">Matemática</option>
-                    <option value="fisica">Física</option>
-                    <option value="quimica">Química</option>
-                    <option value="programacao">Programação</option>
-                </select>
-            </div>
+    <label for="disciplina">Escolha a disciplina:</label>
+    <select id="disciplina" class="filtro-select">
+        <option value="">Selecione uma disciplina</option>
+        {% for disc in disciplinas %}
+            <option value="{{ disc.id }}">{{ disc.nome }} ({{ disc.codigo }})</option>
+        {% endfor %}
+    </select>
+</div>
         </div>
         
-        <div class="resultados-container">
-            <div class="periodo-grid">
-                <div class="periodo-item">
-                    <h3 class="periodo-titulo">2025.1</h3>
-                    <ul class="prova-lista">
-                        <li class="prova-item">
-                            <a href="#" class="prova-link">
-                                <img class="img-download" src="https://www.pngkey.com/png/full/11-115335_download-icon-png-downloading-icon.png" alt="download-prova">
-                                P1
-                            </a>
-                        </li>
-                        <li class="prova-item">
-                            <a href="#" class="prova-link">
-                                <img class="img-download" src="https://www.pngkey.com/png/full/11-115335_download-icon-png-downloading-icon.png" alt="download-prova">
-                                P2
-                            </a>
-                        </li>
-                        <li class="prova-item">
-                            <a href="#" class="prova-link">
-                                <img class="img-download" src="https://www.pngkey.com/png/full/11-115335_download-icon-png-downloading-icon.png" alt="download-prova">
-                                P3
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+       <div class="resultados-container">
+    <div class="periodo-grid">
+        
+        {% for prova_periodo in provas_antigas %}
+            <div class="periodo-item">
+                <h3 class="periodo-titulo">{{ prova_periodo.disciplina.nome }} - {{ prova_periodo.periodo_semestral }}</h3>
                 
+                <ul class="prova-lista">
+                    {% for arquivo in prova_periodo.arquivo_set.all %}
+                        <li class="prova-item">
+                            <a href="{{ arquivo.arquivo.url }}" class="prova-link">
+                                <img class="img-download" src="{% static 'img/download-icon.png' %}" alt="download-prova">
+                                {{ arquivo.tipo_prova }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
-        </div>
+        {% empty %}
+            <p>Nenhuma prova antiga encontrada. Adicione provas via painel de administração.</p>
+        {% endfor %}
+        
     </div>
+</div>
 
     <script>
         const menuToggle = document.getElementById('menuToggle');

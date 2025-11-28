@@ -15,5 +15,5 @@ urlpatterns = [
     path('filtropost/', views.filtropost, name='filtropost'),
     path('provasantigas/', views.provasantigas, name='provasantigas'),
     path('reset-dev/', views.password_reset_dev, name='password_reset_dev'),
-
+    path('adicionar-evento/', views.adicionar_evento, name='adicionar_evento'),
 ]
