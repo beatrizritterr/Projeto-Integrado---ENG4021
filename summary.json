@@ -1,0 +1,17 @@
+{
+  "models_added": "core/models_suggested.py",
+  "base_template": "core/templates/base.html",
+  "html_updated_count": 10,
+  "sample_updated_files": [
+    "templates/core/avaliacaoprof.html",
+    "templates/core/cadastro.html",
+    "templates/core/comunidades.html",
+    "templates/core/configuracoes.html",
+    "templates/core/filtrobusca.html",
+    "templates/core/filtropost.html",
+    "templates/core/index.html",
+    "templates/core/perfil.html",
+    "templates/core/provasantigas.html",
+    "templates/registration/login.html"
+  ]
+}
