@@ -100,6 +100,12 @@
                         <p class="meta-info">
                             Postado por: {{ avaliacao.usuario.username }} em {{ avaliacao.data_criacao|date:"d/m/Y" }}
                         </p>
+                        {% if avaliacao.usuario == request.user %}
+                            <div class="acoes">
+                                <a href="{% url 'editar_avaliacao' avaliacao.id %}">Editar</a>
+                                <a href="{% url 'excluir_avaliacao' avaliacao.id %}">Excluir</a>
+                            </div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% else %}

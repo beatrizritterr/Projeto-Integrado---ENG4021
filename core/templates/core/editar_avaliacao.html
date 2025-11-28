@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Avaliação - Vinculou</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/avaliacaoprof.css' %}">
+</head>
+<body>
+
+    <!-- AQUI ENTRA SUA SIDEBAR (copiada do avaliacaoprof.html) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="{% static 'img/image-removebg-preview.png' %}" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="{% url 'filtrobusca' %}" class="menu-item"><span class="menu-icon">💬</span>Filtros</a>
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active"><span class="menu-icon">⭐</span>Avaliações</a>
+            <a href="{% url 'provasantigas' %}" class="menu-item"><span class="menu-icon">📚</span>Provas Antigas</a>
+            <a href="{% url 'home' %}" class="menu-item"><span class="menu-icon">🗓️</span>Calendário</a>
+            <a href="{% url 'perfil' %}" class="menu-item"><span class="menu-icon">👤</span>Perfil</a>
+        </nav>
+    </div>
+
+    <!-- HEADER DESKTOP -->
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}">
+        </div>
+
+        <div class="search-input-desktop">
+            <div class="search-icon-desktop">🔍</div>
+            <input type="text" placeholder="Buscar...">
+        </div>
+
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <!-- AGORA COMEÇA A PARTE ESPECÍFICA DA PÁGINA -->
+    <div class="principal">
+        <h1>Editar Avaliação</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-enviar">Salvar alterações</button>
+        </form>
+
+        <a href="{% url 'avaliacaoprof' %}" class="btn-voltar">Cancelar</a>
+    </div>
+
+    <!-- COPIE TAMBÉM O MESMO SCRIPT JS DO FINAL -->
+    <script>
+        // mesmo script copiado do avaliacaoprof.html
+    </script>
+
+</body>
+</html>

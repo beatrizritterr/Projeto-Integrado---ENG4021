@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Conta - Vinculou</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/avaliacaoprof.css' %}">
+</head>
+<body>
+    <div class="principal">
+        <h1>Editar Conta</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn-enviar">Salvar alterações</button>
+        </form>
+
+        <a href="{% url 'perfil' %}" class="btn-voltar">Cancelar</a>
+    </div>
+</body>
+</html>
