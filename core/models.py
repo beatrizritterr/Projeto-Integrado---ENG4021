@@ -26,3 +26,26 @@ class Avaliacao(models.Model):
     def __str__(self):
 
         return f'{self.disciplina} ({self.professor}) - Nota: {self.nota}'
+
+
+class Professor(models.Model):
+    nome = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.nome
+
+class Disciplina(models.Model):
+    nome = models.CharField(max_length=200) 
+    codigo = models.CharField(max_length=20, unique=True) 
+    
+    professores = models.ManyToManyField(Professor, related_name='disciplinas')
+
+    def __str__(self):
+        return f"{self.codigo} - {self.nome}"
+
+class Curso(models.Model):
+    nome = models.CharField(max_length=200, unique=True)
+    disciplinas = models.ManyToManyField(Disciplina, related_name='cursos', blank=True)
+
+    def __str__(self):
+        return self.nome

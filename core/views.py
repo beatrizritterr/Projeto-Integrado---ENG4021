@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, AvaliacaoForm
 from django.contrib.auth.decorators import login_required
+from .models import Professor, Disciplina, Curso
+from django.db.models import Prefetch
 
 User = get_user_model() 
 
@@ -66,39 +68,49 @@ def password_reset_dev(request):
     
     return redirect(reset_url)
 
+@login_required
 def avaliacaoprof(request):
+    """
+    View para exibir a lista de professores/disciplinas para avaliação
+    E TAMBÉM processar o formulário de nova avaliação.
+    """
+
+    # --- PARTE 1: Lógica para SALVAR uma nova avaliação (Método POST) ---
     if request.method == 'POST':
         form = AvaliacaoForm(request.POST)
         
         if form.is_valid():
             avaliacao = form.save(commit=False)
-            
             avaliacao.usuario = request.user 
-            
             avaliacao.save()
             
+            # Opcional: Adicionar uma mensagem de sucesso aqui (usando django.contrib.messages)
+            
+            # Redireciona para a mesma página para limpar o formulário e mostrar os dados atualizados
             return redirect('avaliacaoprof')
+            
+    # --- PARTE 2: Lógica para exibir a página (Método GET ou se o formulário for inválido) ---
     else:
+        # Se for GET, cria um formulário em branco
         form = AvaliacaoForm()
 
-    context = {'form': form}
-    return render(request, 'core/avaliacaoprof.html', context)
+    # --- PARTE 3: Buscar os dados do banco de dados para exibir na tela ---
+    # Isso roda tanto no GET quanto se o POST falhar na validação, 
+    # garantindo que a lista de professores sempre apareça.
 
-@login_required 
-def avaliacaoprof(request):
-    if request.method == 'POST':
-        form = AvaliacaoForm(request.POST)
-        
-        if form.is_valid():
-            avaliacao = form.save(commit=False)
-            
-            avaliacao.usuario = request.user 
-            
-            avaliacao.save()
-            
-            return redirect('avaliacaoprof')
-    else:
-        form = AvaliacaoForm()
+    # Busca os cursos, pré-carregando disciplinas e seus professores para otimizar
+    cursos_data = Curso.objects.prefetch_related(
+        Prefetch('disciplinas', queryset=Disciplina.objects.prefetch_related('professores'))
+    ).all().order_by('nome')
 
-    context = {'form': form}
+    # Busca todos os professores para a lista de referência no final da página
+    todos_professores_data = Professor.objects.all().order_by('nome')
+
+    # --- PARTE 4: Montar o contexto e renderizar ---
+    context = {
+        'form': form,                         # O formulário (em branco ou com erros de validação)
+        'cursos': cursos_data,                # Os dados scrapeados dos cursos
+        'todos_professores': todos_professores_data, # Lista geral de professores
+    }
+
     return render(request, 'core/avaliacaoprof.html', context)
