@@ -5,7 +5,19 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Professor(models.Model):
+    nome = models.CharField(max_length=200, unique=True)
 
+    def __str__(self):
+        return self.nome
+
+class Departamento(models.Model):
+    nome = models.CharField(max_length=200, unique=True)
+    professores = models.ManyToManyField(Professor, related_name='departamentos', blank=True)
+
+    def __str__(self):
+        return self.nome
+    
 class Disciplina(models.Model):
     nome = models.CharField(max_length=100, unique=True)
     codigo = models.CharField(max_length=10, unique=True, blank=True, null=True)
@@ -32,7 +44,6 @@ class ProvaAntiga(models.Model):
     
     disciplina = models.ForeignKey('Disciplina', on_delete=models.CASCADE)
     
-    # Ex: '2025.1'
     periodo_semestral = models.CharField(max_length=10) 
     
     data_upload = models.DateTimeField(auto_now_add=True)
@@ -56,16 +67,13 @@ class ArquivoProva(models.Model):
 
 class Evento(models.Model):
     
-    # Usuário que criou o evento (se for um evento pessoal/de comunidade)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE) 
     
     titulo = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
     
-    # O campo mais importante: a data e hora do evento
     data_hora = models.DateTimeField() 
     
-    # Cor/Categoria do evento (Ex: 'azul', 'laranja')
     categoria = models.CharField(max_length=15, default='azul') 
     
     def __str__(self):
