@@ -10,7 +10,111 @@ body {
     min-height: 100vh;
 }
 
-/* Header - padrão consistente */
+
+.titulomes {
+    color: #333; 
+    font-size: 1.8em;
+    font-weight: 600;
+    margin-right: 20px;
+}
+
+
+.grid-calendario {
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 1px; 
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    box-sizing: border-box; 
+    margin-top: 20px;
+}
+
+.grid-calendario .dia {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 5px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    min-height: 30px; 
+    color: #555; 
+}
+
+
+.calendario-dia,
+.calendario-dia-hoje,
+.mes-passado {
+    background-color: #ffffff;
+    padding: 5px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    
+    min-height: 100px; 
+    
+    display: flex;
+    flex-direction: column;
+    
+    color: #333; 
+    font-size: 1.1em;
+    line-height: 1.2;
+}
+
+.calendario-dia-hoje {
+    background-color: #fff9e6; 
+    border: 2px solid #ffaa00;
+}
+
+.mes-passado {
+    background-color: #f7f7f7;
+    color: #b0b0b0; 
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 180%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    z-index: 1000; 
+    display: none; 
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.modal-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1001; 
+    max-width: 450px;
+    width: 90%;
+    visibility: hidden; 
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s, transform 0.3s;
+}
+
+.modal.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%); 
+}
+
+.modal-open {
+    overflow: hidden; 
+}
 .header-container {
     background-color: #002D5B;
     color: #FFFFFF;

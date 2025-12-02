@@ -3,7 +3,11 @@
 from django import template
 register = template.Library()
 
-@register.filter
+
+@register.filter(name='get_item')
 def get_item(dictionary, key):
-    """Permite acessar o valor de um dicionário por chave no template."""
+    """
+    Acessa um item de um dicionário. Ex: {{ meu_dicionario|get_item:chave }}
+    """
     return dictionary.get(key)
+

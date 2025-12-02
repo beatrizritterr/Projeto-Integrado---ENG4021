@@ -1,3 +1,4 @@
+{% load custom_filters %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt">
@@ -12,7 +13,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -21,32 +22,26 @@
                 <span class="menu-icon">💬</span>
                 <span class="menu-text">Filtros</span>
             </a>
-            
-            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
-            
             <a href="{% url 'provasantigas' %}" class="menu-item">
                 <span class="menu-icon">📚</span>
                 <span class="menu-text">Provas Antigas</span>
             </a>
-            
-            <a href="{% url 'home' %}" class="menu-item ">
+            <a href="{% url 'home' %}" class="menu-item active"> 
                 <span class="menu-icon">🗓️</span>
                 <span class="menu-text">Calendário</span>
             </a>
-            
             <a href="{% url 'perfil' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
-        
             <a href="{% url 'login' %}" class="menu-item">
-                <span class="menu-icon">👤</span>
+                <span class="menu-icon">🔑</span>
                 <span class="menu-text">Login</span>
             </a>
-            
             <a href="{% url 'configuracoes' %}" class="menu-item">
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
@@ -57,7 +52,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
         <div class="user-area">
@@ -71,27 +66,28 @@
         <aside class="barra-lado">
             <br/><h2 class="titulo-logo">Agenda VinculaPuc</h2>
             <div class="inf-perfil">
-                <img id="log" src="img/image copy.png">
-                <p>Olá, Usuário!</p>
+                <img id="log" src="{% static 'img/image copy.png' %}"> 
+                <p>Olá, {{ usuario.username|default:"Usuário" }}!</p>
             </div>
-            <button class="add-evento-btn">
-                 Adicionar Novo Evento
+            
+            <button class="add-evento-btn" onclick="openModalForAdd()">
+                Adicionar Novo Evento
             </button>
+            
             <nav class="side-menu">
-                <a href="#" class="menuitemat">Mês</a>
-                <a href="#" class="menuitem"> Agenda</a>
-                <a href="#" class="menuitem"> Relatórios</a>
                 <a href="#" class="menuitem"> Configurações</a>
             </nav>
         </aside>
 
         <main class="principal">
             <header class="header-principal">
-                <h1 class="titulomes">Outubro 2025</h1>
+                <h1 class="titulomes">{{ mes_ano }}</h1>
+                
                 <div class="header-a">
-                    <button class="nav-button"><</button>
-                    <button class="nav-button">Hoje</button>
-                    <button class="nav-button">></button>
+                    <a href="{% url 'home' %}{{ prev_url }}" class="nav-button">&lt;</a>
+                    <a href="{% url 'home' %}?year={{ ano_atual }}&month={{ mes_atual }}" class="nav-button">Hoje</a>
+                    <a href="{% url 'home' %}{{ next_url }}" class="nav-button">&gt;</a>
+                    
                     <div class="barrapesquisa">
                         <input type="text" placeholder="Buscar eventos...">
                     </div>
@@ -107,63 +103,82 @@
                 <div class="dia">Sexta</div>
                 <div class="dia">Sábado</div>
 
-                <div class="mes-passado">28</div>
-                <div class="mes-passado">29</div>
-                <div class="mes-passado">30</div>
-                
-                <div class="calendario-dia">1
-                    <div class="evento-item azul">Evento Robótica</div>
-                </div>
-                <div class="calendario-dia">2</div>
-                <div class="calendario-dia">3
-                    <div class="evento-item laranja">Palestra UX</div>
-                    <div class="evento-item laranja">Palestra Design</div>
-                </div>
-                <div class="calendario-dia">4</div>
-
-                <div class="calendario-dia">5</div>
-                <div class="calendario-dia">6</div>
-                <div class="calendario-dia">7</div>
-                <div class="calendario-dia">8</div>
-                <div class="calendario-dia">9
-                    <div class="evento-item laranja">Roda Conversa</div>
-                </div>
-                <div class="calendario-dia">10
-                    <div class="evento-item azul">Workshop</div>
-                </div>
-                <div class="calendario-dia">11</div>
-                
-                <div class="calendario-dia">12</div>
-                <div class="calendario-dia-hoje">13
-                     <div class="evento-item laranja">HOJE - Reunião</div>
-                </div>
-                <div class="calendario-dia">14</div>
-                <div class="calendario-dia">15
-                    <div class="evento-item azul">Palestra</div>
-                </div>
-                <div class="calendario-dia">16</div>
-                <div class="calendario-dia">17
-                    <div class="evento-item laranja">Evento Eng</div>
-                </div>
-                <div class="calendario-dia">18</div>
-
-                <div class="calendario-dia">19</div>
-                <div class="calendario-dia">20</div>
-                <div class="calendario-dia">21</div>
-                <div class="calendario-dia">22</div>
-                <div class="calendario-dia">23</div>
-                <div class="calendario-dia">24</div>
-                <div class="calendario-dia">25</div>
-
-                <div class="calendario-dia">26</div>
-                <div class="calendario-dia">27</div>
-                <div class="calendario-dia">28</div>
-                <div class="calendario-dia">29</div>
-                <div class="calendario-dia">30</div>
-                <div class="calendario-dia">31</div>
-                <div class="mes-prox">1</div>
+                {% for week in month_weeks %}
+                    {% for day, weekday in week %}
+                        
+                        {% if day == 0 %}
+                            <div class="mes-passado"></div>
+                        {% else %}
+                            
+                            {% if day == hoje and mes_sendo_renderizado == mes_atual and ano_atual == ano_atual %}
+                                <div class="calendario-dia-hoje">
+                            {% else %}
+                                <div class="calendario-dia">
+                            {% endif %}
+                                
+                            {{ day }}
+                            
+                            {% with eventos_do_dia=eventos_por_dia|get_item:day %}
+                                {% for evento in eventos_do_dia %}
+                                    <div class="evento-item {{ evento.categoria }}"
+                                        data-event-id="{{ evento.id }}" 
+                                        data-titulo="{{ evento.titulo }}" 
+                                        data-data-hora="{{ evento.data_hora|date:'Y-m-d\TH:i' }}" 
+                                        data-categoria="{{ evento.categoria }}" 
+                                        data-descricao="{{ evento.descricao|default:'' }}">
+                                        
+                                        {{ evento.titulo }} 
+                                        
+                                        <a href="#" onclick="event.preventDefault(); openModalForEdit('{{ evento.id }}')" title="Editar Evento">✏️</a>
+                                        <a href="#" onclick="event.preventDefault(); deleteEvent('{{ evento.id }}')" title="Excluir Evento">❌</a>
+                                    </div>
+                                {% endfor %}
+                            {% endwith %}
+                            
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
             </div>
+            
         </main>
+    </div>
+
+    <div class="modal-overlay" id="eventModalOverlay"></div>
+    <div class="modal" id="eventModal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Adicionar Novo Evento</h3>
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form id="eventoForm" method="post" action="{% url 'adicionar_evento' %}">
+                {% csrf_token %}
+                
+                <input type="hidden" name="event_id" id="event_id">
+
+                <div class="form-group">
+                    <label for="id_titulo">Título</label>
+                    {{ evento_form.titulo }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_data_hora">Data e Hora</label>
+                    {{ evento_form.data_hora }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_categoria">Cor/Categoria</label>
+                    {{ evento_form.categoria }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_descricao">Descrição</label>
+                    {{ evento_form.descricao }}
+                </div>
+
+                <button type="submit" class="btn-primary" id="submitBtn">Adicionar</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -171,6 +186,70 @@
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
+        
+
+        const modal = document.getElementById('eventModal');
+        const modalOverlay = document.getElementById('eventModalOverlay');
+        const form = document.getElementById('eventoForm');
+        const modalTitle = document.getElementById('modalTitle');
+        const submitBtn = document.getElementById('submitBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            modalOverlay.classList.add('active');
+            body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            modalOverlay.classList.remove('active');
+            body.classList.remove('modal-open');
+            form.reset();
+            form.action = "{% url 'adicionar_evento' %}";
+            document.getElementById('event_id').value = ''; 
+            modalTitle.textContent = "Adicionar Novo Evento";
+            submitBtn.textContent = "Adicionar";
+        }
+
+        function openModalForAdd() {
+            closeModal();
+            openModal();
+        }
+
+        function openModalForEdit(eventId) {
+            const eventElement = document.querySelector(`[data-event-id="${eventId}"]`);
+            if (!eventElement) return;
+
+            document.getElementById('id_titulo').value = eventElement.dataset.titulo;
+            document.getElementById('id_data_hora').value = eventElement.dataset.dataHora;
+            document.getElementById('id_categoria').value = eventElement.dataset.categoria;
+            document.getElementById('id_descricao').value = eventElement.dataset.descricao; 
+
+            form.action = "{% url 'editar_evento' 0 %}".replace('/0/', '/' + eventId + '/');
+            
+            modalTitle.textContent = "Editar Evento";
+            submitBtn.textContent = "Salvar Alterações";
+
+            openModal();
+        }
+
+        function deleteEvent(eventId) {
+            if (confirm("Você tem certeza que deseja excluir este evento?")) {
+                const tempForm = document.createElement('form');
+                tempForm.method = 'POST';
+                tempForm.action = "{% url 'excluir_evento' 0 %}".replace('/0/', '/' + eventId + '/');
+                
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = 'csrfmiddlewaretoken';
+                csrfInput.value = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+                
+                tempForm.appendChild(csrfInput);
+                document.body.appendChild(tempForm);
+                
+                tempForm.submit();
+            }
+        }
 
         menuToggle.addEventListener('click', function() {
             sidebar.classList.add('active');
@@ -183,8 +262,8 @@
             sidebarOverlay.classList.remove('active');
             body.classList.remove('sidebar-open');
         });
-
-        const menuItems = document.querySelectorAll('.menu-item');
+        
+        const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
         menuItems.forEach(item => {
             item.addEventListener('click', function() {
                 menuItems.forEach(i => i.classList.remove('active'));
@@ -198,29 +277,15 @@
 
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
+                closeModal(); 
                 sidebar.classList.remove('active');
                 sidebarOverlay.classList.remove('active');
                 body.classList.remove('sidebar-open');
             }
         });
 
-        const addEventoBtn = document.querySelector('.add-evento-btn');
-        addEventoBtn.addEventListener('click', function() {
-            alert('Funcionalidade: Adicionar Novo Evento');
-        });
-
-        const navButtons = document.querySelectorAll('.nav-button');
-        navButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (this.textContent === 'Hoje') {
-                    alert('Navegando para o mês atual');
-                } else if (this.textContent === '<') {
-                    alert('Navegando para o mês anterior');
-                } else if (this.textContent === '>') {
-                    alert('Navegando para o próximo mês');
-                }
-            });
-        });
+        modalOverlay.addEventListener('click', closeModal);
+        
     </script>
 </body>
 </html>
