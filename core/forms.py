@@ -18,8 +18,7 @@ class EventoForm(forms.ModelForm):
         widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         label="Data e Hora do Evento"
     )
-
-class Meta:
+    class Meta:
         model = Evento
         # Não incluímos 'usuario' aqui, pois ele será adicionado na View
         fields = ['titulo', 'data_hora', 'categoria', 'descricao'] 

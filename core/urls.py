@@ -15,5 +15,7 @@ urlpatterns = [
     path('filtropost/', views.filtropost, name='filtropost'),
     path('provasantigas/', views.provasantigas, name='provasantigas'),
     path('reset-dev/', views.password_reset_dev, name='password_reset_dev'),
-    path('adicionar-evento/', views.adicionar_evento, name='adicionar_evento'),
+    path('evento/adicionar/', views.adicionar_evento, name='adicionar_evento'),
+    path('evento/editar/<int:event_id>/', views.editar_evento, name='editar_evento'),
+    path('evento/excluir/<int:event_id>/', views.excluir_evento, name='excluir_evento'),
 ]
