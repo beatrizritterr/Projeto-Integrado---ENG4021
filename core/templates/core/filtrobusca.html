@@ -12,8 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
-            <div class="sidebar-title">Vinculou</div>
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">            <div class="sidebar-title">Vinculou</div>
         </div>
         
         <nav class="sidebar-menu">
@@ -58,12 +57,12 @@
         <header class="header-container">
             <div class="logo-area">
                 <div class="menu-icon hamburger" id="menuToggle">☰</div>
-                <img id="logo" src="img/image-removebg-preview.png">
+                <img id="logo" src="{% static 'img/image-removebg-preview.png' %}">
             </div>
             
             <div class="user-area">
-                <img id="icone" src="img/image copy 2.png">
-                <img id="icone" src="img/image copy.png">
+                <img id="icone" src="{% static 'img/image copy 2.png' %}">
+                <img id="icone" src="{% static 'img/image copy.png' %}">
             </div>
         </header>
 
@@ -71,32 +70,32 @@
             <div class="caixa-filtros">
                 <h2 class="titulo-caixa">O que você deseja encontrar?</h2>
                 
-                <form class="filtros-busca">
+                <form class="filtros-busca" id="formFiltros">
                     
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="postagens">
-                        <span class="checkbox-ativa"></span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Postagens
-                    </label>
+    <label class="radio-container">
+        <input type="radio" name="filtro_unico" value="postagens" checked>
+        <span class="radio-ativa"></span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Postagens
+    </label>
 
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="comunidades">
-                        <span class="checkbox-ativa"></span>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comunidades
-                    </label>
+    <label class="radio-container">
+        <input type="radio" name="filtro_unico" value="comunidades">
+        <span class="radio-ativa"></span>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Comunidades
+    </label>
 
-                    <label class="checkbox-container">
-                        <input type="checkbox" name="filter" value="pessoas">
-                        <span class="checkbox-ativa"></span>
-                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pessoas
-                    </label>
+    <label class="radio-container">
+        <input type="radio" name="filtro_unico" value="pessoas">
+        <span class="radio-ativa"></span>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pessoas
+    </label>
 
-                    <div class="button-container">
-                        <button type="submit" class="enter-btn">
-                           ENTER
-                        </button>
-                    </div>
-                </form>
+    <div class="button-container">
+        <button type="submit" class="enter-btn">
+           ENTER
+        </button>
+    </div>
+</form>
             </div>
         </main>
     </div>
@@ -137,6 +136,34 @@
                 sidebarOverlay.classList.remove('active');
                 body.classList.remove('sidebar-open');
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('formFiltros');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const filtroSelecionado = document.querySelector('input[name="filtro_unico"]:checked').value;
+                
+                let urlDestino = '';
+
+                switch (filtroSelecionado) {
+                    case 'postagens':
+                        urlDestino = "{% url 'filtropost' %}"; 
+                        break;
+                    case 'comunidades':
+                        urlDestino = "{% url 'comunidades' %}";
+                        break;
+                    case 'pessoas':
+                        urlDestino = "{% url 'perfil' %}"; 
+                        break;
+                    default:
+                        urlDestino = "{% url 'home' %}"; 
+                }
+
+                window.location.href = urlDestino;
+            });
         });
     </script>
 </body>

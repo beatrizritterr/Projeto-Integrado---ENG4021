@@ -12,8 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
-            <div class="sidebar-title">Vinculou</div>
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">            <div class="sidebar-title">Vinculou</div>
         </div>
         
         <nav class="sidebar-menu">
@@ -57,8 +56,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
-        </div>
+                <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">        </div>
         
         <div class="search-input-desktop">
             <div class="search-icon-desktop">🔍</div>
@@ -81,73 +79,21 @@
             </div>
 
             <div class="communities-grid">
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1903/1903162.png" alt="Divulgação Vagas STEM">
-                        <div class="community-info">
-                            <h3>Divulgação Vagas STEM</h3>
-                            <span>300 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
-                </div>
-
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2103/2103658.png" alt="IA">
-                        <div class="community-info">
-                            <h3>IA</h3>
-                            <span>80 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
-                </div>
-
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="ExpoArte">
-                        <div class="community-info">
-                            <h3>ExpoArte</h3>
-                            <span>65 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
-                </div>
-
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/943/943346.png" alt="SIENG">
-                        <div class="community-info">
-                            <h3>SIENG</h3>
-                            <span>30 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
-                </div>
-
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/890/890547.png" alt="Hackaton">
-                        <div class="community-info">
-                            <h3>Hackaton</h3>
-                            <span>120 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
-                </div>
-
-                <div class="community-card">
-                    <div class="community-left">
-                        <img src="https://cdn-icons-png.flaticon.com/512/743/743007.png" alt="Caronas Zona Sul">
-                        <div class="community-info">
-                            <h3>Caronas Zona Sul</h3>
-                            <span>250 Integrantes</span>
-                        </div>
-                    </div>
-                    <button class="enter-btn"><span>Entrar</span></button>
+    {% for comunidade in lista_comunidades %}
+        <div class="community-card">
+            <div class="community-left">
+                <img src="{{ comunidade.icone_url|default:'{% static "img/default_community_icon.png" %}' }}" alt="{{ comunidade.nome }}">
+                <div class="community-info">
+                    <h3>{{ comunidade.nome }}</h3>
+                    <span>{{ comunidade.membros_count }} Integrantes</span>
                 </div>
             </div>
-
+            <button class="enter-btn"><span>Entrar</span></button>
+        </div>
+    {% empty %}
+        <p>Nenhuma comunidade encontrada. Adicione novas comunidades no Admin!</p>
+    {% endfor %}
+</div>
             <div class="suggestions">
                 <button class="sugestoes-btn">➕ Sugestões</button>
             </div>

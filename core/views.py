@@ -2,32 +2,28 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
-from .forms import CustomUserCreationForm, AvaliacaoForm, EventoForm # Importado EventoForm
+from .forms import CustomUserCreationForm, AvaliacaoForm, EventoForm 
 from .models import Disciplina, ProvaAntiga
 from django.contrib.auth.decorators import login_required
 from .models import Avaliacao 
 from .models import Evento
 import calendar
-from datetime import datetime, date, timedelta # IMPORT OBRIGATÓRIO: Adicionei timedelta
+from datetime import datetime, date, timedelta 
 from django.contrib import messages
+from .models import Comunidade 
+from .models import Postagem, Comunidade
 
 User = get_user_model() 
 
-# ----------------------------------------------------
-# VIEWS DE CALENDÁRIO (HOME) E CRUD DE EVENTOS
-# A função 'home' agora está completa e carrega o formulário.
-# ----------------------------------------------------
+
 
 @login_required 
 def home(request):
-    # 1. Obter Mês e Ano (usa o mês/ano atual por padrão)
     year = int(request.GET.get('year', date.today().year))
     month = int(request.GET.get('month', date.today().month))
     
     cal_date = date(year, month, 1)
-    
-    # 2. Navegação (Próximo/Anterior)
-    # Lógica que usa timedelta
+
     try:
         prev_month = cal_date.replace(day=1) - timedelta(days=1)
         next_month = cal_date.replace(day=28) + timedelta(days=4)
@@ -38,7 +34,6 @@ def home(request):
         prev_url = '#'
         next_url = '#'
     
-    # 3. Buscar Eventos do Usuário para o Mês
     start_of_month = datetime(year, month, 1)
     
     if month == 12:
@@ -52,7 +47,6 @@ def home(request):
         data_hora__lt=next_month_dt 
     ).order_by('data_hora') 
 
-    # 4. Mapear Eventos por dia (para fácil acesso no template)
     eventos_por_dia = {}
     for evento in eventos_mes:
         day = evento.data_hora.day
@@ -60,17 +54,15 @@ def home(request):
             eventos_por_dia[day] = []
         eventos_por_dia[day].append(evento)
 
-    # 5. Gerar o grid do calendário
-    cal = calendar.Calendar(firstweekday=6) # 6 = Domingo
-    month_weeks = cal.monthdays2calendar(year, month) # Lista de semanas
+    cal = calendar.Calendar(firstweekday=6) 
+    month_weeks = cal.monthdays2calendar(year, month) 
     
-    # 6. Adicionar o Formulário (para o Modal)
     evento_form = EventoForm() 
 
     context = {
-        'mes_ano': cal_date.strftime("%B %Y").capitalize(), # Título
-        'month_weeks': month_weeks, # O grid do calendário (dias)
-        'eventos_por_dia': eventos_por_dia, # Eventos mapeados
+        'mes_ano': cal_date.strftime("%B %Y").capitalize(),
+        'month_weeks': month_weeks,
+        'eventos_por_dia': eventos_por_dia, 
         'hoje': date.today().day,
         'mes_atual': date.today().month,
         'ano_atual': date.today().year,
@@ -78,14 +70,11 @@ def home(request):
         'prev_url': prev_url,
         'next_url': next_url,
         'usuario': request.user, 
-        'evento_form': evento_form, # Passa o formulário para o modal no index.html
+        'evento_form': evento_form, 
     }
     return render(request, 'core/index.html', context)
 
 
-# ----------------------------------------------------
-# VIEWS SECUNDÁRIAS E CRUD DE EVENTOS (Mantidas Abaixo)
-# ----------------------------------------------------
 
 def perfil(request):
     usuario_logado = request.user 
@@ -169,9 +158,11 @@ def cadastro(request):
     else:
         form = CustomUserCreationForm()
         
-    context = {'form': form}
+    context = {
+        'form': form,
+        'usuario': request.user 
+    }
     return render(request, 'core/cadastro.html', context)
-
 
 def password_reset_dev(request):
     user_id = 1 
@@ -185,7 +176,6 @@ def password_reset_dev(request):
     
     return redirect(reset_url)
 
-# 1. Adicionar Evento (Create)
 @login_required
 def adicionar_evento(request):
     if request.method == 'POST':
@@ -200,7 +190,6 @@ def adicionar_evento(request):
             
     return redirect('home') 
 
-# 2. Editar Evento (Update)
 @login_required
 def editar_evento(request, event_id):
     evento = get_object_or_404(Evento, pk=event_id, usuario=request.user)
@@ -216,7 +205,6 @@ def editar_evento(request, event_id):
             
     return redirect('home')
 
-# 3. Excluir Evento (Delete)
 @login_required
 def excluir_evento(request, event_id):
     
@@ -227,3 +215,28 @@ def excluir_evento(request, event_id):
         messages.warning(request, f"Evento '{evento.titulo}' excluído.")
     
     return redirect('home')
+
+def comunidades(request):
+    lista_comunidades = Comunidade.objects.all().order_by('-membros_count')
+    
+    context = {
+        'lista_comunidades': lista_comunidades,
+        'usuario': request.user 
+    }
+    return render(request, 'core/comunidades.html', context)
+
+def filtrobusca(request):
+    context = {'usuario': request.user} 
+    return render(request, 'core/filtrobusca.html', context)
+
+def filtropost(request): 
+    postagens = Postagem.objects.all().order_by('-data_publicacao').select_related('autor') 
+
+    comunidades = Comunidade.objects.all()[:5]
+    
+    context = {
+        'postagens': postagens,
+        'comunidades': comunidades,
+        'usuario': request.user
+    }
+    return render(request, 'core/filtropost.html', context) 
