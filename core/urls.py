@@ -1,11 +1,10 @@
 
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    # Mapeia a URL raiz da app para a função 'home' em views.py
     path('', views.home, name='home'),
-    # Exemplo para a página de login
     path('perfil/', views.perfil, name='perfil'),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
     path('comunidades/', views.comunidades, name='comunidades'),
@@ -18,4 +17,5 @@ urlpatterns = [
     path('evento/adicionar/', views.adicionar_evento, name='adicionar_evento'),
     path('evento/editar/<int:event_id>/', views.editar_evento, name='editar_evento'),
     path('evento/excluir/<int:event_id>/', views.excluir_evento, name='excluir_evento'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 ]

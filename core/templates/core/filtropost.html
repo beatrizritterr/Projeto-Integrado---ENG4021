@@ -12,8 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
-            <div class="sidebar-title">Vinculou</div>
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">            <div class="sidebar-title">Vinculou</div>
         </div>
         
         <nav class="sidebar-menu">
@@ -57,8 +56,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
-        </div>
+                <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou"> </div>
         
         <div class="search-input-desktop">
             <div class="search-icon-desktop">🔍</div>
@@ -90,85 +88,46 @@
                 </div>
 
                 <div class="caixa-filtro">
-                    <h3>Comunidades</h3>
-                    <ul>
-                        <li><a href="#">#Engenharia</a></li>
-                        <li><a href="#">#Design</a></li>
-                        <li><a href="#">#Robótica</a></li>
-                    </ul>
-                </div>
+    <h3>Comunidades</h3>
+    <ul>
+        {% for comunidade in comunidades %}
+            <li><a href="#">#{{ comunidade.nome }}</a></li>
+        {% empty %}
+            <li>Nenhuma comunidade encontrada.</li>
+        {% endfor %}
+    </ul>
+</div>
             </aside>
 
             <section class="container-feed">
-                
-                <article class="cartao-post">
-                    <div class="cabecalho-post">
-                        <img id="iconee" src="img/image copy 12.png">
-                        <div class="info-post">
-                            <h4 class="nome-usuario">Nome Usuário</h4>
-                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Notícia</span></span>
-                        </div>
-                        <span class="data-post">14/10/2025</span>
-                    </div>
-                    
-                    <p class="previa-conteudo-post">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    </p>
-                    
-                    <div class="acoes-post">
-                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></button>
-                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png"></button>
-                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"></button>
-                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
-                    </div>
-                </article>
+    
+    {% for post in postagens %}
+    <article class="cartao-post">
+        <div class="cabecalho-post">
+            <img id="iconee" src="{% static 'img/image copy 12.png' %}"> 
+            <div class="info-post">
+                <h4 class="nome-usuario">{{ post.autor.first_name|default:post.autor.username }}</h4>
+                <span class="tag-tipo-post">{{ post.titulo }} - <span class="texto-tag-tipo">{{ post.get_tipo_display }}</span></span>
+            </div>
+            <span class="data-post">{{ post.data_publicacao|date:"d/m/Y" }}</span>
+        </div>
+        
+        <p class="previa-conteudo-post">
+            {{ post.conteudo|truncatechars:150 }}
+        </p>
+        
+        <div class="acoes-post">
+            <button class="botao-acao curtir-botao"><img id="icone-interacao" src="{% static 'img/image copy 13.png' %}">{{ post.curtidas_count }}</button>
+            <button class="botao-acao salvar-botao"><img id="icone-interacao" src="{% static 'img/image copy 14.png' %}"></button>
+            <button class="botao-acao comentar-botao"><img id="icone-interacao" src="{% static 'img/image copy 15.png' %}">{{ post.comentarios_count }}</button>
+            <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="{% static 'img/image copy 16.png' %}"></button>
+        </div>
+        </article>
+        {% empty %}
+            <p>Nenhuma postagem encontrada. Seja o primeiro a criar conteúdo!</p>
+        {% endfor %}
 
-                <article class="cartao-post">
-                    <div class="cabecalho-post">
-                        <img id="iconee" src="img/image copy 12.png">
-                        <div class="info-post">
-                            <h4 class="nome-usuario">Nome Usuário</h4>
-                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo laranja">Evento</span></span>
-                        </div>
-                        <span class="data-post">13/10/2025</span>
-                    </div>
-                    
-                    <p class="previa-conteudo-post">
-                        Não perca o workshop de prototipagem da próxima semana! Inscreva-se pelo link na descrição...
-                    </p>
-                    
-                    <div class="acoes-post">
-                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"> 12</button>
-                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png"></button>
-                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"> 4</button>
-                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
-                    </div>
-                </article>
-                
-                <article class="cartao-post">
-                    <div class="cabecalho-post">
-                        <img id="iconee" src="img/image copy 12.png">
-                        <div class="info-post">
-                            <h4 class="nome-usuario">Nome Usuário</h4>
-                            <span class="tag-tipo-post">Título do post - <span class="texto-tag-tipo">Oportunidade</span></span>
-                        </div>
-                        <span class="data-post">12/10/2025</span>
-                    </div>
-                    
-                    <p class="previa-conteudo-post">
-                        Vaga de estágio aberta para estudantes de Sistemas de Informação. Candidate-se agora!
-                    </p>
-                    
-                    <div class="acoes-post">
-                        <button class="botao-acao curtir-botao"><img id="icone-interacao" src="img/image copy 13.png"></button>
-                        <button class="botao-acao salvar-botao"><img id="icone-interacao" src="img/image copy 14.png">6</button>
-                        <button class="botao-acao comentar-botao"><img id="icone-interacao" src="img/image copy 15.png"></button>
-                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="img//image copy 16.png"></button>
-                    </div>
-                </article>
-
-            </section>
-
+    </section>
             <aside class="barra-lateral-tendencias">
                 <div class="caixa-filtro">
                     <h3>Tendências</h3>

@@ -13,7 +13,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -58,7 +58,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
         
@@ -70,47 +70,45 @@
 
     <div class="container">
         
-       
-
         <main class="config">
             <h1 class="titulo">Configurações</h1>
             
             <div class="container-lista">
                 
                 <div class="caixa-categoria">
-                    <a href="#" class="itens">
+                    <a href="{% url 'perfil' %}" class="itens">
                         <span class="item-titulo">Perfil</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
                     <a href="#" class="itens">
                         <span class="item-titulo">Privacidade</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
                 </div>
 
                 <div class="caixa-categoria">
                     <a href="#" class="itens">
                         <span class="item-titulo">Notificações</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
                     <a href="#" class="itens highlight">
                         <span class="item-titulo">Postagens e Interações</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
                     <a href="#" class="itens">
                         <span class="item-titulo">Restrições e Bloqueados</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
                 </div>
 
                 <div class="caixa-categoria">
                     <a href="#" class="itens">
                         <span class="item-titulo">Ajuda</span>
-                        <img id="icone" src="img/image copy 10.png">
+                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
-                    <a href="#" class="itens">
+                    <a href="{% url 'logout' %}" class="itens">
                         <span class="item-titulo">Sair</span>
-                        <img id="icone" src="img/image copy 11.png">
+                        <img id="icone" src="{% static 'img/image copy 11.png' %}">
                     </a>
                 </div>
             </div>

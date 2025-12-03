@@ -67,14 +67,22 @@
     </div>
     
     <br/><br/>
-    <h1 class="welcome-message">Bem vinda(o)!</h1>
+    <h1 class="welcome-message">
+        {% if usuario.is_authenticated %}
+            Bem-vindo(a) de volta, {{ usuario.first_name|default:usuario.username }}!
+        {% else %}
+            Bem-vinda(o)!
+        {% endif %}
+    </h1>
     
     <main class="main-content-container">
         <div class="register-card">
             <h2>Cadastre-se</h2>
             
             <form method="post" action="{% url 'cadastro' %}">
-                {% csrf_token %} {{ form.as_p }} 
+                {% csrf_token %} 
+                
+                {{ form.as_p }} 
                 
                 <button type="submit" class="create-account-button">
                     Criar conta
@@ -89,8 +97,6 @@
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
-
-        // ... (Seu código de navegação lateral) ...
 
         menuToggle.addEventListener('click', function() {
             sidebar.classList.add('active');

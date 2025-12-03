@@ -78,3 +78,44 @@ class Evento(models.Model):
     
     def __str__(self):
         return f'{self.titulo} em {self.data_hora.strftime("%d/%m/%Y")}'
+    
+
+class Comunidade(models.Model):
+    
+    nome = models.CharField(max_length=150, unique=True)
+    membros_count = models.IntegerField(default=0)
+    icone_url = models.URLField(max_length=300, blank=True, null=True)
+    membros = models.ManyToManyField(User, related_name='comunidades_inscritas', blank=True)
+
+    def __str__(self):
+        return self.nome
+    
+class Postagem(models.Model):
+    TIPO_POST = [
+        ('NOT', 'Notícia'),
+        ('EVT', 'Evento'),
+        ('OPR', 'Oportunidade'),
+        ('DSC', 'Discussão'),
+    ]
+    
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    titulo = models.CharField(max_length=100)
+    conteudo = models.TextField()
+    data_publicacao = models.DateTimeField(auto_now_add=True)
+    tipo = models.CharField(max_length=3, choices=TIPO_POST, default='DSC')
+    
+    curtidas_count = models.IntegerField(default=0)
+    comentarios_count = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return f'{self.titulo} por {self.autor.username}'
+
+class Comentario(models.Model):
+    postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE)
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    texto = models.TextField()
+    data_criacao = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f'Comentário de {self.autor.username} em "{self.postagem.titulo}"'
