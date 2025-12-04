@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from .forms import CustomUserCreationForm, AvaliacaoForm, EventoForm 
 from .models import Disciplina, ProvaAntiga
 from django.contrib.auth.decorators import login_required
-from .models import Avaliacao 
+from .models import Avaliacao, Departamento, Professor
 from .models import Evento
 import calendar
 from datetime import datetime, date, timedelta 
@@ -95,6 +95,8 @@ def perfil(request):
     return render(request, 'core/perfil.html', context)
 
 def avaliacaoprof(request):
+    avaliacoes = Avaliacao.objects.all().order_by('-data_criacao')[:5]
+
     if request.method == 'POST':
         form = AvaliacaoForm(request.POST)
         
@@ -106,7 +108,12 @@ def avaliacaoprof(request):
     else:
         form = AvaliacaoForm()
 
-    context = {'form': form}
+
+    context = {
+        'form': form,
+        'avaliacoes': avaliacoes,
+    }
+    
     return render(request, 'core/avaliacaoprof.html', context)
 
 @login_required 

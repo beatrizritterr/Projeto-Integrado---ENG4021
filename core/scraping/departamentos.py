@@ -54,10 +54,28 @@ def _scrape_with_selenium(url, wait_selector_type, wait_selector_value, timeout=
             driver.quit()
 
 def _extract_valid_name(tag):
-    """Extrai e valida um nome de professor de uma tag."""
-    name = tag.text.strip()
-    if len(name.split()) >= 2 and len(name) > 5 and not re.search(r'\d', name):
-        return name
+    """Extrai, limpa e valida um nome de professor de uma tag."""
+    
+    raw_text = tag.text.strip()
+    
+    prefixes_to_remove = [
+        "Nome:",
+        "Nome :",
+        "Docente:",
+        "Docente :",
+        "Professor:",
+        "Professor :",
+    ]
+    
+    cleaned_name = raw_text
+    for prefix in prefixes_to_remove:
+        if cleaned_name.lower().startswith(prefix.lower()):
+            cleaned_name = cleaned_name[len(prefix):].strip()
+            break 
+
+    if len(cleaned_name.split()) >= 2 and len(cleaned_name) > 5 and not re.search(r'\d', cleaned_name):
+        return cleaned_name.title()
+    
     return None
 
 
