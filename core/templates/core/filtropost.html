@@ -1,51 +1,54 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feed de Postagens - Desktop</title>
     <link rel="stylesheet" href="{% static 'css/estilo/estilo3.css' %}">
 </head>
+
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">            <div class="sidebar-title">Vinculou</div>
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
+            <div class="sidebar-title">Vinculou</div>
         </div>
-        
+
         <nav class="sidebar-menu">
             <a href="{% url 'filtrobusca' %}" class="menu-item">
                 <span class="menu-icon">💬</span>
                 <span class="menu-text">Filtros</span>
             </a>
-            
+
             <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
-            
+
             <a href="{% url 'provasantigas' %}" class="menu-item">
                 <span class="menu-icon">📚</span>
                 <span class="menu-text">Provas Antigas</span>
             </a>
-            
+
             <a href="{% url 'home' %}" class="menu-item ">
                 <span class="menu-icon">🗓️</span>
                 <span class="menu-text">Calendário</span>
             </a>
-            
+
             <a href="{% url 'perfil' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
-        
+
             <a href="{% url 'login' %}" class="menu-item">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Login</span>
             </a>
-            
+
             <a href="{% url 'configuracoes' %}" class="menu-item">
                 <span class="menu-icon">⚙️</span>
                 <span class="menu-text">Configurações</span>
@@ -56,13 +59,14 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-                <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou"> </div>
-        
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
+        </div>
+
         <div class="search-input-desktop">
             <div class="search-icon-desktop">🔍</div>
             <input type="text" placeholder="Buscar...">
         </div>
-        
+
         <div class="user-area">
             <div class="notification-icon">🔔</div>
             <div class="profile-icon">👤</div>
@@ -71,70 +75,129 @@
 
     <div class="layout-desktop-feed">
         <main class="conteudo-principal-feed">
-            
+
             <aside class="barra-lateral-filtros">
                 <div class="caixa-filtro tipo-filtro">
                     <h3>Filtros</h3>
                     <div class="selecao-filtro-desktop">
                         <label for="selecao-tipo-post">Tipos de Postagem:</label>
                         <select id="selecao-tipo-post">
-                            <option value="todos" selected>Todos</option>
-                            <option value="noticias">Notícias</option>
-                            <option value="eventos">Eventos</option>
-                            <option value="oportunidades">Oportunidades</option>
-                            <option value="discussao">Discussão</option>
+
+                            <option value="todos" {% if tipo_selecionado == 'todos' %}selected{% endif %}>Todos</option>
+
+                            <option value="noticias" {% if tipo_selecionado == 'noticias' %}selected{% endif %}>Notícias</option>
+
+                            <option value="eventos" {% if tipo_selecionado == 'eventos' %}selected{% endif %}>Eventos</option>
+
+                            <option value="oportunidades" {% if tipo_selecionado == 'oportunidades' %}selected{% endif %}>Oportunidades</option>
+
+                            <option value="discussao" {% if tipo_selecionado == 'discussao' %}selected{% endif %}>Discussão</option>
+
                         </select>
                     </div>
+
                 </div>
 
                 <div class="caixa-filtro">
-    <h3>Comunidades</h3>
-    <ul>
-        {% for comunidade in comunidades %}
-            <li><a href="#">#{{ comunidade.nome }}</a></li>
-        {% empty %}
-            <li>Nenhuma comunidade encontrada.</li>
-        {% endfor %}
-    </ul>
-</div>
+                    <h3>Comunidades</h3>
+                    <ul>
+                        {% for comunidade in comunidades %}
+                        <li><a href="#">#{{ comunidade.nome }}</a></li>
+                        {% empty %}
+                        <li>Nenhuma comunidade encontrada.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </aside>
 
             <section class="container-feed">
-    
-    {% for post in postagens %}
-    <article class="cartao-post">
-        <div class="cabecalho-post">
-            <img id="iconee" src="{% static 'img/image copy 12.png' %}"> 
-            <div class="info-post">
-                <h4 class="nome-usuario">{{ post.autor.first_name|default:post.autor.username }}</h4>
-                <span class="tag-tipo-post">{{ post.titulo }} - <span class="texto-tag-tipo">{{ post.get_tipo_display }}</span></span>
-            </div>
-            <span class="data-post">{{ post.data_publicacao|date:"d/m/Y" }}</span>
-        </div>
-        
-        <p class="previa-conteudo-post">
-            {{ post.conteudo|truncatechars:150 }}
-        </p>
-        
-        <div class="acoes-post">
-            <button class="botao-acao curtir-botao"><img id="icone-interacao" src="{% static 'img/image copy 13.png' %}">{{ post.curtidas_count }}</button>
-            <button class="botao-acao salvar-botao"><img id="icone-interacao" src="{% static 'img/image copy 14.png' %}"></button>
-            <button class="botao-acao comentar-botao"><img id="icone-interacao" src="{% static 'img/image copy 15.png' %}">{{ post.comentarios_count }}</button>
-            <button class="botao-acao compartilhar-botao icone-compartilhar-direita"><img id="icone-interacao" src="{% static 'img/image copy 16.png' %}"></button>
-        </div>
-        </article>
-        {% empty %}
-            <p>Nenhuma postagem encontrada. Seja o primeiro a criar conteúdo!</p>
-        {% endfor %}
 
-    </section>
+                {% for post in postagens %}
+                <article class="cartao-post">
+                    <div class="cabecalho-post">
+                        <img id="iconee" src="{% static 'img/image copy 12.png' %}">
+                        <div class="info-post">
+                            <h4 class="nome-usuario">{{ post.autor.first_name|default:post.autor.username }}</h4>
+
+                            <span class="tag-tipo-post">{{ post.titulo }} -
+                                <span class="texto-tag-tipo">{{ post.get_tipo_display }}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <p class="previa-conteudo-post">
+                        {{ post.conteudo|truncatechars:150 }}
+                    </p>
+
+                    <div class="acoes-post">
+
+                        <button class="botao-acao curtir-botao">
+                            <a href="{% url 'curtir_postagem' pk=post.pk %}"
+                                style="text-decoration: none; color: inherit;">
+                                <span class="emoji-icon">❤️</span>
+                            </a>
+                            {{ post.curtidas.count }}
+                        </button>
+
+                        <button class="botao-acao salvar-botao">
+                            <a href="{% url 'salvar_postagem' pk=post.pk %}"
+                                style="text-decoration: none; color: inherit;">
+                                <span class="emoji-icon">🔖</span>
+                            </a>
+                        </button>
+
+                        <button class="botao-acao comentar-botao">
+                            <span class="emoji-icon">💬</span>
+                            {{ post.comentarios.count }}
+                        </button>
+
+                        <button class="botao-acao compartilhar-botao icone-compartilhar-direita">
+                            <span class="emoji-icon">🔗</span>
+                        </button>
+
+                    </div>
+                    <div class="comentarios-lista" style="margin-top: 15px; padding: 0 15px;">
+    {% for comentario in post.comentarios.all %}
+        <p style="font-size: 14px; margin-bottom: 5px;">
+            <strong>{{ comentario.autor.username }}:</strong> {{ comentario.conteudo }}
+        </p>
+    {% empty %}
+        <p style="font-size: 14px; color: #666;">Seja o primeiro a comentar!</p>
+    {% endfor %}
+</div>
+
+<div class="comentario-input" style="padding: 10px 15px;">
+    <form method="post" action="{% url 'adicionar_comentario' pk=post.pk %}">
+        {% csrf_token %}
+        
+        <input 
+            type="text" 
+            name="conteudo" 
+            placeholder="Adicionar um comentário..." 
+            required
+            style="width: 80%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+        >
+        <button type="submit" style="padding: 8px 10px; background-color: #002D5B; color: white; border: none; border-radius: 4px;">
+            Comentar
+        </button>
+    </form>
+</div>
+                </article>
+                {% empty %}
+                <p>Nenhuma postagem encontrada. Seja o primeiro a criar conteúdo!</p>
+                {% endfor %}
+
+            </section>
             <aside class="barra-lateral-tendencias">
                 <div class="caixa-filtro">
                     <h3>Tendências</h3>
                     <ul class="lista-tendencias">
-                        <li><span class="hashtag-tendencia">#IAeLLMs</span> <span class="contagem-tendencia">2.5k posts</span></li>
-                        <li><span class="hashtag-tendencia">#Intercâmbio2026</span> <span class="contagem-tendencia">1.1k posts</span></li>
-                        <li><span class="hashtag-tendencia">#MedicinaPuc</span> <span class="contagem-tendencia">890 posts</span></li>
+                        <li><span class="hashtag-tendencia">#IAeLLMs</span> <span class="contagem-tendencia">2.5k
+                                posts</span></li>
+                        <li><span class="hashtag-tendencia">#Intercâmbio2026</span> <span
+                                class="contagem-tendencia">1.1k posts</span></li>
+                        <li><span class="hashtag-tendencia">#MedicinaPuc</span> <span class="contagem-tendencia">890
+                                posts</span></li>
                     </ul>
                 </div>
                 <div class="caixa-filtro">
@@ -143,8 +206,26 @@
                     <p>Prof. Ana Paula</p>
                 </div>
             </aside>
-            
+
         </main>
+    </div>
+    <button id="abrirModalBtn" onclick="abrirModal()"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1001; padding: 15px; background-color: #FF8C00; color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer;">
+        +
+    </button>
+    <div id="postModal" class="modal-bg">
+        <div class="modal-conteudo">
+            <span class="fechar-btn" onclick="fecharModal()">&times;</span>
+            <h2>O que você quer compartilhar?</h2>
+
+            <form method="post" action="{% url 'filtropost' %}" id="formNovaPostagem">
+                {% csrf_token %}
+
+                {{ form_postagem.as_p }}
+
+                <button type="submit" class="botao-publicar">Publicar</button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -153,13 +234,13 @@
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
 
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function () {
             sidebar.classList.add('active');
             sidebarOverlay.classList.add('active');
             body.classList.add('sidebar-open');
         });
 
-        sidebarOverlay.addEventListener('click', function() {
+        sidebarOverlay.addEventListener('click', function () {
             sidebar.classList.remove('active');
             sidebarOverlay.classList.remove('active');
             body.classList.remove('sidebar-open');
@@ -167,23 +248,55 @@
 
         const menuItems = document.querySelectorAll('.menu-item');
         menuItems.forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function () {
                 menuItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 sidebar.classList.remove('active');
                 sidebarOverlay.classList.remove('active');
                 body.classList.remove('sidebar-open');
             });
         });
 
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 sidebar.classList.remove('active');
                 sidebarOverlay.classList.remove('active');
                 body.classList.remove('sidebar-open');
             }
         });
+
+        const modal = document.getElementById('postModal');
+        const botaoAbrir = document.getElementById('abrirModalBtn');
+
+        function abrirModal() {
+            modal.classList.add('active');
+        }
+
+        function fecharModal() {
+            modal.classList.remove('active');
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectTipo = document.getElementById('selecao-tipo-post');
+
+            const filtroAtivo = "{{ tipo_selecionado }}";
+            if (filtroAtivo) {
+                selectTipo.value = filtroAtivo;
+            }
+
+            selectTipo.addEventListener('change', function () {
+                const novoFiltro = this.value;
+
+                window.location.href = window.location.pathname + '?tipo=' + novoFiltro;
+            });
+        });
     </script>
 </body>
+
 </html>
