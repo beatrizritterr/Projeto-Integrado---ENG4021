@@ -162,10 +162,18 @@
             <strong>{{ comentario.autor.username }}:</strong> {{ comentario.conteudo }}
         </p>
     {% empty %}
+        <p>Seja o primeiro a comentar!</p>
+    {% endfor %}
+</div>
+<div class="comentarios-lista" style="margin-top: 15px; padding: 0 15px;">
+    {% for comentario in post.comentarios.all %}
+        <p style="font-size: 14px; margin-bottom: 5px;">
+            <strong>{{ comentario.autor.username }}:</strong> {{ comentario.conteudo }}
+        </p>
+    {% empty %}
         <p style="font-size: 14px; color: #666;">Seja o primeiro a comentar!</p>
     {% endfor %}
 </div>
-
 <div class="comentario-input" style="padding: 10px 15px;">
     <form method="post" action="{% url 'adicionar_comentario' pk=post.pk %}">
         {% csrf_token %}

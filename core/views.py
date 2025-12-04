@@ -22,7 +22,8 @@ from .models import (
     Evento, 
     Postagem, 
     Comunidade,
-    ProvaAntiga
+    ProvaAntiga,
+    Comentario
 )
 User = get_user_model()
 
@@ -235,8 +236,7 @@ def filtropost(request):
         if codigo_tipo:
             postagens_qs = postagens_qs.filter(tipo=codigo_tipo)
 
-    postagens = postagens_qs.order_by('-data_publicacao').select_related('autor')
-    comunidades = Comunidade.objects.all()[:5]
+        postagens = postagens_qs.order_by('-data_publicacao').select_related('autor').prefetch_related('comentarios') # <-- Adicione esta pré-busca    comunidades = Comunidade.objects.all()[:5]
 
     context = {
         'postagens': postagens,
@@ -276,12 +276,17 @@ def adicionar_comentario(request, pk):
     postagem = get_object_or_404(Postagem, pk=pk)
     
     if request.method == 'POST':
-        form = ComentarioForm(request.POST) 
+        form = ComentarioForm(request.POST)
         if form.is_valid():
             comentario = form.save(commit=False)
             comentario.postagem = postagem
             comentario.autor = request.user
             comentario.save()
+            
+            postagem.comentarios_count += 1
+            postagem.save()
+            
+        
             messages.success(request, "Comentário adicionado com sucesso!")
         else:
             messages.error(request, "Erro ao processar o comentário.")
