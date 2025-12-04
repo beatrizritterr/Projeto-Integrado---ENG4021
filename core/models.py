@@ -31,14 +31,14 @@ class Avaliacao(models.Model):
     
     disciplina = models.ForeignKey(Disciplina, on_delete=models.CASCADE)
     
-    professor = models.CharField(max_length=100) 
+    professor = models.ForeignKey(Professor, on_delete=models.CASCADE) 
     
     nota = models.DecimalField(max_digits=2, decimal_places=1) 
     comentario = models.TextField()
     data_criacao = models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):
-        return f'{self.disciplina.nome} ({self.professor}) - Nota: {self.nota}'
+        return f'{self.disciplina.nome} ({self.professor.nome}) - Nota: {self.nota}'
     
 class ProvaAntiga(models.Model):
     
