@@ -109,6 +109,11 @@ class Postagem(models.Model):
     
     curtidas = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='curtidas_post', blank=True)
     salvamentos = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='salvamentos_post', blank=True)
+    arquivo_anexo = models.FileField(
+        upload_to='post_anexos/', # Pasta onde os arquivos serão salvos (dentro de MEDIA_ROOT)
+        blank=True, # Torna o campo opcional
+        null=True
+    )
     
     
     def __str__(self):

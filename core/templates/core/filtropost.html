@@ -222,19 +222,16 @@
         +
     </button>
     <div id="postModal" class="modal-bg">
-        <div class="modal-conteudo">
-            <span class="fechar-btn" onclick="fecharModal()">&times;</span>
-            <h2>O que você quer compartilhar?</h2>
-
-            <form method="post" action="{% url 'filtropost' %}" id="formNovaPostagem">
-                {% csrf_token %}
-
-                {{ form_postagem.as_p }}
-
-                <button type="submit" class="botao-publicar">Publicar</button>
-            </form>
-        </div>
+    <div class="modal-conteudo">
+        <form method="post" action="{% url 'filtropost' %}" id="formNovaPostagem" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form_postagem.as_p }} 
+            
+            <button type="submit" class="botao-publicar">Publicar</button>
+        </form>
     </div>
+</div>
 
     <script>
         const menuToggle = document.getElementById('menuToggle');

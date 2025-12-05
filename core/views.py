@@ -74,9 +74,9 @@ def password_reset_dev(request):
 
 @login_required 
 def configuracoes(request):
+    """Exige login para acessar e envia o usuário para o template."""
     context = {'usuario': request.user}
     return render(request, 'core/configuracoes.html', context)
-
 def filtrobusca(request):
     context = {'usuario': request.user} 
     return render(request, 'core/filtrobusca.html', context)
@@ -214,32 +214,40 @@ def comunidades(request):
 
 @login_required 
 def filtropost(request):
+    form_postagem = PostagemForm() 
+    postagens_qs = Postagem.objects.all() 
+    
     if request.method == 'POST':
-        form_postagem = PostagemForm(request.POST)
+        form_postagem = PostagemForm(request.POST, request.FILES) 
+        
         if form_postagem.is_valid():
             postagem = form_postagem.save(commit=False)
             postagem.autor = request.user
             postagem.save()
+            
             messages.success(request, "Postagem publicada com sucesso!")
             return redirect('filtropost') 
-        else:
-            form_postagem = form_postagem 
-    else:
-        form_postagem = PostagemForm() 
-
+       
     tipo_selecionado = request.GET.get('tipo', 'todos') 
-    postagens_qs = Postagem.objects.all()
 
     if tipo_selecionado != 'todos':
-        mapeamento = {'noticias': 'NOT', 'eventos': 'EVT', 'oportunidades': 'OPR', 'discussao': 'DSC'}
+        mapeamento = {
+            'noticias': 'NOT', 
+            'eventos': 'EVT', 
+            'oportunidades': 'OPR', 
+            'discussao': 'DSC'
+        }
         codigo_tipo = mapeamento.get(tipo_selecionado)
         if codigo_tipo:
             postagens_qs = postagens_qs.filter(tipo=codigo_tipo)
 
-        postagens = postagens_qs.order_by('-data_publicacao').select_related('autor').prefetch_related('comentarios') # <-- Adicione esta pré-busca    comunidades = Comunidade.objects.all()[:5]
+   
+    postagens = postagens_qs.order_by('-data_publicacao').select_related('autor').prefetch_related('comentarios')
+    
+    comunidades = Comunidade.objects.all()[:5] 
 
     context = {
-        'postagens': postagens,
+        'postagens': postagens, 
         'comunidades': comunidades,
         'tipo_selecionado': tipo_selecionado, 
         'form_postagem': form_postagem, 

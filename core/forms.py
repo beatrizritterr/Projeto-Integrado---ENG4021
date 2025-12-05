@@ -35,7 +35,7 @@ class EventoForm(forms.ModelForm):
 class PostagemForm(forms.ModelForm):
     class Meta:
         model = Postagem
-        fields = ['titulo', 'conteudo', 'tipo'] 
+        fields = ['titulo', 'conteudo', 'tipo', 'arquivo_anexo'] 
         
         widgets = {
             'titulo': forms.TextInput(attrs={'placeholder': 'Título da Postagem'}),
