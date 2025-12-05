@@ -1,7 +1,7 @@
-# Arquivo: core/models.py
 
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 User = get_user_model()
 
@@ -98,24 +98,35 @@ class Postagem(models.Model):
         ('DSC', 'Discussão'),
     ]
     
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
     
     titulo = models.CharField(max_length=100)
     conteudo = models.TextField()
     data_publicacao = models.DateTimeField(auto_now_add=True)
     tipo = models.CharField(max_length=3, choices=TIPO_POST, default='DSC')
     
-    curtidas_count = models.IntegerField(default=0)
-    comentarios_count = models.IntegerField(default=0)
+    comentarios_count = models.IntegerField(default=0) 
+    
+    curtidas = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='curtidas_post', blank=True)
+    salvamentos = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='salvamentos_post', blank=True)
+    arquivo_anexo = models.FileField(
+        upload_to='post_anexos/', # Pasta onde os arquivos serão salvos (dentro de MEDIA_ROOT)
+        blank=True, # Torna o campo opcional
+        null=True
+    )
+    
     
     def __str__(self):
         return f'{self.titulo} por {self.autor.username}'
 
 class Comentario(models.Model):
-    postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE)
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE, related_name='comentarios')
+    autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
     texto = models.TextField()
     data_criacao = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f'Comentário de {self.autor.username} em "{self.postagem.titulo}"'
+        return f'Comentário de {self.autor.username} em "{self.postagem.titulo[:20]}"'
+
+    class Meta:
+        ordering = ['data_criacao']

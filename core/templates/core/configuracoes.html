@@ -102,15 +102,26 @@
                 </div>
 
                 <div class="caixa-categoria">
-                    <a href="#" class="itens">
-                        <span class="item-titulo">Ajuda</span>
-                        <img id="icone" src="{% static 'img/image copy 10.png' %}">
-                    </a>
-                    <a href="{% url 'logout' %}" class="itens">
-                        <span class="item-titulo">Sair</span>
-                        <img id="icone" src="{% static 'img/image copy 11.png' %}">
-                    </a>
-                </div>
+    <a href="#" class="itens">
+        <span class="item-titulo">Ajuda</span>
+        <img id="icone" src="{% static 'img/image copy 10.png' %}">
+    </a>
+    
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" style="display: flex; width: 100%;">
+            {% csrf_token %}
+            <button type="submit" class="itens" style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; width: 100%;">
+                <span class="item-titulo" style="color: #dc3545;">Sair (Logout)</span>
+                <img id="icone" src="{% static 'img/image copy 11.png' %}">
+            </button>
+        </form>
+    {% else %}
+         <a href="{% url 'login' %}" class="itens">
+            <span class="item-titulo">Sair</span>
+            <img id="icone" src="{% static 'img/image copy 11.png' %}">
+        </a>
+    {% endif %}
+</div>
             </div>
         </main>
     </div>

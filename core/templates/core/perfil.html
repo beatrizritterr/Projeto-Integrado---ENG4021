@@ -60,12 +60,19 @@
             <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
-       
-        
-        <div class="user-area">
-            <div class="notification-icon">🔔</div>
+       <div class="user-area">
+    <div class="notification-icon">🔔</div>
+    
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'perfil' %}">
             <div class="profile-icon">👤</div>
-        </div>
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}">
+            <div class="profile-icon">👤</div>
+        </a>
+    {% endif %}
+</div>
     </div>
 
     <div class="principal">
@@ -78,18 +85,30 @@
             </div>
 
             <div class="perfil-info">
-                <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
-                <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
+    <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
+    <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
 
-                <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
-                <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
-                
-                <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
-                <p class="bio">
-                    {{ info_extra.bio }} 
-                </p>
-                <button class="editar-btn">Editar perfil</button>
-            </div>
+    <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
+    <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
+    
+    <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
+    <p class="bio">
+        {{ info_extra.bio }} 
+    </p>
+    
+    <div style="margin-top: 15px; display: flex; gap: 10px;">
+    <button class="editar-btn">Editar perfil</button>
+    
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn" style="background-color: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                Sair (Logout)
+            </button>
+        </form>
+    {% endif %}
+</div>
+</div>
         </div>
 
         <div class="atividades-container">
@@ -114,7 +133,7 @@
             </div>
     </div>
 
-    <script>
+   <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -152,20 +171,44 @@
             }
         });
 
+
         document.addEventListener('DOMContentLoaded', function() {
+
+            const profileToggle = document.getElementById('profileToggle'); 
+            const userMenu = document.getElementById('userMenu'); 
+            const editarBtn = document.querySelector('.editar-btn'); 
+
             const fotoPerfil = document.querySelector('.perfil-foto img');
             const placeholder = document.querySelector('.foto-placeholder');
             
-            // Lógica para mostrar placeholder se a imagem não carregar ou for a padrão
-            fotoPerfil.onerror = function() {
-                fotoPerfil.style.display = 'none';
-                placeholder.style.display = 'flex';
-            };
+            if (fotoPerfil) {
+                fotoPerfil.onerror = function() {
+                    fotoPerfil.style.display = 'none';
+                    if (placeholder) placeholder.style.display = 'flex';
+                };
+                if (fotoPerfil.src.includes('usuario.png')) {
+                    fotoPerfil.style.display = 'none';
+                    if (placeholder) placeholder.style.display = 'flex';
+                }
+            }
+            
+            if (profileToggle && userMenu) { 
+                profileToggle.addEventListener('click', function(e) {
+                    userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+                    e.stopPropagation(); 
+                });
 
-            // Para garantir que o placeholder aparece se a URL for a padrão e o JS carregar primeiro
-            if (fotoPerfil.src.includes('usuario.png')) {
-                fotoPerfil.style.display = 'none';
-                placeholder.style.display = 'flex';
+                if (editarBtn) {
+                     editarBtn.addEventListener('click', function() {
+                        alert('Funcionalidade de Edição de Perfil acionada! (Backend pendente)');
+                    });
+                }
+                
+                document.addEventListener('click', function(e) {
+                    if (!userMenu.contains(e.target) && e.target.id !== 'profileToggle') {
+                        userMenu.style.display = 'none';
+                    }
+                });
             }
         });
     </script>

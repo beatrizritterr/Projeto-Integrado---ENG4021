@@ -367,3 +367,55 @@ body.sidebar-open {
         width: 280px;
     }
 }
+
+/* --- ESTILO PARA O MENU DROPDOWN DE LOGOUT NO CABEÇALHO --- */
+
+.profile-dropdown-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-icon {
+    font-size: 24px;
+    padding: 5px;
+}
+
+.dropdown-menu {
+    display: none; /* ESSENCIAL: Escondido por padrão, aparece com JS */
+    position: absolute;
+    top: 45px; 
+    right: 0; 
+    width: 200px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 100;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-menu p {
+    padding: 5px 0;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu hr {
+    margin: 5px 0;
+    border-color: #eee;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 8px 5px;
+    text-decoration: none;
+    color: #002D5B; 
+    transition: background-color 0.2s;
+    border-radius: 4px;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+    color: #FF8C00;
+}

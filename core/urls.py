@@ -17,5 +17,10 @@ urlpatterns = [
     path('evento/adicionar/', views.adicionar_evento, name='adicionar_evento'),
     path('evento/editar/<int:event_id>/', views.editar_evento, name='editar_evento'),
     path('evento/excluir/<int:event_id>/', views.excluir_evento, name='excluir_evento'),
-    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('post/<int:pk>/curtir/', views.curtir_postagem, name='curtir_postagem'),
+    path('post/<int:pk>/salvar/', views.salvar_postagem, name='salvar_postagem'),
+    path('post/<int:pk>/comentar/', views.adicionar_comentario, name='adicionar_comentario'),
+    path('logout/', 
+         LogoutView.as_view(next_page='/login/'), # Usando o nome da URL 'login'
+         name='logout'),
 ]
