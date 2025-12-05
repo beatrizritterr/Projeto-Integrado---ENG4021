@@ -21,6 +21,17 @@ urlpatterns = [
     path('post/<int:pk>/salvar/', views.salvar_postagem, name='salvar_postagem'),
     path('post/<int:pk>/comentar/', views.adicionar_comentario, name='adicionar_comentario'),
     path('logout/', 
-         LogoutView.as_view(next_page='/login/'), # Usando o nome da URL 'login'
+         LogoutView.as_view(next_page='/login/'), 
          name='logout'),
+    path('perfil/editar/', views.editar_perfil, name='editar_perfil'),
+    path('perfil/foto/deletar/', views.deletar_foto_perfil, name='deletar_foto_perfil'),
+    path('comunidades/criar/', views.criar_comunidade, name='criar_comunidade'), 
+    path('comunidades/inscrever/<int:pk>/', views.inscrever_comunidade, name='inscrever_comunidade'), 
+    path('comunidades/chat/<int:pk>/', views.chat_comunidade, name='chat_comunidade'),
 ]
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

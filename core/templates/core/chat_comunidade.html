@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - {{ comunidade.nome }}</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/estilo3.css' %}"> 
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chat-historico {
+            height: 450px;
+            overflow-y: scroll;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .mensagem-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .mensagem-minha {
+            background-color: #e0f7fa; 
+            text-align: right;
+            margin-left: 20%;
+        }
+        .mensagem-outra {
+            background-color: #f1f1f1; 
+            margin-right: 20%;
+            text-align: left;
+        }
+        .mensagem-item strong {
+            font-weight: bold;
+            color: #002D5B;
+        }
+        .chat-form input[type="text"] {
+            width: 85%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .chat-form button {
+            width: 13%;
+            padding: 10px;
+            background-color: #FF8C00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <header style="padding: 15px; background-color: #002D5B; color: white; border-radius: 8px 8px 0 0;">
+            <a href="{% url 'comunidades' %}" style="color: white; text-decoration: none; margin-right: 15px;">&larr; Voltar</a>
+            <h1 style="display: inline; font-size: 20px;">Chat - {{ comunidade.nome }}</h1>
+        </header>
+
+        <div class="chat-historico">
+            {% for mensagem in mensagens %}
+                <div class="mensagem-item {% if mensagem.autor == request.user %}mensagem-minha{% else %}mensagem-outra{% endif %}">
+                    <strong>{{ mensagem.autor.username }}:</strong> 
+                    <br>
+                    {{ mensagem.conteudo }}
+                    <span style="font-size: 10px; color: #666; display: block; margin-top: 5px;">{{ mensagem.data_envio|date:"H:i" }}</span>
+                </div>
+            {% empty %}
+                <p style="text-align: center; color: #999;">Seja o primeiro a enviar uma mensagem!</p>
+            {% endfor %}
+        </div>
+
+        {% if request.user.is_authenticated %}
+            <form class="chat-form" method="post" action="{% url 'chat_comunidade' pk=comunidade.pk %}" style="padding: 15px; display: flex; justify-content: space-between;">
+                {% csrf_token %}
+                {{ form_mensagem.conteudo }} 
+                <button type="submit">Enviar</button>
+            </form>
+        {% else %}
+            <p style="text-align: center; padding: 15px;">Faça login para participar do chat.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

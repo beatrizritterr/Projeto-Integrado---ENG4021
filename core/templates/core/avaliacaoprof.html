@@ -57,7 +57,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
         <div class="search-input-desktop">
@@ -74,17 +74,18 @@
     <div class="principal">
         <h1 class="titulo-principal">Avaliação de Professores e Disciplinas</h1>
 
-        <section class="avaliacao">
-            <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
+<section class="avaliacao">
+    <p class="descricao">Compartilhe sua experiência para ajudar outros alunos a escolher melhor suas disciplinas e professores!</p>
 
-            <form class="form-avaliacao" method="post" action="{% url 'avaliacaoprof' %}">
-                {% csrf_token %} 
-                
-                {{ form.as_p }} 
+    <form class="form-avaliacao" method="post" action="{% url 'avaliacaoprof' %}">
+        
+        {% csrf_token %}
+        
+        {{ form.as_p }}
 
-                <button type="submit" class="btn-enviar">Enviar Avaliação</button>
-            </form>
-        </section>
+        <button type="submit" class="btn-enviar">Enviar Avaliação</button>
+    </form>
+</section>
 
         <section class="avaliacoes-recentes">
             <h2>Avaliações Recentes</h2>

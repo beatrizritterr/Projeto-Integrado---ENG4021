@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comunidades - Vinculou</title>
     <link rel="stylesheet" href="{% static 'css/estilo/comunidades.css' %}">
+ 
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -79,32 +80,75 @@
             </div>
 
             <div class="communities-grid">
-    {% for comunidade in lista_comunidades %}
-        <div class="community-card">
-            <div class="community-left">
-                <img src="{{ comunidade.icone_url|default:'{% static "img/default_community_icon.png" %}' }}" alt="{{ comunidade.nome }}">
-                <div class="community-info">
-                    <h3>{{ comunidade.nome }}</h3>
-                    <span>{{ comunidade.membros_count }} Integrantes</span>
-                </div>
+                {% for comunidade in lista_comunidades %}
+                    <div class="community-card">
+    
+    {% if comunidade.is_member %}
+        <a href="{% url 'chat_comunidade' pk=comunidade.pk %}" style="text-decoration: none; color: inherit; width: 100%;">
+    {% endif %}
+
+        <div class="community-left" style="pointer-events: none;">
+            <img src="{% if comunidade.icone %}{{ comunidade.icone.url }}{% else %}{% static 'img/default_community_icon.png' %}{% endif %}" alt="{{ comunidade.nome }}">
+            <div class="community-info">
+                <h3>{{ comunidade.nome }}</h3>
+                <span>{{ comunidade.membros.count }} Integrantes</span>
             </div>
-            <button class="enter-btn"><span>Entrar</span></button>
         </div>
-    {% empty %}
-        <p>Nenhuma comunidade encontrada. Adicione novas comunidades no Admin!</p>
-    {% endfor %}
+
+    {% if comunidade.is_member %}
+        </a> {% endif %}
+
+    {% if request.user.is_authenticated %}
+        <form method="post" action="{% url 'comunidades' %}" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="inscrever_comunidade_pk" value="{{ comunidade.pk }}">
+            <button type="submit" class="enter-btn {% if comunidade.is_member %} sair-btn{% endif %}">
+                <span>{% if comunidade.is_member %}Sair{% else %}Entrar{% endif %}</span>
+            </button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}"><button class="enter-btn">Entrar</button></a>
+    {% endif %}
 </div>
+                {% empty %}
+                    <p>Nenhuma comunidade encontrada. Crie a primeira!</p>
+                {% endfor %}
+            </div>
+            
             <div class="suggestions">
-                <button class="sugestoes-btn">➕ Sugestões</button>
+                <button class="sugestoes-btn" onclick="abrirModal()">➕ Criar Comunidade</button>
             </div>
         </div>
     </div>
+    
+    
+    <div id="createCommunityModal" class="modal-bg">
+        <div class="modal-conteudo">
+            <span class="fechar-btn" onclick="fecharModal()">&times;</span>
+            <h2>Criar Nova Comunidade</h2>
+            
+            <form method="post" action="{% url 'comunidades' %}" enctype="multipart/form-data" id="formCriarComunidade">
+                {% csrf_token %}
+                
+                <input type="hidden" name="criar_comunidade_btn" value="true">
+                
+                {{ form_comunidade.as_p }} 
+                
+                <button type="submit" class="botao-publicar">
+                    Criar
+                </button>
+            </form>
+        </div>
+    </div>
+
 
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
+        const modal = document.getElementById('createCommunityModal');
+
 
         menuToggle.addEventListener('click', function() {
             sidebar.classList.add('active');
@@ -137,6 +181,20 @@
                 body.classList.remove('sidebar-open');
             }
         });
+        
+        window.abrirModal = function() {
+            modal.classList.add('active');
+        }
+
+        window.fecharModal = function() {
+            modal.classList.remove('active');
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
     </script>
 </body>
 </html>

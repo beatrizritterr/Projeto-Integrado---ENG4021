@@ -7,7 +7,9 @@ from .models import (
     Evento, 
     Postagem,
     Comunidade,
-    Comentario
+    Comentario,
+    UserProfile,
+    MensagemComunidade
 )
 from django.contrib.auth.forms import UserCreationForm 
 
@@ -45,7 +47,31 @@ class PostagemForm(forms.ModelForm):
 class ComentarioForm(forms.ModelForm):
     class Meta:
         model = Comentario
-        fields = ['texto'] 
+        fields = ['conteudo'] 
         widgets = {
-            'texto': forms.Textarea(attrs={'placeholder': 'Escreva um comentário...', 'rows': 2}),        
+            'conteudo': forms.Textarea(attrs={'placeholder': 'Escreva um comentário...', 'rows': 2}),        
             }
+        
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['foto_perfil']
+
+class ComunidadeForm(forms.ModelForm):
+    class Meta:
+        model = Comunidade
+        fields = ['nome', 'descricao', 'icone']
+        
+        widgets = {
+            'descricao': forms.Textarea(attrs={'rows': 4}),
+        }
+
+
+class MensagemForm(forms.ModelForm):
+    class Meta:
+        model = MensagemComunidade
+        fields = ['conteudo']
+        
+        widgets = {
+            'conteudo': forms.TextInput(attrs={'placeholder': 'Digite sua mensagem...', 'autocomplete': 'off'}),
+        }

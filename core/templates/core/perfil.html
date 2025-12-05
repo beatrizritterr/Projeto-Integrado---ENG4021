@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuário | Vinculou</title>
     <link rel="stylesheet" href="{% static 'css/estilo/perfil.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -22,7 +23,7 @@
                 <span class="menu-text">Filtros</span>
             </a>
             
-            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item ">
                 <span class="menu-icon">⭐</span>
                 <span class="menu-text">Avaliações</span>
             </a>
@@ -37,7 +38,7 @@
                 <span class="menu-text">Calendário</span>
             </a>
             
-            <a href="{% url 'perfil' %}" class="menu-item">
+            <a href="{% url 'perfil' %}" class="menu-item active">
                 <span class="menu-icon">👤</span>
                 <span class="menu-text">Perfil</span>
             </a>
@@ -61,54 +62,81 @@
         </div>
         
        <div class="user-area">
-    <div class="notification-icon">🔔</div>
-    
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'perfil' %}">
-            <div class="profile-icon">👤</div>
-        </a>
-    {% else %}
-        <a href="{% url 'login' %}">
-            <div class="profile-icon">👤</div>
-        </a>
-    {% endif %}
-</div>
+            <div class="notification-icon">🔔</div>
+            
+            {% if request.user.is_authenticated %}
+                <div class="profile-dropdown-container">
+                    <div class="profile-icon" id="profileToggle">👤</div>
+                    
+                    <div class="dropdown-menu" id="userMenu">
+                        <p>Logado como: <strong>{{ request.user.username }}</strong></p>
+                        <a href="{% url 'perfil' %}">Meu Perfil</a>
+                        <hr>
+                        <form method="post" action="{% url 'logout' %}" style="display: block;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn" style="background:none; border:none; padding:0; cursor:pointer; color: #dc3545;">
+                                Sair / Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'login' %}">
+                    <div class="profile-icon">👤</div>
+                </a>
+            {% endif %}
+        </div>
     </div>
 
     <div class="principal">
         <h1 class="titulo-principal">Perfil do Usuário</h1>
         
         <div class="perfil-card">
-            <div class="perfil-foto">
-                <img src="{% static 'img/usuario.png' %}" alt="Foto de perfil" onerror="this.style.display='none'; document.querySelector('.foto-placeholder').style.display='flex';">
-                <div class="foto-placeholder" style="display: none;">👤</div>
-            </div>
+    
+            <form method="post" enctype="multipart/form-data" action="{% url 'perfil' %}" class="perfil-foto-container">
+                {% csrf_token %}
+
+                <div class="perfil-foto" id="photoArea">
+                    <img id="profileImage" src="{{ profile_data.foto_perfil.url }}" alt="Foto de perfil">
+                    
+                    <button type="button" class="upload-trigger" onclick="document.getElementById('id_foto_perfil').click()">
+                        <i class="fas fa-camera"></i> 
+                    </button>
+                </div>
+
+                <div style="display: none;">
+                    {{ profile_form.foto_perfil }}
+                </div>
+                
+                <button type="submit" id="saveProfileBtn" style="display:none; margin-top: 10px;" class="editar-btn">Salvar Foto</button>
+            </form>
+
 
             <div class="perfil-info">
-    <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
-    <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
+                <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
+                <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
 
-    <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
-    <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
-    
-    <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
-    <p class="bio">
-        {{ info_extra.bio }} 
-    </p>
-    
-    <div style="margin-top: 15px; display: flex; gap: 10px;">
-    <button class="editar-btn">Editar perfil</button>
-    
-    {% if request.user.is_authenticated %}
-        <form method="post" action="{% url 'logout' %}" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="logout-btn" style="background-color: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
-                Sair (Logout)
-            </button>
-        </form>
-    {% endif %}
-</div>
-</div>
+                <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
+                <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
+                
+                <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
+                <p class="bio">
+                    {{ info_extra.bio }} 
+                </p>
+                
+                <div style="margin-top: 15px; display: flex; gap: 10px;">
+                    <button class="editar-btn" id="editInfoBtn">Editar perfil</button>
+                    
+                    {% if request.user.is_authenticated %}
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn" style="background-color: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                Sair
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
         </div>
 
         <div class="atividades-container">
@@ -130,10 +158,10 @@
                     <p>Nenhuma avaliação publicada recentemente.</p>
                 </div>
             {% endfor %}
-            </div>
+        </div>
     </div>
 
-   <script>
+    <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
@@ -173,44 +201,61 @@
 
 
         document.addEventListener('DOMContentLoaded', function() {
+            const fotoPerfil = document.querySelector('.perfil-foto img');
+            const placeholder = document.querySelector('.foto-placeholder');
+            const editarBtn = document.getElementById('editInfoBtn'); 
 
             const profileToggle = document.getElementById('profileToggle'); 
             const userMenu = document.getElementById('userMenu'); 
-            const editarBtn = document.querySelector('.editar-btn'); 
-
-            const fotoPerfil = document.querySelector('.perfil-foto img');
-            const placeholder = document.querySelector('.foto-placeholder');
             
+            const fileInput = document.getElementById('id_foto_perfil');
+            const saveButton = document.getElementById('saveProfileBtn');
+            const profileImage = document.getElementById('profileImage');
+
+
             if (fotoPerfil) {
                 fotoPerfil.onerror = function() {
                     fotoPerfil.style.display = 'none';
                     if (placeholder) placeholder.style.display = 'flex';
                 };
-                if (fotoPerfil.src.includes('usuario.png')) {
+                if (fotoPerfil.src.includes('perfil_padrao.png') || fotoPerfil.src.includes('usuario.png')) {
                     fotoPerfil.style.display = 'none';
                     if (placeholder) placeholder.style.display = 'flex';
                 }
             }
             
+            if (fileInput) {
+                fileInput.addEventListener('change', function(e) {
+                    const [file] = e.target.files;
+                    if (file) {
+                        profileImage.src = URL.createObjectURL(file);
+                    }
+                    saveButton.style.display = 'inline-block';
+                });
+            }
+            
+          
             if (profileToggle && userMenu) { 
                 profileToggle.addEventListener('click', function(e) {
                     userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
                     e.stopPropagation(); 
                 });
 
-                if (editarBtn) {
-                     editarBtn.addEventListener('click', function() {
-                        alert('Funcionalidade de Edição de Perfil acionada! (Backend pendente)');
-                    });
-                }
-                
                 document.addEventListener('click', function(e) {
                     if (!userMenu.contains(e.target) && e.target.id !== 'profileToggle') {
                         userMenu.style.display = 'none';
                     }
                 });
             }
+            
+            if (editarBtn) {
+                 editarBtn.addEventListener('click', function() {
+                    alert('Funcionalidade de Edição de Informações acionada! (Backend pendente)');
+                });
+            }
+
         });
+        
     </script>
 </body>
 </html>
