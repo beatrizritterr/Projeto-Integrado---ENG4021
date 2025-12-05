@@ -106,10 +106,16 @@
                         <span class="item-titulo">Ajuda</span>
                         <img id="icone" src="{% static 'img/image copy 10.png' %}">
                     </a>
-                    <a href="{% url 'logout' %}" class="itens">
-                        <span class="item-titulo">Sair</span>
-                        <img id="icone" src="{% static 'img/image copy 11.png' %}">
-                    </a>
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}" style="width: 100%; display: block">
+                         {% csrf_token %} 
+    
+                         <button type="submit" class="itens" style="background: none; border: none; cursor: pointer;">
+                            <span class="item-titulo">Sair</span>
+                             <img id="icone" src="{% static 'img/image copy 11.png' %}">
+                         </button>
+                    </form>
+                    {% endif %}
                 </div>
             </div>
         </main>

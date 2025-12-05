@@ -68,53 +68,70 @@
         </div>
     </div>
 
-    <div class="principal">
-        <h1 class="titulo-principal">Provas Antigas</h1>
-        
-        <div class="filtros-container">
-            <div class="filtro-item">
-                <label for="disciplina">Escolha a disciplina:</label>
-                <select id="disciplina" class="filtro-select">
-                <option value="">Selecione uma disciplina</option>
-                {% for disc in disciplinas %}
-                <option value="{{ disc.id }}">{{ disc.nome }} ({{ disc.codigo }})</option>
-                {% endfor %}
-                 </select>
+<div class="principal">
+    <h1 class="titulo-principal">Provas Antigas</h1>
+
+    <div class="upload-container"> 
+        <h3>Adicionar Nova Prova</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Disciplina:</label>
+                {{ form.disciplina }}
             </div>
-            
+            <div class="form-group">
+                <label>Grau da Prova:</label>
+                {{ form.grau }}
+            </div>
+            <div class="form-group">
+                <label>Período:</label>
+                {{ form.periodo }}
+            </div>
+            <div class="form-group">
+                <label>Arquivo (PDF):</label>
+                {{ form.arquivo }}
+            </div>
+            <button type="submit" class="btn-enviar" style="margin-top: 10px;">Enviar Prova</button>
+        </form>
+    </div>
+
+    <div class="filtros-container">
+        <form method="get">
             <div class="filtro-item">
-    <label for="disciplina">Escolha a disciplina:</label>
-    <select id="disciplina" class="filtro-select">
-        <option value="">Selecione uma disciplina</option>
-        {% for disc in disciplinas %}
-            <option value="{{ disc.id }}">{{ disc.nome }} ({{ disc.codigo }})</option>
-        {% endfor %}
-    </select>
-</div>
-        </div>
-        
-       <div class="resultados-container">
-    <div class="periodo-grid">
-        
-        {% for prova_periodo in provas_antigas %}
-            <div class="periodo-item">
-                <h3 class="periodo-titulo">{{ prova_periodo.disciplina.nome }} - {{ prova_periodo.periodo_semestral }}</h3>
-                
-                <ul class="prova-lista">
-                    {% for arquivo in prova_periodo.arquivo_set.all %}
-                        <li class="prova-item">
-                            <a href="{{ arquivo.arquivo.url }}" class="prova-link">
-                                <img class="img-download" src="{% static 'img/download-icon.png' %}" alt="download-prova">
-                                {{ arquivo.tipo_prova }}
+                <label for="filtro_disc">Buscar por disciplina:</label>
+                <select name="disciplina" id="filtro_disc" class="filtro-select" onchange="this.form.submit()">
+                    <option value="">Todas as disciplinas</option>
+                    {% for prova in provas %}
+                        {% endfor %}
+                    {% for id, nome, codigo in disciplinas %}
+                        <option value="{{ id }}">{{ nome }} ({{ codigo }})</option>
+                     {% endfor %}
+                </select>
+            </div>
+        </form>
+    </div>
+    
+    <div class="resultados-container">
+        <div class="periodo-grid">
+            {% if provas %}
+                {% for prova in provas %}
+                    <div class="periodo-item" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; background: white;">
+                        <h3 class="periodo-titulo">
+                            {{ prova.disciplina.nome }} - {{ prova.grau }} - {{ prova.periodo }}
+                        </h3>
+                        
+                        <div class="prova-links">
+                            <a href="{{ prova.arquivo.url }}" target="_blank" class="prova-link" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #333;">
+                                <img class="img-download" src="{% static 'img/download-icon.png' %}" alt="PDF" style="width: 20px;">
+                                Baixar Prova ({{ prova.data_upload|date:"d/m/Y" }})
                             </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% empty %}
-            <p>Nenhuma prova antiga encontrada. Adicione provas via painel de administração.</p>
-        {% endfor %}
-        
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Nenhuma prova encontrada.</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 

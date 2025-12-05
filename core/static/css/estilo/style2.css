@@ -86,6 +86,17 @@ body {
     flex-wrap: wrap;
 }
 
+.upload-container {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .filtro-item {
     flex: 1;
     min-width: 250px;
@@ -97,6 +108,7 @@ body {
     font-weight: 500;
     color: #002D5B;
 }
+
 
 .filtro-select {
     width: 100%;
@@ -211,6 +223,7 @@ body {
     z-index: 1000;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .sidebar.active {
     left: 0;

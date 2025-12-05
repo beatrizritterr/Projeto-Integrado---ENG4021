@@ -2,16 +2,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
-from .forms import CustomUserCreationForm, AvaliacaoForm, EventoForm 
+from .forms import CustomUserCreationForm, AvaliacaoForm, EventoForm, ProvaAntigaForm
 from .models import Disciplina, ProvaAntiga
 from django.contrib.auth.decorators import login_required
-from .models import Avaliacao 
+from .models import Avaliacao, ProvaAntiga
 from .models import Evento
 import calendar
 from datetime import datetime, date, timedelta 
 from django.contrib import messages
 from .models import Comunidade 
-from .models import Postagem, Comunidade
+from .models import Postagem, Comunidade, Perfil, Avaliacao
+from .forms import UserUpdateForm, PerfilUpdateForm
+from django.db.models import Q
+
 
 User = get_user_model() 
 
@@ -240,3 +243,77 @@ def filtropost(request):
         'usuario': request.user
     }
     return render(request, 'core/filtropost.html', context) 
+
+
+@login_required 
+def provasantigas(request):
+    if request.method == 'POST':
+        form = ProvaAntigaForm(request.POST, request.FILES) 
+        if form.is_valid():
+            form.save()
+            return redirect('provasantigas')
+    else:
+        form = ProvaAntigaForm()
+
+    disciplina_id = request.GET.get('disciplina')
+    if disciplina_id:
+        provas = ProvaAntiga.objects.filter(disciplina_id=disciplina_id).order_by('-periodo')
+    else:
+        provas = ProvaAntiga.objects.all().order_by('-periodo')
+
+    context = {
+        'form': form,
+        'provas': provas,
+        'disciplinas': ProvaAntiga.objects.values_list('disciplina__id', 'disciplina__nome', 'disciplina__codigo').distinct()
+    }
+    return render(request, 'core/provasantigas.html', context)
+
+
+
+@login_required
+def perfil(request):
+    perfil_usuario, created = Perfil.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = PerfilUpdateForm(request.POST, instance=perfil_usuario)
+        
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            return redirect('perfil') 
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = PerfilUpdateForm(instance=perfil_usuario)
+
+    atividades = Avaliacao.objects.filter(usuario=request.user).order_by('-data_criacao')[:5]
+
+    context = {
+        'usuario': request.user,
+        'u_form': u_form,
+        'p_form': p_form,
+        'atividades': atividades,
+        'info_extra': perfil_usuario 
+    }
+
+    return render(request, 'core/perfil.html', context)
+
+
+def buscar_perfis(request):
+    query = request.GET.get('q') 
+    perfis = Perfil.objects.exclude(user=request.user).select_related('user')
+    
+    if query:
+        perfis = perfis.filter(
+            Q(bio__icontains=query) | 
+            Q(curso__icontains=query) | 
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query)
+        ).distinct()
+
+    context = {
+        'lista_perfis': perfis,
+        'termo_busca': query 
+    }
+    return render(request, 'core/busca_perfis.html', context)

@@ -18,4 +18,5 @@ urlpatterns = [
     path('evento/editar/<int:event_id>/', views.editar_evento, name='editar_evento'),
     path('evento/excluir/<int:event_id>/', views.excluir_evento, name='excluir_evento'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
+    path('buscapessoa/', views.buscar_perfis, name='buscar_perfis'),
 ]

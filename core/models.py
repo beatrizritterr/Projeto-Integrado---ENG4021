@@ -2,6 +2,10 @@
 
 from django.db import models
 from django.contrib.auth import get_user_model
+import os
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 User = get_user_model()
 
@@ -51,19 +55,6 @@ class ProvaAntiga(models.Model):
     def __str__(self):
         return f'{self.disciplina.nome} - {self.periodo_semestral}'
 
-
-class ArquivoProva(models.Model):
-    """Representa o arquivo real (P1, P2, P3) que pode ser baixado."""
-    
-    prova_antiga = models.ForeignKey(ProvaAntiga, on_delete=models.CASCADE)
-    
-    tipo_prova = models.CharField(max_length=10) 
-    
-    arquivo = models.FileField(upload_to='provas/') 
-
-    def __str__(self):
-        return f'{self.prova_antiga.disciplina.nome} - {self.tipo_prova}'
-    
 
 class Evento(models.Model):
     
@@ -119,3 +110,52 @@ class Comentario(models.Model):
     
     def __str__(self):
         return f'Comentário de {self.autor.username} em "{self.postagem.titulo}"'
+
+
+def renomear_prova(instance, filename):
+    """
+    Renomeia o arquivo para o padrão: NomeDisciplina_Grau_Periodo.extensao
+    Exemplo: Calculo1_P1_2023.1.pdf
+    """
+    ext = filename.split('.')[-1]
+    nome_disciplina = instance.disciplina.nome.replace(' ', '')
+    novo_nome = f"{nome_disciplina}_{instance.grau}_{instance.periodo}.{ext}"
+    return os.path.join('provas_antigas/', novo_nome)
+
+class ProvaAntiga(models.Model):
+    OPCOES_GRAU = [
+        ('P1', 'P1'),
+        ('P2', 'P2'),
+        ('P3', 'P3'),
+        ('PF', 'PF'),
+        ('2CH', '2ª Chamada'),
+        ('Outro', 'Outro'),
+    ]
+
+    disciplina = models.ForeignKey('Disciplina', on_delete=models.CASCADE)
+    grau = models.CharField(max_length=10, choices=OPCOES_GRAU)
+    periodo = models.CharField(max_length=10, help_text="Ex: 2023.1")
+    arquivo = models.FileField(upload_to=renomear_prova, null=True, blank=True)
+    data_upload = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.disciplina} - {self.grau} ({self.periodo})"
+
+
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    curso = models.CharField(max_length=100, blank=True)
+    periodo = models.CharField(max_length=20, blank=True)
+    bio = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return f'Perfil de {self.user.username}'
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Perfil.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.perfil.save()
