@@ -54,12 +54,27 @@ def _scrape_with_selenium(url, wait_selector_type, wait_selector_value, timeout=
             driver.quit()
 
 def _extract_valid_name(tag):
-    """Extrai e valida um nome de professor de uma tag."""
-    name = tag.text.strip()
-    if len(name.split()) >= 2 and len(name) > 5 and not re.search(r'\d', name):
-        return name
-    return None
+    """Extrai, limpa, valida e FORMATA um nome de professor."""
+    
+    raw_text = tag.text.strip()
+    
+    prefixes_to_remove = [
+        "Nome:", "Nome :", "Docente:", "Docente :", "Professor:", "Professor :",
+    ]
+    
+    cleaned_name = raw_text
+    for prefix in prefixes_to_remove:
+        if cleaned_name.lower().startswith(prefix.lower()):
+            cleaned_name = cleaned_name[len(prefix):].strip()
+            break
 
+    # Filtro básico
+    if len(cleaned_name.split()) >= 2 and len(cleaned_name) > 5 and not re.search(r'\d', cleaned_name):
+        # --- A MUDANÇA ESTÁ AQUI ---
+        # .title() transforma "JOAO SILVA" em "Joao Silva"
+        return cleaned_name.title() 
+    
+    return None
 
 def _extract_layout_eng_mecanica(soup):
     professors_on_page = set()
