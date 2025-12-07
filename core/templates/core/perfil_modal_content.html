@@ -1,0 +1,31 @@
+{% load static %}
+<div class="modal-header-perfil">
+    <img src="{% if profile_data.foto_perfil %}{{ profile_data.foto_perfil.url }}{% else %}{% static 'img/perfil_padrao.png' %}{% endif %}" 
+         alt="{{ perfil_alvo.username }}" 
+         class="modal-profile-img">
+    
+    <h2>{{ perfil_alvo.get_full_name|default:perfil_alvo.username }}</h2>
+    <span class="modal-curso">{{ profile_data.curso|default:"Curso não informado" }} ({{ profile_data.periodo|default:"N/A" }})</span>
+</div>
+
+<div class="modal-body-content-perfil">
+    <h3>Descrição:</h3>
+    <p>{{ profile_data.bio|default:"Nenhuma biografia disponível." }}</p>
+
+    {% if atividades %}
+        <hr>
+        <h3>Últimas 5 Avaliações:</h3>
+        <ul class="lista-atividades-perfil">
+        {% for atividade in atividades %}
+            <li>
+                ⭐ Nota **{{ atividade.nota }}** em **{{ atividade.disciplina.nome }}** (Prof. {{ atividade.professor.nome }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if is_owner %}
+        <hr>
+        <a href="{% url 'perfil' %}" class="btn-editar-modal">Gerenciar Meu Perfil</a>
+    {% endif %}
+</div>

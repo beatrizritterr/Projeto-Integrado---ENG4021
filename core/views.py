@@ -1,4 +1,4 @@
-# ARQUIVO: core/views.py - CÓDIGO CONSOLIDADO FINAL CORRIGIDO
+# ARQUIVO: core/views.py - CÓDIGO CONSOLIDADO FINAL (AJAX MODAL)
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -59,8 +59,8 @@ def cadastro(request):
 @login_required
 def perfil(request):
     """
-    Consolida o Perfil. Lida com a atualização do User (u_form), Profile Data (p_form_data) 
-    e Profile Picture (p_form).
+    Consolida o Perfil do usuário logado. Lida com a atualização do User (u_form), 
+    Profile Data (p_form_data) e Profile Picture (p_form).
     """
     usuario_logado = request.user 
    
@@ -95,6 +95,33 @@ def perfil(request):
         'profile_data': profile_instance,
     }
     return render(request, 'core/perfil.html', context)
+
+
+@login_required
+def perfil_detalhe_ajax(request, pk):
+    """
+    NOVA VIEW: Retorna o conteúdo HTML parcial do perfil para ser carregado via AJAX/Modal.
+    Esta view substitui a necessidade de uma página 'perfil_detalhe.html' completa.
+    """
+    usuario_alvo = get_object_or_404(User, pk=pk)
+    
+    try:
+        profile_alvo = UserProfile.objects.get(user=usuario_alvo)
+    except UserProfile.DoesNotExist:
+        profile_alvo = None 
+
+    atividades = Avaliacao.objects.filter(usuario=usuario_alvo).order_by('-data_criacao')[:5]
+    is_owner = request.user == usuario_alvo
+
+    context = {
+        'perfil_alvo': usuario_alvo,    
+        'profile_data': profile_alvo,   
+        'atividades': atividades,
+        'is_owner': is_owner,
+    }
+    
+    # Renderiza o template parcial (apenas o conteúdo do modal)
+    return render(request, 'core/perfil_modal_content.html', context)
 
 
 def password_reset_dev(request):
@@ -318,7 +345,7 @@ def filtropost(request):
         form_postagem = PostagemForm(request.POST, request.FILES) 
         
         if form_postagem.is_valid():
-            postagem = form_postagem.save(commit=False)
+            postagem = form.save(commit=False)
             postagem.autor = request.user
             postagem.save()
             messages.success(request, "Postagem publicada com sucesso!")
@@ -512,8 +539,8 @@ def chat_comunidade(request, pk):
 
 def busca_perfis(request):
     """
-    Função nova do segundo código: Pesquisa por perfis de usuário usando Q objects.
-    (Assumindo UserProfile como o modelo de perfil)
+    Pesquisa por perfis de usuário usando Q objects. 
+    Usada para renderizar 'busca_perfis.html' (a lista de resultados).
     """
     query = request.GET.get('q') 
     perfis = UserProfile.objects.exclude(user=request.user).select_related('user')

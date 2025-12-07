@@ -71,7 +71,7 @@
 
     <div class="principal">
         <div class="comunidades-container">
-            <form method="GET" action="{% url 'buscar_perfis' %}"> 
+            <form method="GET" action="{% url 'busca_perfis' %}"> 
             <h1 class="titulo-principal">Perfis</h1>
         
                 <div class="search-icon">🔍</div>
@@ -96,9 +96,9 @@
                     <span>{{ perfil_obj.curso|default:"Curso não informado" }}</span>
                 </div>
             </div>
-            <a href="{% url 'perfil_detalhe' perfil_obj.user.pk %}" class="enter-btn">
-                <span>Ver Perfil</span>
-            </a>
+            <button class="enter-btn open-perfil-modal" data-pk="{{ perfil_obj.user.pk }}">
+    <span>Ver Perfil</span>
+</button>
         </div>
     {% empty %}
         <p>Nenhum perfil encontrado. Tente buscar por um nome diferente!</p>
@@ -109,6 +109,14 @@
             </div>
         </div>
     </div>
+    <div id="perfilModal" class="modal-custom-overlay">
+  <div class="modal-content-custom">
+    <span class="close-btn-custom">&times;</span>
+    <div id="modalBodyContent">
+      <p>Carregando perfil...</p>
+    </div>
+  </div>
+</div>
     <script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -146,6 +154,57 @@
                 body.classList.remove('sidebar-open');
             }
         });
+        // Dentro das tags <script> no busca_perfis.html
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (Seu código existente do sidebar) ...
+    
+    // --- LÓGICA DO MODAL AJAX ---
+    const modal = document.getElementById('perfilModal');
+    const modalBody = document.getElementById('modalBodyContent');
+    const closeBtn = document.querySelector('.close-btn-custom');
+
+    document.querySelectorAll('.open-perfil-modal').forEach(button => {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            const userId = this.getAttribute('data-pk');
+            
+            // 1. Constrói a URL usando o nome 'perfil_detalhe_ajax'
+            // O replace('0', userId) substitui o placeholder '0' pelo PK real.
+            const url = "{% url 'perfil_detalhe_ajax' pk=0 %}".replace('0', userId); 
+            
+            // 2. Limpa e mostra o modal enquanto carrega
+            modalBody.innerHTML = '<p style="text-align:center;">Carregando...</p>';
+            modal.style.display = 'flex'; 
+            
+            // 3. Faz a chamada AJAX
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar o recurso.');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    modalBody.innerHTML = html; // Insere o HTML parcial
+                })
+                .catch(error => {
+                    console.error('Erro de rede ou servidor:', error);
+                    modalBody.innerHTML = '<p style="text-align:center; color:red;">Não foi possível carregar o perfil. Erro: ' + error.message + '</p>';
+                });
+        });
+    });
+
+    // 4. Lógica para fechar o modal
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
     </script>
     </body>
 </html>
