@@ -418,3 +418,79 @@ body.sidebar-open {
             border-color: #dc3545 !important;
             color: white !important;
         }
+
+/* CSS BÁSICO DO MODAL (ADICIONE NO SEU ARQUIVO CSS) */
+
+.modal-custom-overlay {
+    display: none; /* Escondido por padrão */
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.7); /* Fundo preto semi-transparente */
+    justify-content: center; /* Centraliza o conteúdo (se display: flex) */
+    align-items: center; /* Centraliza o conteúdo (se display: flex) */
+}
+
+.modal-content-custom {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% do topo e centralizado */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 80%; /* Largura padrão */
+    max-width: 500px; /* Largura máxima */
+    position: relative;
+    max-height: 80vh; /* Altura máxima para permitir scroll */
+    overflow-y: auto;
+}
+
+.close-btn-custom {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn-custom:hover,
+.close-btn-custom:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+/* Estilos para o conteúdo interno do modal (perfil_modal_content.html) */
+.modal-profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.modal-header-perfil {
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.lista-atividades-perfil {
+    list-style: none;
+    padding: 0;
+}
+
+.btn-editar-modal {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 15px;
+}
