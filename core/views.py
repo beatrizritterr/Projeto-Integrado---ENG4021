@@ -1,10 +1,11 @@
-# ARQUIVO: core/views.py - CÓDIGO CONSOLIDADO E CORRIGIDO
+# ARQUIVO: core/views.py - CÓDIGO CONSOLIDADO FINAL CORRIGIDO
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.db.models import Q 
 import calendar
 from datetime import datetime, date, timedelta 
 
@@ -14,9 +15,12 @@ from .forms import (
     EventoForm, 
     PostagemForm,
     ComentarioForm,
-    ProfileUpdateForm,
+    ProfileUpdateForm, 
     ComunidadeForm,
-    MensagemForm
+    MensagemForm,
+    ProvaAntigaForm, 
+    UserUpdateForm,  
+    PerfilUpdateForm, 
 )
 
 from .models import (
@@ -29,12 +33,12 @@ from .models import (
     Comentario,
     Departamento,
     Professor,
-    UserProfile,
-    MensagemComunidade
+    UserProfile, 
+    MensagemComunidade,
+    Perfil 
 )
 
 User = get_user_model()
-
 
 
 def cadastro(request):
@@ -54,35 +58,40 @@ def cadastro(request):
 
 @login_required
 def perfil(request):
+    """
+    Consolida o Perfil. Lida com a atualização do User (u_form), Profile Data (p_form_data) 
+    e Profile Picture (p_form).
+    """
     usuario_logado = request.user 
    
     profile_instance, created = UserProfile.objects.get_or_create(user=usuario_logado)
     
     if request.method == 'POST':
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=profile_instance)
+        u_form = UserUpdateForm(request.POST, instance=usuario_logado)
+        p_form_data = PerfilUpdateForm(request.POST, instance=profile_instance) 
         
-        if p_form.is_valid():
+        if u_form.is_valid() and p_form_data.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form_data.save()
             p_form.save()
-            messages.success(request, 'Sua foto de perfil foi atualizada!')
+            messages.success(request, 'Seu perfil foi atualizado com sucesso!')
             return redirect('perfil') 
         else:
-            messages.error(request, 'Erro ao atualizar a foto. Verifique o arquivo.')
+            messages.error(request, 'Erro ao atualizar o perfil. Verifique os campos.')
     else:
         p_form = ProfileUpdateForm(instance=profile_instance)
+        u_form = UserUpdateForm(instance=usuario_logado)
+        p_form_data = PerfilUpdateForm(instance=profile_instance)
 
     atividades = Avaliacao.objects.filter(usuario=usuario_logado).order_by('-data_criacao')[:5] 
-
-    info_extra = {
-        'curso': 'Engenharia de Computação', 
-        'periodo': '5º',
-        'bio': 'Apaixonado por tecnologia e inovação...'
-    }
 
     context = {
         'usuario': usuario_logado,
         'atividades': atividades, 
-        'info_extra': info_extra,
         'profile_form': p_form,      
+        'u_form': u_form,            
+        'p_form_data': p_form_data,  
         'profile_data': profile_instance,
     }
     return render(request, 'core/perfil.html', context)
@@ -129,7 +138,6 @@ def avaliacaoprof(request):
         'usuario': request.user
     }
     return render(request, 'core/avaliacaoprof.html', context)
-
 
 
 @login_required 
@@ -203,7 +211,15 @@ def adicionar_evento(request):
 def editar_evento(request, event_id):
     evento = get_object_or_404(Evento, pk=event_id, usuario=request.user)
     
-    messages.info(request, f"Função de edição para o evento: {evento.titulo}.")
+    if request.method == 'POST': 
+        form = EventoForm(request.POST, instance=evento)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Evento atualizado com sucesso!")
+        else:
+            messages.error(request, "Erro ao editar evento. Verifique os campos.")
+            
     return redirect('home')
 
 @login_required
@@ -258,17 +274,42 @@ def comunidades(request):
     return render(request, 'core/comunidades.html', context)
 
 def provasantigas(request):
+    """
+    Função de provas antigas consolidada, com lógica de upload e filtro.
+    CORREÇÃO APLICADA: 'periodo_semestral' substituído por 'periodo'.
+    """
+    if request.method == 'POST': 
+        form = ProvaAntigaForm(request.POST, request.FILES) 
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Prova antiga enviada com sucesso!")
+            return redirect('provasantigas')
+        else:
+            messages.error(request, "Erro ao enviar prova antiga. Verifique os campos.")
+    else:
+        form = ProvaAntigaForm()
+        
+    disciplina_id = request.GET.get('disciplina')
+    if disciplina_id:
+        # CORRIGIDO: Usando 'periodo' ao invés de 'periodo_semestral'
+        provas_antigas_qs = ProvaAntiga.objects.filter(disciplina_id=disciplina_id).order_by('-periodo')
+    else:
+        # CORRIGIDO: Usando 'periodo' ao invés de 'periodo_semestral'
+        provas_antigas_qs = ProvaAntiga.objects.all().order_by('-periodo', 'disciplina__nome') 
+
+    provas_antigas = provas_antigas_qs.select_related('disciplina').prefetch_related('arquivo_set')
+    
     disciplinas = Disciplina.objects.all().order_by('nome')
-    
-    provas_antigas = ProvaAntiga.objects.all().select_related('disciplina').prefetch_related('arquivo_set').order_by('-periodo_semestral', 'disciplina__nome')
-    
+    disciplinas_filtro = ProvaAntiga.objects.values_list('disciplina__id', 'disciplina__nome', 'disciplina__codigo').distinct()
+
     context = {
         'disciplinas': disciplinas,
         'provas_antigas': provas_antigas,
-        'usuario': request.user
+        'usuario': request.user,
+        'form': form, 
+        'disciplinas_filtro': disciplinas_filtro 
     }
     return render(request, 'core/provasantigas.html', context)
-
 
 
 @login_required 
@@ -467,3 +508,26 @@ def chat_comunidade(request, pk):
         'usuario': request.user 
     }
     return render(request, 'core/chat_comunidade.html', context)
+
+
+def busca_perfis(request):
+    """
+    Função nova do segundo código: Pesquisa por perfis de usuário usando Q objects.
+    (Assumindo UserProfile como o modelo de perfil)
+    """
+    query = request.GET.get('q') 
+    perfis = UserProfile.objects.exclude(user=request.user).select_related('user')
+    
+    if query:
+        perfis = perfis.filter(
+            Q(bio__icontains=query) | 
+            Q(curso__icontains=query) | 
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query)
+        ).distinct()
+
+    context = {
+        'lista_perfis': perfis,
+        'termo_busca': query 
+    }
+    return render(request, 'core/busca_perfis.html', context)

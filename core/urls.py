@@ -28,6 +28,8 @@ urlpatterns = [
     path('comunidades/criar/', views.criar_comunidade, name='criar_comunidade'), 
     path('comunidades/inscrever/<int:pk>/', views.inscrever_comunidade, name='inscrever_comunidade'), 
     path('comunidades/chat/<int:pk>/', views.chat_comunidade, name='chat_comunidade'),
+    path('busca_perfis/', views.busca_perfis, name='busca_perfis'),
+
 ]
 
 from django.conf import settings

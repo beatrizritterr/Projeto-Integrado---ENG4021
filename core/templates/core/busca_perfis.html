@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Perfis | Vinculou</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/comunidades.css' %}">
+</head>
+<body>
+       <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">            <div class="sidebar-title">Vinculou</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="{% url 'filtrobusca' %}" class="menu-item">
+                <span class="menu-icon">💬</span>
+                <span class="menu-text">Filtros</span>
+            </a>
+            
+            <a href="{% url 'avaliacaoprof' %}" class="menu-item active">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-text">Avaliações</span>
+            </a>
+            
+            <a href="{% url 'provasantigas' %}" class="menu-item">
+                <span class="menu-icon">📚</span>
+                <span class="menu-text">Provas Antigas</span>
+            </a>
+            
+            <a href="{% url 'home' %}" class="menu-item ">
+                <span class="menu-icon">🗓️</span>
+                <span class="menu-text">Calendário</span>
+            </a>
+            
+            <a href="{% url 'perfil' %}" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Perfil</span>
+            </a>
+        
+            <a href="{% url 'login' %}" class="menu-item">
+                <span class="menu-icon">👤</span>
+                <span class="menu-text">Login</span>
+            </a>
+            
+            <a href="{% url 'configuracoes' %}" class="menu-item">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-text">Configurações</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="header-container">
+        <div class="logo-area">
+            <div class="menu-icon hamburger" id="menuToggle">☰</div>
+                <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">        </div>
+        
+        <div class="search-input-desktop">
+            <div class="search-icon-desktop">🔍</div>
+            <input type="text" placeholder="Buscar...">
+        </div>
+        
+        <div class="user-area">
+            <div class="notification-icon">🔔</div>
+            <div class="profile-icon">👤</div>
+        </div>
+    </div>
+
+    <div class="principal">
+        <div class="comunidades-container">
+            <form method="GET" action="{% url 'buscar_perfis' %}"> 
+            <h1 class="titulo-principal">Perfis</h1>
+        
+                <div class="search-icon">🔍</div>
+        
+                <input type="text" 
+                     name="q" 
+                     placeholder="Digite o nome..." 
+                     value="{{ termo_busca|default:'' }}"
+        >
+        
+                 <button type="submit" style="display:none;"></button>
+            </form>
+             </div>
+
+            <div class="communities-grid">
+    {% for perfil_obj in lista_perfis %} <div class="community-card">
+            <div class="community-left">
+                <img src="{% static 'img/usuario.png' %}" alt="{{ perfil_obj.user.username }}">
+                
+                <div class="community-info">
+                    <h3>{{ perfil_obj.user.first_name|default:perfil_obj.user.username }}</h3>
+                    <span>{{ perfil_obj.curso|default:"Curso não informado" }}</span>
+                </div>
+            </div>
+            <a href="{% url 'perfil_detalhe' perfil_obj.user.pk %}" class="enter-btn">
+                <span>Ver Perfil</span>
+            </a>
+        </div>
+    {% empty %}
+        <p>Nenhum perfil encontrado. Tente buscar por um nome diferente!</p>
+    {% endfor %}
+</div>
+            <div class="suggestions">
+                <button class="sugestoes-btn">➕ Sugestões</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
+
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            body.classList.add('sidebar-open');
+        });
+
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            body.classList.remove('sidebar-open');
+        });
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+                body.classList.remove('sidebar-open');
+            }
+        });
+    </script>
+    </body>
+</html>
