@@ -25,6 +25,7 @@ urlpatterns = [
     
     path('perfil/editar/', views.editar_perfil, name='editar_perfil'),
     path('perfil/foto/deletar/', views.deletar_foto_perfil, name='deletar_foto_perfil'),
+    path('perfil/detalhes/editar/', views.editar_perfil_detalhes, name='editar_perfil_detalhes'),
 
     # Eventos (Home/Calendário)
     path('evento/adicionar/', views.adicionar_evento, name='adicionar_evento'),

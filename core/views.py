@@ -558,3 +558,35 @@ def busca_perfis(request):
         'termo_busca': query 
     }
     return render(request, 'core/busca_perfis.html', context)
+
+@login_required
+def editar_perfil_detalhes(request):
+    """
+    View dedicada para edição dos campos de texto do User e UserProfile.
+    """
+    usuario_logado = request.user 
+    profile_instance, created = UserProfile.objects.get_or_create(user=usuario_logado)
+    
+    # Forms para edição:
+    u_form = UserUpdateForm(instance=usuario_logado) # Nome, Email
+    p_form_data = PerfilUpdateForm(instance=profile_instance) # Curso, Bio, Periodo
+
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=usuario_logado)
+        p_form_data = PerfilUpdateForm(request.POST, instance=profile_instance)
+        
+        if u_form.is_valid() and p_form_data.is_valid():
+            u_form.save()
+            p_form_data.save()
+            messages.success(request, 'Informações de perfil atualizadas com sucesso!')
+            return redirect('perfil')
+        else:
+            messages.error(request, 'Erro ao salvar. Verifique os campos.')
+
+    context = {
+        'usuario': usuario_logado,
+        'u_form': u_form,
+        'p_form_data': p_form_data,
+        'profile_data': profile_instance,
+    }
+    return render(request, 'core/editar_perfil_detalhes.html', context)

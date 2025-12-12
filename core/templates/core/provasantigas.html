@@ -12,7 +12,7 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="img/image-removebg-preview.png" alt="Logo" class="sidebar-logo">
+            <img src="{% static 'img/image-removebg-preview.png' %}" alt="Logo" class="sidebar-logo">
             <div class="sidebar-title">Vinculou</div>
         </div>
         
@@ -57,7 +57,7 @@
     <div class="header-container">
         <div class="logo-area">
             <div class="menu-icon hamburger" id="menuToggle">☰</div>
-            <img id="logo" src="img/image-removebg-preview.png" alt="Logo Vinculou">
+            <img id="logo" src="{% static 'img/image-removebg-preview.png' %}" alt="Logo Vinculou">
         </div>
         
       
@@ -81,16 +81,7 @@
                 {% endfor %}
                  </select>
             </div>
-            
-            <div class="filtro-item">
-    <label for="disciplina">Escolha a disciplina:</label>
-    <select id="disciplina" class="filtro-select">
-        <option value="">Selecione uma disciplina</option>
-        {% for disc in disciplinas %}
-            <option value="{{ disc.id }}">{{ disc.nome }} ({{ disc.codigo }})</option>
-        {% endfor %}
-    </select>
-</div>
+         
         </div>
         
        <div class="resultados-container">
