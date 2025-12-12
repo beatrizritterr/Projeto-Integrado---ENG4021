@@ -91,6 +91,14 @@
     <div class="principal">
         <h1 class="titulo-principal">Perfil do Usuário</h1>
         
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <div class="perfil-card">
     
             <form method="post" enctype="multipart/form-data" action="{% url 'perfil' %}" class="perfil-foto-container">
@@ -113,25 +121,34 @@
 
 
             <div class="perfil-info">
-                <h1>{{ usuario.first_name|default:usuario.username }}</h1> 
+                <h1>{{ usuario.first_name|default:usuario.username }} {{ usuario.last_name }}</h1> 
                 <p><strong>Nome de Usuário:</strong> {{ usuario.username }}</p>
 
-                <p><strong>Curso:</strong> {{ info_extra.curso }}</p>
-                <p><strong>Período:</strong> {{ info_extra.periodo }}</p>
+                <p><strong>Curso:</strong> {{ profile_data.curso|default:"Não informado" }}</p>
+                <p><strong>Período:</strong> {{ profile_data.periodo|default:"Não informado" }}</p>
                 
                 <p><strong>Email:</strong> {{ usuario.email|default:"Não cadastrado" }}</p>
                 <p class="bio">
-                    {{ info_extra.bio }} 
+                    {{ profile_data.bio|default:"Sem biografia." }}
                 </p>
                 
                 <div style="margin-top: 15px; display: flex; gap: 10px;">
-                    <button class="editar-btn" id="editInfoBtn">Editar perfil</button>
+                    <a href="{% url 'editar_perfil_detalhes' %}">
+                        <button class="editar-btn">Editar perfil</button>
+                    </a>
                     
                     {% if request.user.is_authenticated %}
                         <form method="post" action="{% url 'logout' %}" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit" class="logout-btn" style="background-color: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
                                 Sair
+                            </button>
+                        </form>
+                        
+                        <form method="post" action="{% url 'deletar_foto_perfil' %}" style="display: inline;" id="deletePhotoForm">
+                            {% csrf_token %}
+                            <button type="submit" id="deleteProfileBtn" style="display:none; background-color: #6c757d; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                                Remover Foto
                             </button>
                         </form>
                     {% endif %}
@@ -203,8 +220,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const fotoPerfil = document.querySelector('.perfil-foto img');
             const placeholder = document.querySelector('.foto-placeholder');
-            const editarBtn = document.getElementById('editInfoBtn'); 
-
+            const deleteProfileBtn = document.getElementById('deleteProfileBtn'); // Novo botão
+            
             const profileToggle = document.getElementById('profileToggle'); 
             const userMenu = document.getElementById('userMenu'); 
             
@@ -213,28 +230,35 @@
             const profileImage = document.getElementById('profileImage');
 
 
-            if (fotoPerfil) {
-                fotoPerfil.onerror = function() {
-                    fotoPerfil.style.display = 'none';
-                    if (placeholder) placeholder.style.display = 'flex';
-                };
-                if (fotoPerfil.src.includes('perfil_padrao.png') || fotoPerfil.src.includes('usuario.png')) {
-                    fotoPerfil.style.display = 'none';
-                    if (placeholder) placeholder.style.display = 'flex';
+            // 1. Lógica para Placeholder e Botão de Deletar
+            if (fotoPerfil && profileImage) {
+                // Checa se o src da imagem é a padrão (assumindo que 'perfil_padrao.png' está no default)
+                const isDefaultPhoto = profileImage.src.includes('perfil_padrao.png') || profileImage.src.includes('usuario.png');
+                
+                if (isDefaultPhoto) {
+                    // Esconde o botão de deletar se for a foto padrão
+                    if (deleteProfileBtn) deleteProfileBtn.style.display = 'none';
+                } else {
+                    // Mostra o botão de deletar se houver uma foto real
+                    if (deleteProfileBtn) deleteProfileBtn.style.display = 'inline-block';
                 }
             }
             
+            // 2. Lógica de Upload e Pré-visualização
             if (fileInput) {
                 fileInput.addEventListener('change', function(e) {
                     const [file] = e.target.files;
                     if (file) {
                         profileImage.src = URL.createObjectURL(file);
                     }
+                    // Mostra o botão Salvar Foto
                     saveButton.style.display = 'inline-block';
+                    // Esconde o botão Deletar para evitar confusão no upload
+                    if (deleteProfileBtn) deleteProfileBtn.style.display = 'none';
                 });
             }
             
-          
+            // 3. Lógica do Dropdown
             if (profileToggle && userMenu) { 
                 profileToggle.addEventListener('click', function(e) {
                     userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
@@ -248,12 +272,8 @@
                 });
             }
             
-            if (editarBtn) {
-                 editarBtn.addEventListener('click', function() {
-                    alert('Funcionalidade de Edição de Informações acionada! (Backend pendente)');
-                });
-            }
-
+            // 4. Remoção do alerta no botão Editar perfil (agora é um link)
+            // A lógica de click do editarBtn foi removida, pois ele agora é um <a> tag.
         });
         
     </script>

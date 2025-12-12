@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <link rel="stylesheet" href="{% static 'css/estilo/perfil.css' %}">
+</head>
+<body>
+    <div class="principal">
+        <div class="perfil-card" style="max-width: 600px; margin: 40px auto; padding: 20px;">
+            <h1 class="titulo-principal">Editar Suas Informações</h1>
+            
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form method="post" action="{% url 'editar_perfil_detalhes' %}">
+                {% csrf_token %}
+
+                <h2>Dados Pessoais (Nome / Email)</h2>
+                {{ u_form.as_p }}
+
+                <hr style="margin: 20px 0;">
+
+                <h2>Detalhes Acadêmicos e Bio</h2>
+                {{ p_form_data.as_p }}
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="editar-btn" style="background-color: #FF8C00;">Salvar Alterações</button>
+                    <a href="{% url 'perfil' %}" style="margin-left: 15px;">Voltar ao Perfil</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

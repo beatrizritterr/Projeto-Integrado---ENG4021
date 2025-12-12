@@ -114,6 +114,7 @@ class UserProfile(models.Model):
     foto_perfil = models.ImageField(default='perfil_padrao.png', upload_to='profile_pics')
     
     curso = models.CharField(max_length=100, blank=True, null=True)
+    periodo = models.CharField(max_length=20, blank=True, null=True) # <-- ESTE NOME É CRÍTICO
     bio = models.TextField(max_length=500, blank=True, null=True)
 
     def __str__(self):
